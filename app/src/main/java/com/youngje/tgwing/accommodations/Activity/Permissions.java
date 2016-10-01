@@ -32,17 +32,7 @@ public class Permissions extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION:
-                break;
-            default:
-                break;
 
-        }
-        // TODO: 2016. 10. 1. 완성해야될 필요성 있으 
-    }
 
 
 }

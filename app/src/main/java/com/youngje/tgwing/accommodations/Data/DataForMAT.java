@@ -28,7 +28,6 @@ public class DataFormat {
     // AT4 : 관광명소
     // AD5 : 숙박
     // FD6 : 음식점
-
     // HP8 : 병원
     // PM9 : 약국
 
@@ -48,7 +47,7 @@ public class DataFormat {
 
     //public static String[] DATSAFORMATNAME = {, "CS2", "PS3", "SC4", "AC5", "PK6", "OL7", "SW8", "BK9", "CT1", "AG2", "PO3", "AT4", "AD5", "FD6", "CE7", "HP8", "PM9"};
 
-    public static String createDaumRequestURL(DATASOURCE datasource,DATAFORMAT dataformat, double lat,double lon, int radius,int sort,String format,String daumApikey) {
+    public static String createDaumRequestURL(DATASOURCE datasource,DATAFORMAT dataformat, double lat,double lon, int radius,int sort,String format,String daumApikey) { // 카테고리
         String requestUrl  = "";
         String APIkey = daumApikey;
         String searchType = dataformat.getValue(); // 뭘 검색해야하나
