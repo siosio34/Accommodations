@@ -33,7 +33,7 @@ public class Json {
                         Marker ma = null;
                         switch (datasource) {
                             case DAUM:
-                                ma = processDAUMKeywordJSONObject(jo);
+                                ma = processDAUMJSONObject(jo);
                                 break;
 
                             case OPENAPI:
@@ -56,7 +56,7 @@ public class Json {
 
 
 
-    public Marker processDAUMKeywordJSONObject(JSONObject jsonObject) throws JSONException {
+    public Marker processDAUMJSONObject(JSONObject jsonObject) throws JSONException {
         Marker marker = null;
         marker = new Marker(jsonObject.getString("id"),jsonObject.getString("latitude"), jsonObject.getString("longitude"),jsonObject.getString("title"),
                 jsonObject.getString("category"),jsonObject.getString("phone"),jsonObject.getString("address"),jsonObject.getString("newAddress"),
@@ -67,11 +67,13 @@ public class Json {
 
     public Marker processTourapiJSONObject(JSONObject jsonObject) throws JSONException {
         Marker marker = null;
+
         return marker;
     }
 
     public Marker processSeoulApiJSONObject(JSONObject jsonObject) throws JSONException {
         Marker marker = null;
+
         return marker;
     }
 
