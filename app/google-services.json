@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "310048639421",
+    "firebase_url": "https://foreigntour-79a88.firebaseio.com",
+    "project_id": "foreigntour-79a88",
+    "storage_bucket": "foreigntour-79a88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310048639421:android:986a3984414642c3",
+        "android_client_info": {
+          "package_name": "com.youngje.tgwing.accommodations"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310048639421-gs2fhv2susjih0p15q42ctmvelrsq294.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.youngje.tgwing.accommodations",
+            "certificate_hash": "461A4EEA1D06D912F5BA34A7122953D8986077AE"
+          }
+        },
+        {
+          "client_id": "310048639421-2b6hpu6v9dnvt378lfmdq20p04mmt675.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8OvHdP5eFLPY1rC585k-8g9md0EUIhE4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "310048639421-2b6hpu6v9dnvt378lfmdq20p04mmt675.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
