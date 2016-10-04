@@ -44,14 +44,15 @@ public class MainActivity extends AppCompatActivity {
 
         new LocationUtil(this);
 
-        // --- 로케이션 테스트 and daum category search test
+         //--- 로케이션 테스트 and daum category search test 완료됨.
         // Location temp = LocationUtil.getLocation();
         // Log.i("temp", Double.toString(temp.getLongitude()));
         // Log.i("temp2", Double.toString(temp.getLatitude()));
         // String apikey = "1dee5001636c3e99fb8d90496c9a3f8a";//
         // HttpHandler httpHandler = new HttpHandler();
-        //
-        // String createUrl = DataFormat.createDaumRequestURL(DataFormat.DATASOURCE.DAUM, DataFormat.DATAFORMAT.CAFE,temp.getLatitude(),temp.getLongitude(),10000,0,"json",apikey);
+        // String temptemp = "울산";
+//
+        // String createUrl = DataFormat.createDaumKeywordRequestURL(temptemp,temp.getLatitude(),temp.getLongitude(),10000,0,"json",apikey);
         // try {
         //     String result = httpHandler.execute(createUrl).get();
         //     Toast.makeText(this,result,Toast.LENGTH_LONG).show();
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         // } catch (ExecutionException e) {
         //     e.printStackTrace();
         // }
-
 
     }
 

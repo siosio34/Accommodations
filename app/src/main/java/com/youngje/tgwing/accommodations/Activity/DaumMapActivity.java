@@ -6,4 +6,6 @@ package com.youngje.tgwing.accommodations.Activity;
 public class DaumMapActivity {
 
 
+
+
 }
