@@ -133,9 +133,7 @@ public class UserSignInActivity extends BaseActivity implements
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // [START_EXCLUDE]
-                //    updateUI(user);
-                // [END_EXCLUDE]
+
             }
         };
 
