@@ -17,7 +17,7 @@ public class ReviewPost {
     private int contentType; // 글, 사진,동영상
     private String reviewUrl; // 리뷰와 연관된 사진 동영상 링크
     private Date CreateDate; // 글 쓴 시간
-    //private List<Comment> comments;
+    private int starLate; // 별점
 
     public String getMarkerId() {
         return markerId;
@@ -84,5 +84,11 @@ public class ReviewPost {
     }
 
 
+    public int getStarLate() {
+        return starLate;
+    }
 
+    public void setStarLate(int starLate) {
+        this.starLate = starLate;
+    }
 }
