@@ -14,7 +14,8 @@ public class User {
     private String userName; // 유저 이름
     private String userEmail; // 유저 아이디
     private String userDescription; // 유저 소개
-    private String imageUri;
+    private String imageUri; // 이미지 링크
+    private String country; // 국가
 
     public static User currentUser = new User();
 
@@ -23,12 +24,14 @@ public class User {
     }
 
     public User() {}
-    public User(String userId,String userName,String userEmail,String userDescription,String imageUri) {
+    public User(String userId,String userName,String userEmail,String userDescription,String imageUri,String country) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
         this.userDescription = userDescription;
         this.imageUri = imageUri;
+        this.country= country;
+
     }
 
     public String getUserId() {
@@ -72,4 +75,11 @@ public class User {
     }
 
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 }
