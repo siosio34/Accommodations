@@ -6,5 +6,11 @@ package com.youngje.tgwing.accommodations;
 
 public class Comment {
 
+    private String writeUserId;
+    private String writeUserName;
+
+
+
+
 
 }

@@ -4,20 +4,11 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.youngje.tgwing.accommodations.Data.DataFormat;
-import com.youngje.tgwing.accommodations.HttpHandler;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
-
-import java.util.concurrent.ExecutionException;
-
-import static android.support.v4.app.ActivityCompat.requestPermissions;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         new LocationUtil(this);
+
 
          //--- 로케이션 테스트 and daum category search test 완료됨.
         // Location temp = LocationUtil.getLocation();

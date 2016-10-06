@@ -1,5 +1,6 @@
 package com.youngje.tgwing.accommodations.Data;
 
+import com.youngje.tgwing.accommodations.DaumMarker;
 import com.youngje.tgwing.accommodations.Marker;
 
 import org.json.JSONArray;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * Created by joyeongje on 2016. 9. 26..
  */
-public class Json {
+public class Json  {
 
     public static final int MAX_JSON_OBJECTS = 50;    // JSON 객체의 최대 수
 
@@ -58,9 +59,10 @@ public class Json {
 
     public Marker processDAUMJSONObject(JSONObject jsonObject) throws JSONException {
         Marker marker = null;
-        marker = new Marker(jsonObject.getString("id"),jsonObject.getString("latitude"), jsonObject.getString("longitude"),jsonObject.getString("title"),
-                jsonObject.getString("category"),jsonObject.getString("phone"),jsonObject.getString("address"),jsonObject.getString("newAddress"),
-                jsonObject.getString("imageUrl"),jsonObject.getString("placeUrl"),jsonObject.getString("distance"));
+
+        marker = new DaumMarker(jsonObject.getString("id"),jsonObject.getString("lat"),jsonObject.getString("lon"),jsonObject.getString("title"),jsonObject.getString("placeUrl")
+                ,jsonObject.getString("placeUrl"),jsonObject.getDouble("distance"),jsonObject.getString("phone"),jsonObject.getString("address"),jsonObject.getString("newAddress")
+                ,jsonObject.getString("category"));
 
         return marker;
     }
@@ -73,7 +75,6 @@ public class Json {
 
     public Marker processSeoulApiJSONObject(JSONObject jsonObject) throws JSONException {
         Marker marker = null;
-
         return marker;
     }
 

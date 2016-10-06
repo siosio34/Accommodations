@@ -33,14 +33,23 @@ public class LocationUtil implements LocationListener {
     Context ctx;
     private String provider;
 
-    private LocationManager locationMgr;        // 위치 관리자
+    LocationManager locationMgr;        // 위치 관리자
 
     private boolean isGpsEnabled; // gps 사용 여부
     private boolean isNetworkEnabled; // 네트워크 사용 여부
 
     //private static final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 8001;
 
-    public static Location getLocation() {
+    public Location getLocation() {
+
+        try {
+            if (ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: 2016. 10. 6. error check
+            }
+            return curlocation != null ? curlocation : locationMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
+        catch (Exception e) {}
+
         return curlocation;
     }
 
@@ -126,6 +135,5 @@ public class LocationUtil implements LocationListener {
     public void onProviderDisabled(String s) {
 
     }
-
 
 }

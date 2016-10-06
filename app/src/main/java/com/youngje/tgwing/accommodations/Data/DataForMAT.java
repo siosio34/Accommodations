@@ -9,7 +9,11 @@ import java.util.Locale;
  */
 public class DataFormat {
 
+    private final String DAUM_KEY = "1dee5001636c3e99fb8d90496c9a3f8a";
     private final String TOUR_KEY = "6P%2BoZASTR%2FyMvmypmG5GiuDxZywpTc43N4KDgbWDU9nzKaYCi%2Bx%2BQAMUBIKS7s%2BOML3LSCUkENhFVKV4KY3%2FQg%3D%3D";
+    private final String SEOUL_APP_KEY = "437770464173696f373353734d7345";
+
+    // TODO: 2016. 10. 6. 이거 다 strings.xml 로 옮기고 
 
     //private final String TOUR_AMERICA   = "6P%2BoZASTR%2FyMvmypmG5GiuDxZywpTc43N4KDgbWDU9nzKaYCi%2Bx%2BQAMUBIKS7s%2BOML3LSCUkENhFVKV4KY3%2FQg%3D%3D";
 
@@ -20,32 +24,43 @@ public class DataFormat {
         DAUM, OPENAPI, TOURAPI
     }
 
-    // -- 다음거
-    // MT1 : 대형마트
-    // CS2 : 편의점
-    // PS3 : 어린이집, 유치원
-    // SC4 : 학교
-    // AC5 : 학원
-    // PK6 : 주차장
-    // OL7 : 주유소, 충전소
-    // SW8 : 지하철역
-    // BK9 : 은행
-    // CT1 : 문화시설
-    // AG2 : 중개업소
-    // PO3 : 공공기관
-    // AT4 : 관광명소
-    // AD5 : 숙박
-    // FD6 : 음식점
-    // HP8 : 병원
-    // PM9 : 약국
 
-    public enum DAUMECATEGORY {
+    public enum DATATYPE {
 
-        MART("MT1"), CONVINEIENCE("CS2"), KIDHOUSE("PS3"), SCHOOL("SC4"), INSTITUDE("AC5"), PARKING("PK6"), OIL("OL7"), SUBWAY("SW8"), BANK("BK9"), CUSTOM("CT1"), AG2("AG2"), PO3("PO3"), AT4("AT4"), MOTEL("AD5"), FOOD("FD6"), CAFE("CE7"), HOSPITAL("HP8"), PHARMACY("PM9");
+        // -- 다음거
+        // MT1 : 대형마트
+        // CS2 : 편의점
+        // PS3 : 어린이집, 유치원
+        // SC4 : 학교
+        // AC5 : 학원
+        // PK6 : 주차장
+        // OL7 : 주유소, 충전소
+        // SW8 : 지하철역
+        // BK9 : 은행
+        // CT1 : 문화시설
+        // AG2 : 중개업소
+        // PO3 : 공공기관
+        // AT4 : 관광명소
+        // AD5 : 숙박
+        // FD6 : 음식점
+        // HP8 : 병원
+        // PM9 : 약국
+
+        // ------------- 다음 카테고리 -------------------- //
+        MART("MT1"), CONVINEIENCE("CS2"), KIDHOUSE("PS3"), SCHOOL("SC4"), INSTITUDE("AC5"), PARKING("PK6"), OIL("OL7"),
+        SUBWAY("SW8"), BANK("BK9"), CUSTOM("CT1"), AG2("AG2"), PO3("PO3"), AT4("AT4"), MOTEL("AD5"), FOOD("FD6"),
+        CAFE("CE7"), HOSPITAL("HP8"), PHARMACY("PM9"),
+
+
+        // ------------- 서울시 공공 데이터 ----------------- //
+        WIFI("PublicWiFiPlaceInfo"), TOILET("SearchPublicToiletPOIService");
+
+        // --------- 한국관광공사 api 데이터 ----------------- //
+
 
         private final String value;
 
-        private DAUMECATEGORY(String value) {
+        private DATATYPE(String value) {
             this.value = value;
         }
 
@@ -56,7 +71,7 @@ public class DataFormat {
 
     //public static String[] DATSAFORMATNAME = {, "CS2", "PS3", "SC4", "AC5", "PK6", "OL7", "SW8", "BK9", "CT1", "AG2", "PO3", "AT4", "AD5", "FD6", "CE7", "HP8", "PM9"};
 
-    public static String createDaumCategoryRequestURL(DAUMECATEGORY dataformat, double lat, double lon, int radius, int sort, String format, String daumApikey) { // 카테고리
+    public static String createDaumCategoryRequestURL(DATATYPE dataformat, double lat, double lon, int radius, int sort, String format, String daumApikey) { // 카테고리
         String requestUrl = "";
         String searchType = dataformat.getValue(); // 뭘 검색해야하나
         String curloc = Double.toString(lat) + "," + Double.toString(lon);
@@ -97,12 +112,21 @@ public class DataFormat {
     }
 
 
-    public static String createOpenAPIRequestURL(DATASOURCE datasource, double lat, double lon, int radius, int sort, String format, String daumApikey) {
+    public static String createSeoulOpenAPIRequestURL(DATATYPE dataformat,int startNum, int endNum,String format) {
         String requestUrl = "";
+        // http://data.seoul.go.kr/openinf/openapiview.jsp?infId=OA-1218 -- 공공 와이파이
+        // http://openAPI.seoul.go.kr:8088/(인증키)/xml/PublicWiFiPlaceInfo/1/5/강남구
+        // http://openAPI.seoul.go.kr:8088/(인증키)/xml/SearchPublicToiletPOIService/1/5/
+        String dataType =
+
+        //http://openAPI.seoul.go.kr:8088/(인증키)/xml/PublicWiFiPlaceInfo/1/5/강남구
+        requestUrl = "http://openAPI.seoul.go.kr:8088/" + "SEOUL_APP_KEY" + "/json/"
+                + dataformat.getValue() + "/" + startNum + "/" + endNum + "/";
+
         return requestUrl;
     }
 
-    public static String createTourAPIRequestURL(Locale locale) {
+    public static String createTourAPIRequestURL(Locale locale,String appName) {
 
         //  MobileApp 파라미터는 서비스(웹,앱 등)별로 활용 통계를 산출하기 위한 항목입니다. URL요청 시 반드시 기재 부탁드립니다.//====//== 파라미터 인코딩 예시(JSP 기준)
         //  <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> //=== 서비스명이 영문인 경우 (인코딩 불필요)
@@ -119,7 +143,7 @@ public class DataFormat {
         // SpnService 서어(스페인어)
         // RusService 노어(러시아어)
 
-        String appName = "Accommdations";
+        //String appName = "Accommdations";
         // TODO: 2016. 10. 2. locale 에따라서 바까야됨 일단은 영어로
         String requestUrl = "http://api.visitkorea.or.kr/openapi/service/rest/EngService + ";
         return requestUrl;
