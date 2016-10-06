@@ -1,4 +1,4 @@
-package com.youngje.tgwing.accommodations;
+package com.youngje.tgwing.accommodations.Util;
 
 import android.os.AsyncTask;
 import android.util.Log;
