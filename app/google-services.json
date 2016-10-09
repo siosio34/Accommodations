@@ -1,65 +1,21 @@
 {
   "project_info": {
-    "project_number": "76549979943",
-    "firebase_url": "https://tour-7de99.firebaseio.com",
-    "project_id": "tour-7de99",
-    "storage_bucket": "tour-7de99.appspot.com"
+    "project_number": "136292505933",
+    "firebase_url": "https://tourseoul-451de.firebaseio.com",
+    "project_id": "tourseoul-451de",
+    "storage_bucket": "tourseoul-451de.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:76549979943:android:951a42ec7f6d2f20",
-        "android_client_info": {
-          "package_name": "com.youngje.tgwing.accommodations.Activity"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "76549979943-cspil95hgrs735rg4pf5lc8aur5btrql.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.youngje.tgwing.accommodations.Activity",
-            "certificate_hash": "461A4EEA1D06D912F5BA34A7122953D8986077AE"
-          }
-        },
-        {
-          "client_id": "76549979943-ua1jho8pnr0cv0i4bhri1qb2i09dh2a4.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC6JRrnpxaoWXN4cpEJiTj3CKwLGxM9q3g"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "76549979943-ua1jho8pnr0cv0i4bhri1qb2i09dh2a4.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:76549979943:android:986a3984414642c3",
+        "mobilesdk_app_id": "1:136292505933:android:986a3984414642c3",
         "android_client_info": {
           "package_name": "com.youngje.tgwing.accommodations"
         }
       },
       "oauth_client": [
         {
-          "client_id": "76549979943-v81lsi37vejge390mb6047bpife9f5s6.apps.googleusercontent.com",
+          "client_id": "136292505933-rbiqghj2vngcuisa8srs2b68rrbl0bag.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.youngje.tgwing.accommodations",
@@ -67,13 +23,13 @@
           }
         },
         {
-          "client_id": "76549979943-ua1jho8pnr0cv0i4bhri1qb2i09dh2a4.apps.googleusercontent.com",
+          "client_id": "136292505933-730po4d0rdd8f896i6k41jfrbent71uk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6JRrnpxaoWXN4cpEJiTj3CKwLGxM9q3g"
+          "current_key": "AIzaSyC2pzaqi8H-ItJl-AiGoETAz1XAd72GlYc"
         }
       ],
       "services": {
@@ -84,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "76549979943-ua1jho8pnr0cv0i4bhri1qb2i09dh2a4.apps.googleusercontent.com",
+              "client_id": "136292505933-730po4d0rdd8f896i6k41jfrbent71uk.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

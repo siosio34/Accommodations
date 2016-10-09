@@ -17,59 +17,9 @@ public class Json  {
 
     public static final int MAX_JSON_OBJECTS = 50;    // JSON 객체의 최대 수
 
-    public List<Marker> load(JSONObject root, DataFormat.DATASOURCE datasource) {
-
-        JSONObject jo = null;
-        JSONArray dataArray = null;
-        List<Marker> markerList = new ArrayList<Marker>();
-
-        try {
-            if (root.has("channel")) { // 다음 카테고리 url인 경우
-                dataArray = root.getJSONObject("channel").getJSONArray("item");
-                if (dataArray != null) {
-
-                    int top = Math.min(MAX_JSON_OBJECTS, dataArray.length());
-                    for (int i = 0; i < top; i++) {
-                        jo = dataArray.getJSONObject(i);
-                        Marker ma = null;
-                        switch (datasource) {
-                            case DAUM:
-                                ma = processDAUMJSONObject(jo);
-                                break;
-
-                            case OPENAPI:
-                                break;
-
-                        }
-
-                        if (ma != null) {
-                            markerList.add(ma);
-                        }
-                    }
-
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return markerList;
-    }
-
-
-
-    public Marker processDAUMJSONObject(JSONObject jsonObject) throws JSONException {
-        Marker marker = null;
-
-        marker = new DaumMarker(jsonObject.getString("id"),jsonObject.getString("lat"),jsonObject.getString("lon"),jsonObject.getString("title"),jsonObject.getString("placeUrl")
-                ,jsonObject.getString("placeUrl"),jsonObject.getDouble("distance"),jsonObject.getString("phone"),jsonObject.getString("address"),jsonObject.getString("newAddress")
-                ,jsonObject.getString("category"));
-
-        return marker;
-    }
 
     public Marker processTourapiJSONObject(JSONObject jsonObject) throws JSONException {
         Marker marker = null;
-
         return marker;
     }
 
@@ -77,12 +27,6 @@ public class Json  {
         Marker marker = null;
         return marker;
     }
-
-
-
-
-
-
 
 
 }

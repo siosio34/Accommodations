@@ -1,6 +1,7 @@
 package com.youngje.tgwing.accommodations.Activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -33,7 +34,10 @@ public class MainActivity extends AppCompatActivity {
                     PERMISSIONS_REQUEST_CODE_ACCESS_FINE_LOCATION);
         }
 
-        new LocationUtil(this);
+        Intent intent = new Intent(this,UserSignInActivity.class);
+        startActivity(intent);
+
+        //new LocationUtil(this);
 
 
          //--- 로케이션 테스트 and daum category search test 완료됨.

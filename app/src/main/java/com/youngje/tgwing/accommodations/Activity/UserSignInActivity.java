@@ -1,12 +1,12 @@
 /**
  * Copyright 2016 Google Inc. All Rights Reserved.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -80,19 +80,19 @@ public class UserSignInActivity extends BaseActivity implements
     private TextView mStatusTextView;
     private TextView mDetailTextView;
 
-   // private final int SPLASH_DELAY_MESSAGE = 100;
-   // Handler splashHandler = new Handler(new Handler.Callback() {
-   //     @Override
-   //     public boolean handleMessage(Message msg) {
-   //         switch (msg.what) {
-   //             case SPLASH_DELAY_MESSAGE:
-   //                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-   //             default:
-   //                 break;
-   //         }
-   //         return false;
-   //     }
-   // });
+    private final int SPLASH_DELAY_MESSAGE = 100;
+    Handler splashHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case SPLASH_DELAY_MESSAGE:
+                    startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+                default:
+                    break;
+            }
+            return false;
+        }
+    });
 
 
     @Override
@@ -125,7 +125,7 @@ public class UserSignInActivity extends BaseActivity implements
                 if (user != null) {
                     // User is signed in
                     checkBasicUser(user);
-                   // splashHandler.sendEmptyMessageDelayed(SPLASH_DELAY_MESSAGE, 1000);
+                    splashHandler.sendEmptyMessageDelayed(SPLASH_DELAY_MESSAGE, 1000);
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
 
@@ -258,12 +258,11 @@ public class UserSignInActivity extends BaseActivity implements
     }
 
 
-
     public void checkBasicUser(final FirebaseUser firebaseUser) { //  기존 유저 체크 뒤 정보 불러오기
         System.out.println();
         // 새로 등록할 유저
         final String uid = firebaseUser.getUid();
-        Log.i("user information",uid);
+        Log.i("user information", uid);
 
         // Read from the database
         myRef.child(uid).addListenerForSingleValueEvent(
@@ -274,14 +273,13 @@ public class UserSignInActivity extends BaseActivity implements
                         // whenever data at this location is updated.
 
                         User userValue = dataSnapshot.getValue(User.class);
-                        String userId = null;
                         String photoUrl = null;
                         String email = null;
                         String name = null;
 
                         String providerId;
 
-                        if(userValue == null) {
+                        if (userValue == null) {
 
                             name = firebaseUser.getDisplayName();
                             email = firebaseUser.getEmail();
@@ -289,15 +287,14 @@ public class UserSignInActivity extends BaseActivity implements
 
                             String country = null;
 
-                            User userTemp = new User(uid,name,email,null,photoUrl,country);
-                            registerUser(uid,userTemp);
+                            User userTemp = new User(uid, name, email, null, photoUrl, country);
+                            registerUser(uid, userTemp);
                             User.currentUser = userTemp;
-                            Log.i("신규 유저 정보",User.currentUser.toString());
-                        }
-                        else { // 존재할경우 -> 불러와야함
+                            Log.i("신규 유저 정보", User.currentUser.toString());
+                        } else { // 존재할경우 -> 불러와야함
                             // TODO: 2016. 9. 15. 여기서 에러가 터지네쓰벌
                             User.currentUser = userValue;
-                            Log.i("기존 유저정보",User.currentUser.toString());
+                            Log.i("기존 유저정보", User.currentUser.toString());
                         }
 
                     }
