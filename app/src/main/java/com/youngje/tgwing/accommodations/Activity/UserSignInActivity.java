@@ -80,19 +80,19 @@ public class UserSignInActivity extends BaseActivity implements
     private TextView mStatusTextView;
     private TextView mDetailTextView;
 
-    private final int SPLASH_DELAY_MESSAGE = 100;
-    Handler splashHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-                case SPLASH_DELAY_MESSAGE:
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                default:
-                    break;
-            }
-            return false;
-        }
-    });
+   // private final int SPLASH_DELAY_MESSAGE = 100;
+   // Handler splashHandler = new Handler(new Handler.Callback() {
+   //     @Override
+   //     public boolean handleMessage(Message msg) {
+   //         switch (msg.what) {
+   //             case SPLASH_DELAY_MESSAGE:
+   //                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+   //             default:
+   //                 break;
+   //         }
+   //         return false;
+   //     }
+   // });
 
 
     @Override
@@ -125,7 +125,7 @@ public class UserSignInActivity extends BaseActivity implements
                 if (user != null) {
                     // User is signed in
                     checkBasicUser(user);
-                    splashHandler.sendEmptyMessageDelayed(SPLASH_DELAY_MESSAGE, 1000);
+                   // splashHandler.sendEmptyMessageDelayed(SPLASH_DELAY_MESSAGE, 1000);
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
 
@@ -263,6 +263,7 @@ public class UserSignInActivity extends BaseActivity implements
         System.out.println();
         // 새로 등록할 유저
         final String uid = firebaseUser.getUid();
+        Log.i("user information",uid);
 
         // Read from the database
         myRef.child(uid).addListenerForSingleValueEvent(
@@ -281,20 +282,14 @@ public class UserSignInActivity extends BaseActivity implements
                         String providerId;
 
                         if(userValue == null) {
-                            // if uid 가 존재하지 않을경우
-                            for (UserInfo profile : firebaseUser.getProviderData()) {
-                                // Id of the provider (ex: google.com)
-                                providerId = profile.getProviderId();
 
-                                // Name, email address, and profile photo Url
-                                userId = profile.getUid();
-                                name = profile.getDisplayName();
-                                email = profile.getEmail();
-                                photoUrl = profile.getPhotoUrl().toString();
+                            name = firebaseUser.getDisplayName();
+                            email = firebaseUser.getEmail();
+                            photoUrl = firebaseUser.getPhotoUrl().toString();
 
-                            };
+                            String country = null;
 
-                            User userTemp = new User(userId,name,email,null,photoUrl);
+                            User userTemp = new User(uid,name,email,null,photoUrl,country);
                             registerUser(uid,userTemp);
                             User.currentUser = userTemp;
                             Log.i("신규 유저 정보",User.currentUser.toString());
