@@ -17,6 +17,7 @@
 package com.youngje.tgwing.accommodations.Activity;
 
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,6 +52,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.youngje.tgwing.accommodations.Activity.BaseActivity;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.User;
+import com.youngje.tgwing.accommodations.Util.LocationUtil;
 
 import java.net.URI;
 
@@ -260,6 +262,9 @@ public class UserSignInActivity extends BaseActivity implements
 
     public void checkBasicUser(final FirebaseUser firebaseUser) { //  기존 유저 체크 뒤 정보 불러오기
         System.out.println();
+        LocationUtil locationUtil = new LocationUtil();
+        final Location curloc = locationUtil.getLocation();
+
         // 새로 등록할 유저
         final String uid = firebaseUser.getUid();
         Log.i("user information", uid);
@@ -284,16 +289,16 @@ public class UserSignInActivity extends BaseActivity implements
                             photoUrl = firebaseUser.getPhotoUrl().toString();
                             String country = null;
 
-                            User userTemp = new User(uid, name, email, null, photoUrl, country);
+                            User userTemp = new User(uid, name, email, null, photoUrl, country,"",curloc.getLatitude(),curloc.getLongitude());
                             registerUser(uid, userTemp);
-                            User.currentUser = userTemp;
+                            User.setMyInstance(userTemp);
 
-                            Log.i("신규 유저 정보", User.currentUser.toString());
+                            Log.i("신규 유저 정보", User.getMyInstance().toString());
 
                         } else { // 존재할경우 -> 불러와야함
                             // TODO: 2016. 9. 15. 여기서 에러가 터지네쓰벌
-                            User.currentUser = userValue;
-                            Log.i("기존 유저정보", User.currentUser.toString());
+                            User.setMyInstance(userValue);
+                            Log.i("기존 유저정보", User.getMyInstance().toString());
                         }
 
                     }

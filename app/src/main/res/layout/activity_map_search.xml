@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:orientation="vertical"
-tools:context="com.youngje.tgwing.accommodations.Activity.MapSearchActivity"
-    >
-
-<!-- 상단 NavBar -->
-<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:background="#FFFFFF">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.youngje.tgwing.accommodations.Activity.MapSearchActivity">
 
-    <!-- 탭뷰 -->
-    <ImageView
-        android:id="@+id/activity_main_btn_menu"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@mipmap/ic_icon_menu"/>
-
+    <!-- 상단 NavBar -->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_margin="4dp"
-        android:background="@drawable/ic_container_textbox"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/activity_main_searchbar"
+        <!-- 탭뷰 -->
+        <ImageView
+            android:id="@+id/activity_main_btn_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ic_icon_menu" />
+
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="24dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:hint="Search"
-            android:background="@null"/>
+            android:background="@drawable/ic_container_textbox"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/activity_main_searchbar"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="Search" />
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@mipmap/ic_icon_mic" />
+
+        </LinearLayout>
 
         <ImageView
+            android:id="@+id/activity_main_btn_more"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@mipmap/ic_icon_mic"/>
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:clickable="true"
+            android:src="@mipmap/ic_icon_more" />
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/activity_main_btn_more"
-        android:clickable="true"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:src="@mipmap/ic_icon_more"/>
-
-</LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="4dp"
-    android:background="@drawable/ic_container_shadow_bottom"/>
-<!-- end 상단 NavBar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/ic_container_shadow_bottom" />
+    <!-- end 상단 NavBar -->
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -75,8 +75,8 @@ tools:context="com.youngje.tgwing.accommodations.Activity.MapSearchActivity"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center"
             android:animateLayoutChanges="true"
-            android:visibility="gone"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,122 +86,130 @@ tools:context="com.youngje.tgwing.accommodations.Activity.MapSearchActivity"
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ic_container_circle"
                     android:padding="4dp"
                     android:scaleType="centerInside"
-                    android:background="@drawable/ic_container_circle"
-                    app:srcCompat="@mipmap/ic_icon_menu_landmark"/>
+                    app:srcCompat="@mipmap/ic_icon_menu_landmark" />
+
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ic_container_circle"
                     android:padding="4dp"
                     android:scaleType="centerInside"
-                    android:background="@drawable/ic_container_circle"
-                    app:srcCompat="@mipmap/ic_icon_menu_restroom"/>
+                    app:srcCompat="@mipmap/ic_icon_menu_restroom" />
+
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ic_container_circle"
                     android:padding="4dp"
                     android:scaleType="centerInside"
-                    android:background="@drawable/ic_container_circle"
-                    app:srcCompat="@mipmap/ic_icon_menu_wifizone"/>
+                    app:srcCompat="@mipmap/ic_icon_menu_wifizone" />
+
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ic_container_circle"
                     android:padding="4dp"
                     android:scaleType="centerInside"
-                    android:background="@drawable/ic_container_circle"
-                    app:srcCompat="@mipmap/ic_icon_menu_bank"/>
+                    app:srcCompat="@mipmap/ic_icon_menu_bank" />
+
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ic_container_circle"
                     android:padding="4dp"
                     android:scaleType="centerInside"
-                    android:background="@drawable/ic_container_circle"
-                    app:srcCompat="@mipmap/ic_icon_menu_cvs"/>
+                    app:srcCompat="@mipmap/ic_icon_menu_cvs" />
+
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ic_container_circle"
                     android:padding="4dp"
                     android:scaleType="centerInside"
-                    android:background="@drawable/ic_container_circle"
-                    app:srcCompat="@mipmap/ic_icon_menu_restaurant"/>
+                    app:srcCompat="@mipmap/ic_icon_menu_restaurant" />
+
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ic_container_circle"
                     android:padding="4dp"
                     android:scaleType="centerInside"
-                    android:background="@drawable/ic_container_circle"
-                    app:srcCompat="@mipmap/ic_icon_menu_hotel"/>
+                    app:srcCompat="@mipmap/ic_icon_menu_hotel" />
+
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ic_container_circle"
                     android:padding="4dp"
                     android:scaleType="centerInside"
-                    android:background="@drawable/ic_container_circle"
-                    app:srcCompat="@mipmap/ic_icon_menu_cafe"/>
+                    app:srcCompat="@mipmap/ic_icon_menu_cafe" />
+
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ic_container_circle"
                     android:padding="4dp"
                     android:scaleType="centerInside"
-                    android:background="@drawable/ic_container_circle"
-                    app:srcCompat="@mipmap/ic_icon_menu_pharmacy"/>
+                    app:srcCompat="@mipmap/ic_icon_menu_pharmacy" />
+
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ic_container_circle"
                     android:padding="4dp"
                     android:scaleType="centerInside"
-                    android:background="@drawable/ic_container_circle"
-                    app:srcCompat="@mipmap/ic_icon_menu_train"/>
+                    app:srcCompat="@mipmap/ic_icon_menu_train" />
 
             </LinearLayout>
 
         </HorizontalScrollView>
 
-        <!-- 지도는 여기에! -->
-
-        <RelativeLayout
+        <net.daum.mf.map.api.MapView
             android:id="@+id/map_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
+        </net.daum.mf.map.api.MapView>
 
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@mipmap/ic_people_black_48dp"
             android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"/>
+            android:layout_margin="16dp"
+            android:src="@mipmap/ic_people_black_48dp" />
 
     </FrameLayout>
 

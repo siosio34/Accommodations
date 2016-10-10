@@ -21,7 +21,11 @@
         </activity>
         <activity android:name=".Activity.UserSignInActivity" />
         <activity android:name=".Activity.BaseActivity" />
-        <activity android:name=".Activity.MapSearchActivity"></activity>
+        <activity
+            android:name=".Activity.MapSearchActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".Activity.CommunityChatroomActivity" />
+        <activity android:name=".Activity.CommunityMainActivity"></activity>
     </application>
 
 </manifest>

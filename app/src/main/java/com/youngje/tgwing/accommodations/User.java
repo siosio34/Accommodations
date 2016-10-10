@@ -10,6 +10,7 @@ import java.util.List;
 
 public class User {
 
+
     private String userId;
     private String userName; // 유저 이름
     private String userEmail; // 유저 아이디
@@ -17,21 +18,30 @@ public class User {
     private String imageUri; // 이미지 링크
     private String country; // 국가
 
-    public static User currentUser = new User();
+    //////////////////////////////////////////////
+    private String chatRoomID;
+    private Double lat;
+    private Double lon;
 
-    public static User getInstance() {
+    private static User currentUser = new User();
+
+    public static User getMyInstance() {
         return currentUser;
     }
+    public static void setMyInstance(User user) { currentUser = user;}
 
     public User() {}
-    public User(String userId,String userName,String userEmail,String userDescription,String imageUri,String country) {
+
+    public User(String userId,String userName,String userEmail,String userDescription,String imageUri,String country,String chatRoomID,Double lat,Double lon) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
         this.userDescription = userDescription;
         this.imageUri = imageUri;
         this.country= country;
-
+        this.chatRoomID = chatRoomID;
+        this.lat = lat;
+        this.lon = lon;
     }
 
     public String getUserId() {
@@ -81,5 +91,29 @@ public class User {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getChatRoomID() {
+        return chatRoomID;
+    }
+
+    public void setChatRoomID(String chatRoomID) {
+        this.chatRoomID = chatRoomID;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLon() {
+        return lon;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
     }
 }

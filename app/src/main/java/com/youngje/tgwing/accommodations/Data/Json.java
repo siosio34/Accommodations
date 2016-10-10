@@ -23,8 +23,13 @@ public class Json  {
         return marker;
     }
 
+
+
+
     public Marker processSeoulApiJSONObject(JSONObject jsonObject) throws JSONException {
         Marker marker = null;
+        // TODO: 2016. 10. 10.
+        // 쿼리값을 여기서 날려야됨
         return marker;
     }
 

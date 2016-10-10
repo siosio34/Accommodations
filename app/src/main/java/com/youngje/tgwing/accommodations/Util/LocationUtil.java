@@ -47,6 +47,9 @@ public class LocationUtil implements LocationListener {
         LocationUtil.curlocation = curlocation;
     }
 
+    public LocationUtil() {
+
+    }
     public LocationUtil(Context appCtx) { // 생성자.
         ctx = appCtx;
         locationMgr = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
@@ -78,7 +81,7 @@ public class LocationUtil implements LocationListener {
 
                 // 위치 값을 얻어오게 되면 현재 위치를 지정
                 // 우선순위는 gps > 네트워크 > 기본값
-                if(gps!=null) {
+                if(gps != null) {
                     curlocation = gps;
                     Log.i("GPS: ", gps.toString());
                 }
