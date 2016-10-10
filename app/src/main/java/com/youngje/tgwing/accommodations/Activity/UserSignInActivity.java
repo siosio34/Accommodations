@@ -277,20 +277,19 @@ public class UserSignInActivity extends BaseActivity implements
                         String email = null;
                         String name = null;
 
-                        String providerId;
-
                         if (userValue == null) {
 
                             name = firebaseUser.getDisplayName();
                             email = firebaseUser.getEmail();
                             photoUrl = firebaseUser.getPhotoUrl().toString();
-
                             String country = null;
 
                             User userTemp = new User(uid, name, email, null, photoUrl, country);
                             registerUser(uid, userTemp);
                             User.currentUser = userTemp;
+
                             Log.i("신규 유저 정보", User.currentUser.toString());
+
                         } else { // 존재할경우 -> 불러와야함
                             // TODO: 2016. 9. 15. 여기서 에러가 터지네쓰벌
                             User.currentUser = userValue;
@@ -319,10 +318,6 @@ public class UserSignInActivity extends BaseActivity implements
         if (i == R.id.sign_in_button) {
             signIn();
         }
-        //else if (i == R.id.sign_out_button) {
-        //    signOut();
-        //} else if (i == R.id.disconnect_button) {
-        //    revokeAccess();
-        //}
+
     }
 }
