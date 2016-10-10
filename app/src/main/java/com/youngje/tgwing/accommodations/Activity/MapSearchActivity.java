@@ -71,6 +71,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             }
         });
 
+
+
         // // java code
         // MapView mapView = new MapView(this);
         // mapView.setDaumMapApiKey("b751bc30d4efe34c1ef20e644f655766");
@@ -224,4 +226,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
 
     }
+
+
 }

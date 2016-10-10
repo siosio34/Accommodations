@@ -23,6 +23,8 @@ public class User {
     private Double lat;
     private Double lon;
 
+    private ArrayList<String> myChatRoomList;
+
     private static User currentUser = new User();
 
     public static User getMyInstance() {
@@ -115,5 +117,13 @@ public class User {
 
     public void setLon(Double lon) {
         this.lon = lon;
+    }
+
+    public ArrayList<String> getMyChatRoomList() {
+        return myChatRoomList;
+    }
+
+    public void setMyChatRoomList(ArrayList<String> myChatRoomList) {
+        this.myChatRoomList = myChatRoomList;
     }
 }

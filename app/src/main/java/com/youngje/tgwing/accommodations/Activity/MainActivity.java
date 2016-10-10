@@ -8,6 +8,8 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
 
@@ -33,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_CODE_ACCESS_FINE_LOCATION);
         }
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("temp");
+        myRef.removeValue();
 
         Intent intent = new Intent(this,UserSignInActivity.class);
         startActivity(intent);
