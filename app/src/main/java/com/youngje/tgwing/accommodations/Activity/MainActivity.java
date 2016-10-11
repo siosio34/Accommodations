@@ -36,16 +36,12 @@ public class MainActivity extends AppCompatActivity {
                     PERMISSIONS_REQUEST_CODE_ACCESS_FINE_LOCATION);
         }
 
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("temp");
-        myRef.removeValue();
 
         Intent intent = new Intent(this,UserSignInActivity.class);
         startActivity(intent);
 
 
-        //new LocationUtil(this);
+        new LocationUtil(this); // 현재위치 한번 받아옴.
 
 
          //--- 로케이션 테스트 and daum category search test 완료됨.
@@ -55,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         // String apikey = "1dee5001636c3e99fb8d90496c9a3f8a";//
         // HttpHandler httpHandler = new HttpHandler();
         // String temptemp = "울산";
-//
+        //
         // String createUrl = DataFormat.createDaumKeywordRequestURL(temptemp,temp.getLatitude(),temp.getLongitude(),10000,0,"json",apikey);
         // try {
         //     String result = httpHandler.execute(createUrl).get();
@@ -68,6 +64,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // 파이어베이스 데이터 많아지면 웹에서 수정,삭제가 힘듬 이 함수 필요
+    public void firebaseUtilNodeAdd() {
+
+        //  노드 추가
+
+        // FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // DatabaseReference myRef = database.getReference();
+        // myRef.child("review").child("temp").setValue("temp");
+    }
+
+    public void firebaseUtilNodeDelete() {
+
+        // 노드 삭제
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //DatabaseReference myRef = database.getReference("temp");
+        //myRef.removeValue();
+    }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -75,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 break;
-
         }
         // TODO: 2016. 10. 1. 완성해야될 필요성 있으
     }

@@ -9,9 +9,9 @@ import java.util.Date;
  * Created by Mansu on 2016-10-08.
  */
 public class Chatroom {
-    private String userId;
-    private String chatroomId;
-    private String chatroomTitle;
+    private String userId; // user id
+    private String chatroomId; // 채팅방 id
+    private String chatroomTitle; // 채팅방 이름
     private String chatroomWriterProfilePic;
     private String chatroomWriterName;
     private String chatroomWriterNationality;

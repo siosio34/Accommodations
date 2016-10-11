@@ -26,9 +26,8 @@ public class DaumDataProcessor implements DataProcessor {
         List<Marker> markers = new ArrayList<Marker>();
         JSONObject root = convertToJSON(rawData);
         JSONArray dataArray = root.getJSONObject("channel").getJSONArray("item");
-        Marker ma = null;
+        Marker ma;
 
-        // TODO: 2016. 10. 6. 스위치문 구현
         String dataType = datatype.getValue();
 
         int top = Math.min(MAX_JSON_OBJECTS, dataArray.length());
@@ -40,15 +39,6 @@ public class DaumDataProcessor implements DataProcessor {
         return markers;
     }
 
-
-    private JSONObject convertToJSON(String rawData) {
-        try {
-            return new JSONObject(rawData);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public Marker processDAUMJSONObject(JSONObject jsonObject) throws JSONException {
         Marker marker = null;
 
@@ -57,6 +47,15 @@ public class DaumDataProcessor implements DataProcessor {
                 , jsonObject.getString("category"));
 
         return marker;
+    }
+
+
+    private JSONObject convertToJSON(String rawData) {
+        try {
+            return new JSONObject(rawData);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

@@ -6,6 +6,7 @@ import com.youngje.tgwing.accommodations.Marker;
 import com.youngje.tgwing.accommodations.SeoulMarker;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,65 +19,73 @@ import java.util.List;
 
 public class SeoulDataProcessor implements DataProcessor {
 
+    public static final int MAX_JSON_OBJECTS = 50;
     //와이파이네임
 
     @Override
     public List<Marker> load(String rawData, DataFormat.DATATYPE datatype) throws JSONException {
 
         List<Marker> markers = new ArrayList<Marker>();
-        String type = datatype.getValue();
+        JSONObject root = convertToJSON(rawData);
+        JSONArray dataArray = null;
+        Marker ma;
 
-        if(type.equals("WIFI"))
-            markers = processSeoulWIFIObject();
+        String dataType = datatype.getValue();
 
-        else if(type.equals("TOILET"))
-            markers = processSeoulToiletObject();
+        if(dataType.equals("WIFI")) {
+            dataArray = root.getJSONObject("wifi").getJSONArray("RESULT");
+            int top = Math.min(MAX_JSON_OBJECTS, dataArray.length());
+            for (int i = 0; i < top; i++) {
+                JSONObject jo = dataArray.getJSONObject(i);
+
+                ma = processSeoulToiletObject(jo);
+                markers.add(ma);
+            }
+        }
+
+        else if(dataType.equals("TOILET")) {
+            dataArray = root.getJSONObject("toilet").getJSONArray("RESULT");
+            int top = Math.min(MAX_JSON_OBJECTS, dataArray.length());
+            for (int i = 0; i < top; i++) {
+                JSONObject jo = dataArray.getJSONObject(i);
+
+                ma = processSeoulWIFIObject(jo);
+                markers.add(ma);
+            }
+        }
 
         return markers;
     }
 
-    public List<Marker> processSeoulToiletObject()  {
+    public Marker processSeoulToiletObject(JSONObject jsonObject) throws JSONException {
+
+        Marker marker = null;
+
+        marker = new SeoulMarker(jsonObject.getString("POI_ID"),jsonObject.getString("Y_WGS84"),
+                jsonObject.getString("X_WGS84"),jsonObject.getString("FNAME"),"","",0,"TOILET");
+
+        return marker;
+    }
+
+    public Marker processSeoulWIFIObject(JSONObject jsonObject) throws JSONException {
 
         List<Marker> markersList = new ArrayList<Marker>();
         Marker marker = null;
 
-        Location curloc = LocationUtil.curlocation;
+        marker = new SeoulMarker(jsonObject.getString("INSTL_DIV"),jsonObject.getString("INSTL_Y"),
+                jsonObject.getString("INSTL_X"),jsonObject.getString("PLACE_NAME"),"","",0,"WIFI");
 
-        // TODO: 2016. 10. 10. db 쿼리문 던져야됨
+        return  marker;
 
-        //marker = new SeoulMarker();
-        // TODO: 2016. 10. 10. 경도, 위도, 아이디 ,이름
-
-
-        return markersList;
     }
 
-    public List<Marker> processSeoulWIFIObject() {
-
-        List<Marker> markersList = new ArrayList<Marker>();
-        Marker marker = null;
-
-        Location curloc = LocationUtil.curlocation;
-
-        //marker = new SeoulMarker();
-
-        // TODO: 2016. 10. 10. db 쿼리문 던져야됨
-        // TODO: 2016. 10. 10. 경도, 위도, 아이디 ,이름
-
-        return markersList;
+    private JSONObject convertToJSON(String rawData) {
+        try {
+            return new JSONObject(rawData);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
-
-
-
-
-
-
-
-    // TODO: 2016. 10. 10. 앤 디비에서 불러와야된다
-
-    // 아아아 시이바
-
-
 
 
 }

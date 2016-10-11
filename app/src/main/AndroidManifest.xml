@@ -24,7 +24,7 @@
         <activity
             android:name=".Activity.MapSearchActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".Activity.CommunityChatroomActivity" />
+
         <activity android:name=".Activity.CommunityMainActivity"></activity>
     </application>
 

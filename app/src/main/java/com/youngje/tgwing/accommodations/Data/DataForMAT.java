@@ -117,11 +117,12 @@ public class DataFormat {
         // http://data.seoul.go.kr/openinf/openapiview.jsp?infId=OA-1218 -- 공공 와이파이
         // http://openAPI.seoul.go.kr:8088/(인증키)/xml/PublicWiFiPlaceInfo/1/5/강남구
         // http://openAPI.seoul.go.kr:8088/(인증키)/xml/SearchPublicToiletPOIService/1/5/
-        String dataType =
+        String dataType = dataformat.getValue();
+        // TODO: 2016. 10. 11. 서울 에이피아이 작성
+
 
         //http://openAPI.seoul.go.kr:8088/(인증키)/xml/PublicWiFiPlaceInfo/1/5/강남구
-        requestUrl = "http://openAPI.seoul.go.kr:8088/" + "SEOUL_APP_KEY" + "/json/"
-                + dataformat.getValue() + "/" + startNum + "/" + endNum + "/";
+
 
         return requestUrl;
     }
