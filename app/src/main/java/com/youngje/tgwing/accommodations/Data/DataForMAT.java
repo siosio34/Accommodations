@@ -1,8 +1,24 @@
 package com.youngje.tgwing.accommodations.Data;
 
 import android.content.res.Resources;
+import android.util.Log;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
+
+import static android.net.Uri.encode;
 
 /**
  * Created by joyeongje on 2016. 9. 26..
@@ -52,8 +68,9 @@ public class DataFormat {
         CAFE("CE7"), HOSPITAL("HP8"), PHARMACY("PM9"),
 
 
+
         // ------------- 서울시 공공 데이터 ----------------- //
-        WIFI("PublicWiFiPlaceInfo"), TOILET("SearchPublicToiletPOIService");
+        WIFI("wifi/RESULT.json"), TOILET("toilet.json?");
 
         // --------- 한국관광공사 api 데이터 ----------------- //
 
@@ -112,18 +129,11 @@ public class DataFormat {
     }
 
 
-    public static String createSeoulOpenAPIRequestURL(DATATYPE dataformat,int startNum, int endNum,String format) {
+    public static String createSeoulOpenAPIRequestURL(DATATYPE dataformat) {
         String requestUrl = "";
-        // http://data.seoul.go.kr/openinf/openapiview.jsp?infId=OA-1218 -- 공공 와이파이
-        // http://openAPI.seoul.go.kr:8088/(인증키)/xml/PublicWiFiPlaceInfo/1/5/강남구
-        // http://openAPI.seoul.go.kr:8088/(인증키)/xml/SearchPublicToiletPOIService/1/5/
         String dataType = dataformat.getValue();
-        // TODO: 2016. 10. 11. 서울 에이피아이 작성
 
-
-        //http://openAPI.seoul.go.kr:8088/(인증키)/xml/PublicWiFiPlaceInfo/1/5/강남구
-
-
+        requestUrl = "https://tourseoul-451de.firebaseio.com/seoul/" + dataType;
         return requestUrl;
     }
 

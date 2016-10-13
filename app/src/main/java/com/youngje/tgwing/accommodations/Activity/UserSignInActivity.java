@@ -55,6 +55,9 @@ import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
 
 import java.net.URI;
+import java.util.ArrayList;
+
+import static android.R.attr.x;
 
 /**
  * Demonstrate Firebase Authentication using a Google ID Token.
@@ -82,19 +85,6 @@ public class UserSignInActivity extends BaseActivity implements
     private TextView mStatusTextView;
     private TextView mDetailTextView;
 
-    private final int SPLASH_DELAY_MESSAGE = 100;
-    Handler splashHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-                case SPLASH_DELAY_MESSAGE:
-                    startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
-                default:
-                    break;
-            }
-            return false;
-        }
-    });
 
 
     @Override
@@ -126,24 +116,26 @@ public class UserSignInActivity extends BaseActivity implements
 
                 if (user != null) {
                     // User is signed in
+                    // TODO: 2016. 10. 12.  로그인 했을때 -> 바로앱 , 로그인 안했을때 로그인 하게하기
+                    //
                     checkBasicUser(user);
-                    splashHandler.sendEmptyMessageDelayed(SPLASH_DELAY_MESSAGE, 1000);
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-
 
                 } else {
                     // User is signed out
+                    setContentView(R.layout.activity_user_sign_in);
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
 
             }
         };
 
-        setContentView(R.layout.activity_user_sign_in);
-
         // Button listeners
-        findViewById(R.id.sign_in_button).setOnClickListener(this);
+        //setContentView(R.layout.activity_user_sign_in);
+        //findViewById(R.id.sign_in_button).setOnClickListener(this);
         // [END auth_state_listener]
+
+
+
     }
 
     // [START on_start_add_listener]
@@ -289,16 +281,20 @@ public class UserSignInActivity extends BaseActivity implements
                             photoUrl = firebaseUser.getPhotoUrl().toString();
                             String country = null;
 
-                            User userTemp = new User(uid, name, email, null, photoUrl, country,"",curloc.getLatitude(),curloc.getLongitude());
+                            User userTemp = new User(uid, name, email, "", photoUrl, country,"",curloc.getLatitude(),curloc.getLongitude(),new ArrayList<String>());
                             registerUser(uid, userTemp);
                             User.setMyInstance(userTemp);
 
                             Log.i("신규 유저 정보", User.getMyInstance().toString());
+                            startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+                            //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
                         } else { // 존재할경우 -> 불러와야함
                             // TODO: 2016. 9. 15. 여기서 에러가 터지네쓰벌
                             User.setMyInstance(userValue);
                             Log.i("기존 유저정보", User.getMyInstance().toString());
+                            startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+                            //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                         }
 
                     }

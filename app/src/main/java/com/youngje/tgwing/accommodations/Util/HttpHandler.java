@@ -1,27 +1,51 @@
 package com.youngje.tgwing.accommodations.Util;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpParams;
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.X509TrustManager;
+
+import okhttp3.HttpUrl;
+
+import static android.net.Uri.encode;
 
 /**
  * Created by joyeongje on 2016. 10. 2..
@@ -79,15 +103,27 @@ public class HttpHandler extends AsyncTask<String, Void, String>{
 
 
         try {
+
+
             url = new URL(urlStr);
             conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(10000);
             conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-type", "application/json ; charset=utf-8");
+            conn.setDoInput(true);//응답 헤더와 메시지를 읽어들이겠다
+            conn.setDoOutput(true);
+
+            //// TODO: 2016. 10. 12. json  
+            
+            int responseCode = conn.getResponseCode();
+            Log.i("ResponseCode : ", Integer.toString(responseCode));
 
             // read the response
-            InputStream in = new BufferedInputStream(conn.getInputStream());
-            responseStr = convertStreamToString(in);
+            if(responseCode == HttpURLConnection.HTTP_OK) {
+                InputStream in = new BufferedInputStream(conn.getInputStream());
+                responseStr = convertStreamToString(in);
+            }
 
         } catch (MalformedURLException e) {
             Log.e(TAG, "MalformedURLException: " + e.getMessage());
@@ -97,10 +133,18 @@ public class HttpHandler extends AsyncTask<String, Void, String>{
             Log.e(TAG, "Exception: " + e.getMessage());
         }
 
+
+
+
+
+
         return responseStr;
 
 
     }
+
+
+
 
     private String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -123,4 +167,5 @@ public class HttpHandler extends AsyncTask<String, Void, String>{
 
         return sb.toString();
     }
+
 }

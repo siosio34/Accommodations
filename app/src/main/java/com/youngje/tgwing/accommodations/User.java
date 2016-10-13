@@ -34,7 +34,7 @@ public class User {
 
     public User() {}
 
-    public User(String userId,String userName,String userEmail,String userDescription,String imageUri,String country,String chatRoomID,Double lat,Double lon) {
+    public User(String userId,String userName,String userEmail,String userDescription,String imageUri,String country,String chatRoomID,Double lat,Double lon,ArrayList<String> myChatRoomList) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -44,6 +44,8 @@ public class User {
         this.chatRoomID = chatRoomID;
         this.lat = lat;
         this.lon = lon;
+        this.myChatRoomList =myChatRoomList;
+
     }
 
     public String getUserId() {

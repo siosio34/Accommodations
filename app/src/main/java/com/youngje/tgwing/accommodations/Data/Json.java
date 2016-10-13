@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Json  {
 
-    public static final int MAX_JSON_OBJECTS = 50;    // JSON 객체의 최대 수
+    public static final int MAX_JSON_OBJECTS = 10;    // JSON 객체의 최대 수
 
 
     public Marker processTourapiJSONObject(JSONObject jsonObject) throws JSONException {
@@ -23,15 +23,14 @@ public class Json  {
         return marker;
     }
 
-
-
-
     public Marker processSeoulApiJSONObject(JSONObject jsonObject) throws JSONException {
         Marker marker = null;
         // TODO: 2016. 10. 10.
         // 쿼리값을 여기서 날려야됨
         return marker;
     }
+
+
 
 
 }

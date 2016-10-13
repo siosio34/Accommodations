@@ -30,15 +30,15 @@ public class LocationUtil implements LocationListener {
 
     //private static final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 8001;
 
-    public Location getLocation() {
+    public static Location getLocation() {
 
-        try {
-            if (ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: 2016. 10. 6. error check
-            }
-            return curlocation != null ? curlocation : locationMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        }
-        catch (Exception e) {}
+       // try {
+       //     if (ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+       //         // TODO: 2016. 10. 6. error check
+       //     }
+       //     return curlocation != null ? curlocation : locationMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+       // }
+       // catch (Exception e) {}
 
         return curlocation;
     }
@@ -100,13 +100,6 @@ public class LocationUtil implements LocationListener {
         } catch (Exception e) {
 
         }
-
-
-    }
-
-    public void getGPSInfo() {
-
-
     }
 
     @Override

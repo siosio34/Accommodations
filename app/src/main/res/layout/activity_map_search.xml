@@ -84,113 +84,53 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ic_container_circle"
-                    android:padding="4dp"
-                    android:scaleType="centerInside"
+                    android:id="@+id/landmark"
+                    style="@style/scrollingImageView"
                     app:srcCompat="@mipmap/ic_icon_menu_landmark" />
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ic_container_circle"
-                    android:padding="4dp"
-                    android:scaleType="centerInside"
+                    android:id="@+id/restroom"
+                    style="@style/scrollingImageView"
                     app:srcCompat="@mipmap/ic_icon_menu_restroom" />
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ic_container_circle"
-                    android:padding="4dp"
-                    android:scaleType="centerInside"
+                    android:id="@+id/wifizone"
+                    style="@style/scrollingImageView"
                     app:srcCompat="@mipmap/ic_icon_menu_wifizone" />
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ic_container_circle"
-                    android:padding="4dp"
-                    android:scaleType="centerInside"
+                    android:id="@+id/bank"
+                    style="@style/scrollingImageView"
                     app:srcCompat="@mipmap/ic_icon_menu_bank" />
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ic_container_circle"
-                    android:padding="4dp"
-                    android:scaleType="centerInside"
+                    android:id="@+id/market"
+                    style="@style/scrollingImageView"
                     app:srcCompat="@mipmap/ic_icon_menu_cvs" />
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ic_container_circle"
-                    android:padding="4dp"
-                    android:scaleType="centerInside"
+                    android:id="@+id/restaurant"
+                    style="@style/scrollingImageView"
                     app:srcCompat="@mipmap/ic_icon_menu_restaurant" />
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ic_container_circle"
-                    android:padding="4dp"
-                    android:scaleType="centerInside"
+                    android:id="@+id/hotel"
+                    style="@style/scrollingImageView"
                     app:srcCompat="@mipmap/ic_icon_menu_hotel" />
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ic_container_circle"
-                    android:padding="4dp"
-                    android:scaleType="centerInside"
+                    android:id="@+id/cafe"
+                    style="@style/scrollingImageView"
                     app:srcCompat="@mipmap/ic_icon_menu_cafe" />
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ic_container_circle"
-                    android:padding="4dp"
-                    android:scaleType="centerInside"
+                    android:id="@+id/pharmacy"
+                    style="@style/scrollingImageView"
                     app:srcCompat="@mipmap/ic_icon_menu_pharmacy" />
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ic_container_circle"
-                    android:padding="4dp"
-                    android:scaleType="centerInside"
+                    android:id="@+id/train"
+                    style="@style/scrollingImageView"
                     app:srcCompat="@mipmap/ic_icon_menu_train" />
 
             </LinearLayout>

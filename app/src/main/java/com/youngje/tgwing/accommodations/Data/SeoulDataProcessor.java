@@ -48,7 +48,6 @@ public class SeoulDataProcessor implements DataProcessor {
             int top = Math.min(MAX_JSON_OBJECTS, dataArray.length());
             for (int i = 0; i < top; i++) {
                 JSONObject jo = dataArray.getJSONObject(i);
-
                 ma = processSeoulWIFIObject(jo);
                 markers.add(ma);
             }
