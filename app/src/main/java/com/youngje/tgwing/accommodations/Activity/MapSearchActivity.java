@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.youngje.tgwing.accommodations.Data.DataFormat;
+import com.youngje.tgwing.accommodations.Marker;
 import com.youngje.tgwing.accommodations.R;
+import com.youngje.tgwing.accommodations.Util.HttpHandler;
+import com.youngje.tgwing.accommodations.Util.LocationUtil;
 
 import net.daum.android.map.openapi.search.OnFinishSearchListener;
 import net.daum.android.map.openapi.search.Searcher;
@@ -42,6 +47,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static com.youngje.tgwing.accommodations.R.string.daum_api_key;
 import net.daum.android.map.openapi.search.Item;
@@ -53,11 +59,13 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     private EditText mSearchView;
     private HashMap<Integer, Item> mTagItemMap = new HashMap<Integer, Item>();
     private MapView mMapView;
+    private Location curlocate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_search);
+        curlocate = LocationUtil.getLocation();
 
         btnMore = (ImageView) findViewById(R.id.activity_main_btn_more);
         layoutMore = (View) findViewById(R.id.activity_main_btn_category);
@@ -157,12 +165,13 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         });
     }
 
-    public void categoryClicked(View v){
+    public void categoryClicked(View v) throws ExecutionException, InterruptedException {
         String temp = null;
+        DataFormat.DATATYPE datatype = null;
         switch (v.getId()){
             case R.id.landmark: temp = "AT4"; break;
-            case R.id.restroom: temp = ""; break;
-            case R.id.wifizone: temp = ""; break;
+            case R.id.restroom: datatype = DataFormat.DATATYPE.TOILET; break;
+            case R.id.wifizone: datatype = DataFormat.DATATYPE.WIFI; break;
             case R.id.bank: temp = "BK9"; break;
             case R.id.market: temp = "CS2"; break;
             case R.id.restaurant: temp = "FD6"; break;
@@ -172,7 +181,23 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             case R.id.train: temp = "SW8"; break;
             default: temp = ""; break;
         }
-        categorySearch(temp);
+
+
+        // TODO: 2016. 10. 15. 합쳐야된다.
+        if(datatype != null) {
+            HttpHandler httpHandler = new HttpHandler();
+            String createUrl = null;
+            DataFormat.DATATYPE dataFormat = DataFormat.DATATYPE.WIFI;
+            createUrl = DataFormat.createSeoulOpenAPIRequestURL(dataFormat, curlocate.getLatitude(), curlocate.getLongitude());
+            String HTTPResult = httpHandler.execute(createUrl).get();
+
+            // TODO: 2016. 10. 15. parsing 하는거 만들어야됨
+
+        }
+
+        else categorySearch(temp);
+
+
     }
     /** category codes
      MT1 대형마트

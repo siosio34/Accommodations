@@ -51,8 +51,8 @@ import static android.net.Uri.encode;
  * Created by joyeongje on 2016. 10. 2..
  */
 
-public class HttpHandler extends AsyncTask<String, Void, String>{
-        private static final String TAG = "HttpHandler" ;
+public class HttpHandler extends AsyncTask<String, Void, String> {
+    private static final String TAG = "HttpHandler";
 
     @Override
     protected String doInBackground(String... params) {
@@ -61,8 +61,8 @@ public class HttpHandler extends AsyncTask<String, Void, String>{
         String urlStr = params[0];
         HttpURLConnection conn = null;
 
-        if(urlStr.startsWith("file:\\"));
-            // TODO: 2016. 10. 2. 파일에서 읽어올경우 처리해야됨
+        if (urlStr.startsWith("file:\\")) ;
+        // TODO: 2016. 10. 2. 파일에서 읽어올경우 처리해야됨
 
         // 네트워크 부분은 절차가 좀 복잡하다(SSL/TLS)
         if (urlStr.startsWith("https://")) {
@@ -104,26 +104,21 @@ public class HttpHandler extends AsyncTask<String, Void, String>{
 
         try {
 
-
             url = new URL(urlStr);
             conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(10000);
             conn.setRequestMethod("GET");
-            conn.setRequestProperty("Content-type", "application/json ; charset=utf-8");
-            conn.setDoInput(true);//응답 헤더와 메시지를 읽어들이겠다
-            conn.setDoOutput(true);
 
             //// TODO: 2016. 10. 12. json  
-            
+
             int responseCode = conn.getResponseCode();
             Log.i("ResponseCode : ", Integer.toString(responseCode));
 
-            // read the response
-            if(responseCode == HttpURLConnection.HTTP_OK) {
-                InputStream in = new BufferedInputStream(conn.getInputStream());
-                responseStr = convertStreamToString(in);
-            }
+
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            responseStr = convertStreamToString(in);
+
 
         } catch (MalformedURLException e) {
             Log.e(TAG, "MalformedURLException: " + e.getMessage());
@@ -133,17 +128,8 @@ public class HttpHandler extends AsyncTask<String, Void, String>{
             Log.e(TAG, "Exception: " + e.getMessage());
         }
 
-
-
-
-
-
         return responseStr;
-
-
     }
-
-
 
 
     private String convertStreamToString(InputStream is) {

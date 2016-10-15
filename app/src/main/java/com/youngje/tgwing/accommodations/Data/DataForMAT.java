@@ -70,7 +70,7 @@ public class DataFormat {
 
 
         // ------------- 서울시 공공 데이터 ----------------- //
-        WIFI("wifi/RESULT.json"), TOILET("toilet.json?");
+        WIFI("wifi/RESULT.json?"), TOILET("toilet/RESULT.json?");
 
         // --------- 한국관광공사 api 데이터 ----------------- //
 
@@ -129,12 +129,30 @@ public class DataFormat {
     }
 
 
-    public static String createSeoulOpenAPIRequestURL(DATATYPE dataformat) {
+    public static String createSeoulOpenAPIRequestURL(DATATYPE dataformat,double lat, double lon) {
         String requestUrl = "";
         String dataType = dataformat.getValue();
-
         requestUrl = "https://tourseoul-451de.firebaseio.com/seoul/" + dataType;
+
+        String orderQuery = "";
+
+        List<NameValuePair> params = new LinkedList<NameValuePair>();
+
+        params.add(new BasicNameValuePair("orderBy","\"INSTL_Y\""));
+        params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lat -0.5) +"\""));
+        params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lat + 0.5) + "\""));
+        //params.add(new BasicNameValuePair("orderBy", "\"INSTL_X\""));
+        //params.add(new BasicNameValuePair("startAt", String.valueOf(126.9780 - 0.03)));
+        //params.add(new BasicNameValuePair("endAt", String.valueOf(126.9780 + 0.03)));
+
+        String paramString = URLEncodedUtils.format(params, "utf-8");
+
+        requestUrl += paramString;
+
+        Log.i("requestUrl : ",requestUrl );
         return requestUrl;
+
+
     }
 
     public static String createTourAPIRequestURL(Locale locale,String appName) {

@@ -53,40 +53,26 @@ public class MainActivity extends AppCompatActivity {
             checkPermission = true;
         }
 
-        if(!checkPermission) {
+        if (!checkPermission) {
             Intent intent = new Intent(this, UserSignInActivity.class);
             startActivity(intent);
         }
 
 
+        String createUrl;
+        //--- 로케이션 테스트 and daum category search test 완료됨.
+        Location culoc = LocationUtil.curlocation;
+        HttpHandler httpHandler = new HttpHandler();
+        createUrl = DataFormat.createSeoulOpenAPIRequestURL(DataFormat.DATATYPE.WIFI, culoc.getLatitude(), culoc.getLongitude());
 
-//
-    //    //--- 로케이션 테스트 and daum category search test 완료됨.
-    //    Location temp = LocationUtil.curlocation;
-    //    Log.i("temp", Double.toString(temp.getLongitude()));
-    //    Log.i("temp2", Double.toString(temp.getLatitude()));
-    //    HttpHandler httpHandler = new HttpHandler();
-//
-    //    String createUrl = null;
-    //    createUrl = DataFormat.createSeoulOpenAPIRequestURL(DataFormat.DATATYPE.WIFI);
-//
-    //    try {
-    //     String result = httpHandler.execute(createUrl).get();
-    //     Log.i("temp3", result);
-    // } catch (InterruptedException e) {
-    //     e.printStackTrace();
-    // } catch (ExecutionException e) {
-    //     e.printStackTrace();
-    // }
-
-
-      //  OkhttpUtil okhttpUtil = new OkhttpUtil();
-      //  try {
-      //      String returnStr = okhttpUtil.run("");
-      //      Log.i("hehe",returnStr);
-      //  } catch (IOException e) {
-      //      e.printStackTrace();
-      //  }
+        try {
+            String result = httpHandler.execute(createUrl).get();
+            // TODO: 2016. 10. 15. null값일때 예외처리 해야됨
+            if(result != null)
+                Log.i("temp3", result);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -116,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             case PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION:
             case PERMISSIONS_REQUEST_CODE_ACCESS_FINE_LOCATION:
             default:
-                Intent intent = new Intent(this,UserSignInActivity.class);
+                Intent intent = new Intent(this, UserSignInActivity.class);
                 startActivity(intent);
                 break;
         }
