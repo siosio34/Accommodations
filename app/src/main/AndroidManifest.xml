@@ -24,8 +24,8 @@
         <activity
             android:name=".Activity.MapSearchActivity"
             android:windowSoftInputMode="adjustResize" />
-
-        <activity android:name=".Activity.CommunityMainActivity"></activity>
+        <activity android:name=".Activity.CommunityMainActivity" />
+        <activity android:name=".Activity.WriteReviewActivity"></activity>
     </application>
 
 </manifest>

@@ -25,9 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.Marker;
 import com.youngje.tgwing.accommodations.R;
+import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
 
@@ -60,12 +63,18 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     private HashMap<Integer, Item> mTagItemMap = new HashMap<Integer, Item>();
     private MapView mMapView;
     private Location curlocate;
+    private User curUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_search);
         curlocate = LocationUtil.getLocation();
+        curUser = User.getMyInstance();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        myRef.child("currentUser").setValue(curUser);
 
         btnMore = (ImageView) findViewById(R.id.activity_main_btn_more);
         layoutMore = (View) findViewById(R.id.activity_main_btn_category);
