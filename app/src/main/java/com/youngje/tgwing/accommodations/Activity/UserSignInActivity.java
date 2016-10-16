@@ -129,13 +129,6 @@ public class UserSignInActivity extends BaseActivity implements
             }
         };
 
-        // Button listeners
-        //setContentView(R.layout.activity_user_sign_in);
-        //findViewById(R.id.sign_in_button).setOnClickListener(this);
-        // [END auth_state_listener]
-
-
-
     }
 
     // [START on_start_add_listener]

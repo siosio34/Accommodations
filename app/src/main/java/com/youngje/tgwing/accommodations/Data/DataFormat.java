@@ -172,6 +172,8 @@ public class DataFormat {
         // SpnService 서어(스페인어)
         // RusService 노어(러시아어)
 
+
+
         //String appName = "Accommdations";
         // TODO: 2016. 10. 2. locale 에따라서 바까야됨 일단은 영어로
         String requestUrl = "http://api.visitkorea.or.kr/openapi/service/rest/EngService + ";

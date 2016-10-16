@@ -5,5 +5,7 @@ package com.youngje.tgwing.accommodations.Data;
  */
 
 public class TourAPIDataProcessor {
-    // TODO: 2016. 10. 15. 구현해야됨 
+    // TODO: 2016. 10. 15. 구현해야됨
+
+
 }

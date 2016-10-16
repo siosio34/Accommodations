@@ -193,18 +193,17 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
 
         // TODO: 2016. 10. 15. 합쳐야된다.
-        if(datatype != null) {
-            HttpHandler httpHandler = new HttpHandler();
-            String createUrl = null;
-            DataFormat.DATATYPE dataFormat = DataFormat.DATATYPE.WIFI;
-            createUrl = DataFormat.createSeoulOpenAPIRequestURL(dataFormat, curlocate.getLatitude(), curlocate.getLongitude());
-            String HTTPResult = httpHandler.execute(createUrl).get();
+       // if(datatype != null) {
+       //     HttpHandler httpHandler = new HttpHandler();
+       //     String createUrl = null;
+       //     DataFormat.DATATYPE dataFormat = DataFormat.DATATYPE.WIFI;
+       //     createUrl = DataFormat.createSeoulOpenAPIRequestURL(dataFormat, curlocate.getLatitude(), curlocate.getLongitude());
+       //     String HTTPResult = httpHandler.execute(createUrl).get();
+//
+       //     // TODO: 2016. 10. 15. parsing 하는거 만들어야됨
+       // }
 
-            // TODO: 2016. 10. 15. parsing 하는거 만들어야됨
-
-        }
-
-        else categorySearch(temp);
+         categorySearch(temp);
 
 
     }

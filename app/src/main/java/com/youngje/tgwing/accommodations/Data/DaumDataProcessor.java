@@ -17,7 +17,7 @@ import java.util.List;
 
 public class DaumDataProcessor implements DataProcessor {
 
-    public static final int MAX_JSON_OBJECTS = 1000;
+    public static final int MAX_JSON_OBJECTS = 50;
 
     // TODO: 2016. 10. 6. 다른 함수 추가해야됨. 
     @Override
