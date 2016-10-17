@@ -85,8 +85,6 @@ public class UserSignInActivity extends BaseActivity implements
     private TextView mStatusTextView;
     private TextView mDetailTextView;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -279,14 +277,17 @@ public class UserSignInActivity extends BaseActivity implements
                             User.setMyInstance(userTemp);
 
                             Log.i("신규 유저 정보", User.getMyInstance().toString());
-                            startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+                            startActivity(new Intent(getApplicationContext(), WriteReviewActivity.class));
+                            //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
                         } else { // 존재할경우 -> 불러와야함
                             // TODO: 2016. 9. 15. 여기서 에러가 터지네쓰벌
                             User.setMyInstance(userValue);
                             Log.i("기존 유저정보", User.getMyInstance().toString());
-                            startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+                            //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+
+                            startActivity(new Intent(getApplicationContext(), WriteReviewActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                         }
 

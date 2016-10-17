@@ -85,6 +85,8 @@ public class WriteReviewActivity extends AppCompatActivity {
                                           @Override
                                           public void onClick(View view) {
 
+
+
                                               // TODO: 2016. 10. 16.  backbutoon 효과 집어넣기
                                           }
                                       });
@@ -250,8 +252,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         Marker marker = Marker.getSelectedMarker();
         User curUser = User.getMyInstance();
 
-
-        String markerId = marker.getId();
+        String markerId = "1224";
         String userId = curUser.getUserId();
         String userName = curUser.getUserName();
         String userImageUrl = curUser.getImageUri();

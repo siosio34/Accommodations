@@ -32,19 +32,7 @@ public class LocationUtil implements LocationListener {
 
     public static Location getLocation() {
 
-       // try {
-       //     if (ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-       //         // TODO: 2016. 10. 6. error check
-       //     }
-       //     return curlocation != null ? curlocation : locationMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-       // }
-       // catch (Exception e) {}
-
         return curlocation;
-    }
-
-    public static void setLocation(Location curlocation) {
-        LocationUtil.curlocation = curlocation;
     }
 
     public LocationUtil() {
@@ -83,10 +71,11 @@ public class LocationUtil implements LocationListener {
                 // 우선순위는 gps > 네트워크 > 기본값
                 if(gps != null) {
                     curlocation = gps;
+                    //curlocation = gps;
                     Log.i("GPS: ", gps.toString());
                 }
                 else if (network!=null) {
-                    curlocation = network;
+                    curlocation = gps;
                     Log.i("Network: ", network.toString());
                 }
 
@@ -101,6 +90,8 @@ public class LocationUtil implements LocationListener {
 
         }
     }
+
+
 
     @Override
     public void onLocationChanged(Location location) {

@@ -73,12 +73,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+
             android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/cameraButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 app:srcCompat="@drawable/camera" />
 
             <TextView
@@ -101,6 +103,7 @@
                 android:id="@+id/galleryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 app:srcCompat="@drawable/gallery" />
 
             <TextView
@@ -124,6 +127,7 @@
                 android:id="@+id/camcorderButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 app:srcCompat="@drawable/camcorder" />
 
             <TextView
@@ -168,7 +172,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
-        android:textSize="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="top|left"
+        android:textSize="20sp"
         android:hint="글을 입력해 주세요"
         android:id="@+id/inputText" />
 
