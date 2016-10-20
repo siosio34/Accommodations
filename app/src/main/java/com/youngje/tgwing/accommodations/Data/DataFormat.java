@@ -161,6 +161,7 @@ public class DataFormat {
 
 
 
+
     public static String createTourAPIRequestURL(Locale locale,String appName) {
 
         //  MobileApp 파라미터는 서비스(웹,앱 등)별로 활용 통계를 산출하기 위한 항목입니다. URL요청 시 반드시 기재 부탁드립니다.//====//== 파라미터 인코딩 예시(JSP 기준)
@@ -216,6 +217,9 @@ public class DataFormat {
 
 
     }
+
+
+
 
 
 

@@ -1,9 +1,5 @@
 package com.youngje.tgwing.accommodations;
-
-
-import java.net.URL;
 import java.util.Date;
-
 /**
  * Created by Mansu on 2016-10-08.
  */
@@ -15,21 +11,15 @@ public class Chat {
     private Date chatDate;
     private String chatContent;
 
-    public Chat(String chatWriterProfilePic, String chatWriterName, String chatWriterNationality, Date chatDate, String chatContent) {
+    public Chat() {}
+
+    public Chat(String userId, String chatWriterProfilePic, String chatWriterName, String chatWriterNationality, Date chatDate, String chatContent) {
+        this.userId = userId;
         this.chatWriterProfilePic = chatWriterProfilePic;
         this.chatWriterName = chatWriterName;
         this.chatWriterNationality = chatWriterNationality;
         this.chatDate = chatDate;
         this.chatContent = chatContent;
-    }
-
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getChatWriterProfilePic() {
@@ -70,5 +60,13 @@ public class Chat {
 
     public void setChatContent(String chatContent) {
         this.chatContent = chatContent;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

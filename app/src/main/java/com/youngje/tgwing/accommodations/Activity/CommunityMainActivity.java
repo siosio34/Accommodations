@@ -1,106 +1,250 @@
 package com.youngje.tgwing.accommodations.Activity;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.UiThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+import com.youngje.tgwing.accommodations.Chat;
+import com.youngje.tgwing.accommodations.ChatManager;
 import com.youngje.tgwing.accommodations.Chatroom;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.Util.RoundedAvatarDrawable;
+import com.youngje.tgwing.accommodations.User;
+import java.util.Date;
+import java.util.HashMap;
 
-import java.io.IOException;
-import java.util.ArrayList;
 
-public class CommunityMainActivity extends Activity implements View.OnClickListener {
-    private ArrayList<Chatroom> chatroomList;
+public class CommunityMainActivity extends AppCompatActivity implements View.OnClickListener {
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private PopupWindow popup;
+    private View popupView;
 
+    //community chatroom activity request code
+    private final int COMMUNITY_CHATROOM_REQUEST_CODE = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community_main);
 
-        FloatingActionButton createChatroomBtn = (FloatingActionButton) findViewById(R.id.community_main_createChatroom);
+        FloatingActionButton createChatroomBtn = (FloatingActionButton)findViewById(R.id.community_main_createChatroom);
         createChatroomBtn.setOnClickListener(this);
 
-        ViewPager chatroomListPagerAdapter = (ViewPager) findViewById(R.id.community_main_chatroom_viewpager);
+        ViewPager chatroomListPagerAdapter = (ViewPager)findViewById(R.id.community_main_chatroom_viewpager);
         chatroomListPagerAdapter.setAdapter(new ChatroomListPagerAdapter());
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch(v.getId()) {
             case R.id.community_main_chatroom_body:
-               // Intent intent = new Intent(CommunityMainActivity.this, CommunityChatroomActivity.class);
-               // intent.putExtra("boardId", (int) v.getTag());
-                /*
-                    채팅룸 구별하기 위해 데이터 전달 필요
-                 */
-                //startActivity(intent);
+                enterRoom((String)v.getTag());
                 break;
 
             //클릭시 팝업 윈도우 생성
             case R.id.community_main_createChatroom:
-                //팝업으로 띄울 커스텀뷰를 설정
-                View popupView = getLayoutInflater().inflate(R.layout.layout_community_main_create_chatroom_popup, null);
-
-                //팝업 객체 생성
-                popup = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                //팝업 뷰 터치 가능하도록 설정
-                popup.setTouchable(true);
-
-                //popupwindow를 parent view 기준으로 띄움
-                popup.showAtLocation(popupView, Gravity.CENTER, 0, 0);
-
-                //register onclick listener for create and cancel
-                popupView.findViewById(R.id.community_main_chatroom_popup_create).setOnClickListener(this);
-                popupView.findViewById(R.id.community_main_chatroom_popup_cancel).setOnClickListener(this);
-
-                //make background dim
-                WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-                WindowManager.LayoutParams p = (WindowManager.LayoutParams) popupView.getLayoutParams();
-                p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-                p.dimAmount = 0.5f;
-                wm.updateViewLayout(popupView, p);
+                popupView();
                 break;
 
             case R.id.community_main_chatroom_popup_create:
-                try {
-                    String chatroomTitle = ((EditText) findViewById(R.id.community_main_chatroom_popup_title)).getText().toString();
-                    int limitNumber = Integer.parseInt(((EditText) findViewById(R.id.community_main_chatroom_popup_limitNumber)).getText().toString());
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
-                /*
-                    방생성에 필요한 데이터를 캐치해서 데이터베이스에 저장 필요
-                 */
-
-
+                createRoom();
                 break;
 
             case R.id.community_main_chatroom_popup_cancel:
                 popup.dismiss();
+                break;
+        }
+    }
+
+    public void enterRoom(final String chatManagerId) {
+        databaseReference.child("ChatManager").child(chatManagerId).child("chatroom").runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Chatroom chatroom = mutableData.getValue(Chatroom.class);
+
+                int maxNumber = chatroom.getChatroomMaxNumber();
+                int currentNumber = chatroom.getUserList().size();
+
+                if (currentNumber < maxNumber) {
+                    ArrayList<User> userList = chatroom.getUserList();
+                    boolean isExist = false;
+                    for (int i = 0; i < userList.size(); i++)
+                        if (userList.get(i).getUserEmail().compareTo(User.getMyInstance().getUserEmail()) == 0) {
+                            isExist = true;
+                            break;
+                        }
+
+                    if (isExist == false)
+                        mutableData.child("userList").child(Integer.toString(currentNumber)).setValue(User.getMyInstance());
+
+                    return Transaction.success(mutableData);
+                } else
+                    return Transaction.abort();
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                if(databaseError == null) {
+                    if(b == true) {
+                        Intent intent = new Intent(CommunityMainActivity.this, CommunityChatroomActivity.class);
+                        intent.putExtra("chatManagerId", chatManagerId);
+                        startActivityForResult(intent, COMMUNITY_CHATROOM_REQUEST_CODE);
+                    }
+                    else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(CommunityMainActivity.this, "방이 꽉 찼습니다.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }
+                else {
+                    /*
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(CommunityMainActivity.this, "방 입장에 실패하였습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    */
+                    enterRoom(chatManagerId);
+                }
+                System.out.println(databaseError);
+            }
+        });
+    }
+
+    public void createRoom() {
+        databaseReference.child("ChatManager").push().addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                        try {
+                            String chatroomTitle = ((EditText) popupView.findViewById(R.id.community_main_chatroom_popup_title)).getText().toString();
+                            int limitNumber = Integer.parseInt(((EditText) popupView.findViewById(R.id.community_main_chatroom_popup_limitNumber)).getText().toString());
+                            User user = User.getMyInstance();
+                            Chatroom chatroom = new Chatroom(chatroomTitle, user.getImageUri(), user.getUserName(), user.getCountry(), limitNumber, new Date(), false, new ArrayList<User>());
+                            final ChatManager chatManager = new ChatManager(chatroom, new HashMap<String, Chat>());
+                            dataSnapshot.getRef().setValue(chatManager, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                    //add room id to User object
+                                    if(databaseError == null) {
+                                        databaseReference.getRoot().child("users").child(User.getMyInstance().getUserId()).child("chatRoomID").setValue(dataSnapshot.getKey(), new DatabaseReference.CompletionListener() {
+                                            @Override
+                                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                dataSnapshot.child("chatroom").child("userList").getRef().child("0").setValue(User.getMyInstance());
+                                                Intent intent = new Intent(CommunityMainActivity.this, CommunityChatroomActivity.class);
+                                                intent.putExtra("chatManagerId", dataSnapshot.getKey());
+                                                startActivityForResult(intent, COMMUNITY_CHATROOM_REQUEST_CODE);
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(CommunityMainActivity.this, "방 생성에 실패하였습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        } catch(NullPointerException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(CommunityMainActivity.this, "방 생성에 실패하였습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }
+        );
+    }
+
+    public void popupView() {
+        //팝업으로 띄울 커스텀뷰를 설정
+        popupView = getLayoutInflater().inflate(R.layout.layout_community_main_create_chatroom_popup, null);
+
+        //팝업 객체 생성
+        popup = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        //팝업 뷰 터치 가능하도록 설정
+        popup.setTouchable(true);
+
+        //popupwindow를 parent view 기준으로 띄움
+        popup.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+
+        //register onclick listener for create and cancel
+        popupView.findViewById(R.id.community_main_chatroom_popup_create).setOnClickListener(this);
+        popupView.findViewById(R.id.community_main_chatroom_popup_cancel).setOnClickListener(this);
+
+        //make background dim
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        WindowManager.LayoutParams p = (WindowManager.LayoutParams) popupView.getLayoutParams();
+        p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        p.dimAmount = 0.5f;
+        wm.updateViewLayout(popupView, p);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case COMMUNITY_CHATROOM_REQUEST_CODE:
+                if(resultCode == 9998)
+                    Toast.makeText(this, "방이 존재하지 않습니다.", Toast.LENGTH_LONG).show();
+                else if(resultCode == 9999)
+                    Toast.makeText(this, "방 접속에 실패하였습니다.", Toast.LENGTH_LONG).show();
                 break;
         }
     }
@@ -147,76 +291,152 @@ public class CommunityMainActivity extends Activity implements View.OnClickListe
             return pager == obj;
         }
 
-        public ScrollView getChatroomList(int flag) {
-            chatroomList = new ArrayList<>();
-            ScrollView chatroomListScroll = new ScrollView(CommunityMainActivity.this);
-            LinearLayout.LayoutParams chatroomListScrollParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            chatroomListScroll.setLayoutParams(chatroomListScrollParams);
-
-            LinearLayout chatroomListLayout = new LinearLayout(CommunityMainActivity.this);
-            LinearLayout.LayoutParams chatroomListLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            chatroomListLayout.setLayoutParams(chatroomListLayoutParams);
-            chatroomListScroll.addView(chatroomListLayout);
+        public ListView getChatroomList(int flag) {
+            ArrayList<Chatroom> chatroomList = new ArrayList<>();
+            ChatRoomAdapter chatroomAdapter = new ChatRoomAdapter(CommunityMainActivity.this, R.layout.layout_community_main_chatroom, chatroomList);
+            final ListView chatroomListView = new ListView(CommunityMainActivity.this);
+            chatroomListView.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+            chatroomListView.setAdapter(chatroomAdapter);
 
             //get data from db
             if (flag == 0) {
-                chatroomListScroll.setBackgroundColor(0x80000000);
-
-                /*
-                    내주위에 있는 채팅룸 리스트 가져오기 필요.
-                 */
-
+                getAroundChatroomListAndDraw();
             } else if (flag == 1) {
-                chatroomListScroll.setBackgroundColor(0x80FFFFFF);
-
-                /*
-                    내가 들어간 방 리스트 가져오기 필요
-                 */
-
+                getEnteredChatroomListAndDraw(chatroomAdapter);
             }
 
-            for (int i = 0; i < chatroomList.size(); i++) {
-                Chatroom chatroom = chatroomList.get(i);
-                //create chatroom
-                LinearLayout chatroomView = (LinearLayout) LayoutInflater.from(CommunityMainActivity.this).inflate(R.layout.layout_community_main_chatroom, null);
+            return chatroomListView;
+        }
+
+        private void getAroundChatroomListAndDraw() {
+        }
+
+        private void getEnteredChatroomListAndDraw(final ChatRoomAdapter chatroomAdapter) {
+            databaseReference.child("users").child(User.getMyInstance().getUserId()).child("myChatroomList").addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            GenericTypeIndicator<ArrayList<String>> t = new GenericTypeIndicator<ArrayList<String>>() {};
+                            ArrayList<String> chatroomList = dataSnapshot.getValue(t);
+                            if (chatroomList != null) {
+                                for(int i=0; i<chatroomList.size(); i++) {
+                                    final String value = chatroomList.get(i);
+                                    databaseReference.child("ChatManager").child(value).child("chatroom").addListenerForSingleValueEvent(
+                                            new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    chatroomAdapter.addWithChatManagerId(dataSnapshot.getValue(Chatroom.class), value);
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+                                                    //한개 문제생겼을 때에도 알려줘야하나?
+                                                }
+                                            }
+                                    );
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(CommunityMainActivity.this, "내가 들어간 방 정보를 가져올 수 없습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+            );
+        }
+
+        private class ChatRoomAdapter extends ArrayAdapter<Chatroom> {
+            private ArrayList<Chatroom> chatList;
+            private ArrayList<String> chatManagerIdList;
+
+            public ChatRoomAdapter(Context context, int chatLayoutId, ArrayList<Chatroom> chatList) {
+                super(context, chatLayoutId, chatList);
+                chatManagerIdList = new ArrayList<>();
+                this.chatList = chatList;
+            }
+
+            public void addWithChatManagerId(Chatroom chatroom, String chatManagerId) {
+                this.add(chatroom);
+                chatManagerIdList.add(chatManagerId);
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = convertView;
+                if (v == null)
+                    v = getLayoutInflater().inflate(R.layout.layout_community_main_chatroom, null);
+
+                Chatroom chatroom = chatList.get(position);
+                String chatManagerId = chatManagerIdList.get(position);
+                return drawChatroomToList(chatroom, v, chatManagerId);
+            }
+
+            private View drawChatroomToList(Chatroom chatroom, View chatroomView, String chatManagerId) {
                 //방마다 구별하기 위해 채팅룸 id를 구별자로 추가.
-                chatroomView.setTag(chatroom.getChatroomId());
+                chatroomView.setTag(chatManagerId);
                 chatroomView.setOnClickListener(CommunityMainActivity.this);
 
                 //set chatroom writer profile
-                ImageView profilePicView = (ImageView) chatroomView.findViewById(R.id.community_main_chatroom_writerProfilePic);
-                try {
-                    Bitmap profilePic = Picasso.with(CommunityMainActivity.this).load(Uri.parse(chatroom.getChatroomWriterProfilePic())).get();
-                    profilePicView.setImageDrawable(new RoundedAvatarDrawable(profilePic, profilePic.getWidth(), profilePic.getWidth()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                final ImageView profilePicView = (ImageView)chatroomView.findViewById(R.id.community_main_chatroom_writerProfilePic);
+                Picasso.with(CommunityMainActivity.this).load(chatroom.getChatroomWriterProfilePic()).into(new Target() {
+
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        profilePicView.setImageDrawable(new RoundedAvatarDrawable(bitmap, bitmap.getWidth(), bitmap.getWidth()));
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
 
                 //set chatroom writer name
-                TextView chatroomWriterName = (TextView) chatroomView.findViewById(R.id.community_main_chatroom_writerName);
+                TextView chatroomWriterName = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_writerName);
                 chatroomWriterName.setText(chatroom.getChatroomWriterName());
 
                 //set chatroom writer nationality
-                ImageView chatroomNationality = (ImageView) chatroomView.findViewById(R.id.community_main_chatroom_nationality);
-                Picasso.with(CommunityMainActivity.this).load(Uri.parse(chatroom.getChatroomWriterNationality())).into(chatroomNationality);
+                ImageView chatroomNationality = (ImageView)chatroomView.findViewById(R.id.community_main_chatroom_nationality);
+                //chatroom.getChatroomWriterNationality()
+                chatroomNationality.setBackgroundResource(R.drawable.googlelogo);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(chatroomWriterName.getWidth(), chatroomWriterName.getHeight());
+                chatroomNationality.setLayoutParams(params);
+                //Picasso.with(CommunityMainActivity.this).load("googlelogo.png").into(chatroomNationality);
 
                 //set chatroom number
-                TextView chatroomNumber = (TextView) chatroomView.findViewById(R.id.community_main_chatroom_number);
-                chatroomNumber.setText(chatroom.getChatroomNumber() + "/" + chatroom.getChatroomMaxNumbr());
+                TextView chatroomNumber = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_number);
+                if(chatroom.getUserList() != null)
+                    chatroomNumber.setText(chatroom.getUserList().size() + "/" + chatroom.getChatroomMaxNumber());
+                else
+                    chatroomNumber.setText(0 + "/" + chatroom.getChatroomMaxNumber());
 
                 //set chatroom date
-                TextView chatroomDate = (TextView) chatroomView.findViewById(R.id.community_main_chatroom_date);
-                chatroomDate.setText(chatroom.getChatroomDate().toString());
+                TextView chatroomDate = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_date);
+                Date date = chatroom.getChatroomDate();
+                SimpleDateFormat format;
+                if(date.getHours() > 12)
+                    format = new SimpleDateFormat("오후 hh:mm");
+                else
+                    format = new SimpleDateFormat("오전 hh:mm");
+                chatroomDate.setText(format.format(date));
 
                 //set chatroom title
-                TextView chatroomTitle = (TextView) chatroomView.findViewById(R.id.community_main_chatroom_title);
+                TextView chatroomTitle = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_title);
                 chatroomTitle.setText(chatroom.getChatroomTitle());
 
-                //set chatroom
-                chatroomListLayout.addView(chatroomView);
+                return chatroomView;
             }
-
-            return chatroomListScroll;
         }
     }
 }

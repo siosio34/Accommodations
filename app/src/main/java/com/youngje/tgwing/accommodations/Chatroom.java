@@ -1,53 +1,34 @@
-
 package com.youngje.tgwing.accommodations;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by Mansu on 2016-10-08.
  */
 public class Chatroom {
-    private String userId; // user id
-    private String chatroomId; // 채팅방 id
-    private String chatroomTitle; // 채팅방 이름
+    private String chatroomTitle;
     private String chatroomWriterProfilePic;
     private String chatroomWriterName;
     private String chatroomWriterNationality;
-    private int chatroomNumber;
-    private int chatroomMaxNumbr;
+    private int chatroomMaxNumber;
     private Date chatroomDate;
     private boolean isEnd;
+    private ArrayList<User> userList;
 
-    public Chatroom(String userId,String chatroomId, String chatroomTitle, String chatroomWriterProfilePic, String chatroomWriterName, String chatroomWriterNationality, int chatroomNumber, int chatroomMaxNumber, Date chatroomDate, boolean isEnd) {
-        this.userId = userId;
-        this.chatroomId = chatroomId;
+    public Chatroom() {}
+
+    public Chatroom(String chatroomTitle, String chatroomWriterProfilePic, String chatroomWriterName, String chatroomWriterNationality, int chatroomMaxNumber, Date chatroomDate, boolean isEnd, ArrayList<User> userList) {
         this.chatroomTitle = chatroomTitle;
         this.chatroomWriterProfilePic = chatroomWriterProfilePic;
         this.chatroomWriterName = chatroomWriterName;
         this.chatroomWriterNationality = chatroomWriterNationality;
-        this.chatroomNumber = chatroomNumber;
-        this.chatroomMaxNumbr = chatroomMaxNumber;
+        this.chatroomMaxNumber = chatroomMaxNumber;
         this.chatroomDate = chatroomDate;
         this.isEnd = isEnd;
-    }
-
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getChatroomId() {
-        return chatroomId;
-    }
-
-    public void setChatroomId(String chatroomId) {
-        this.chatroomId = chatroomId;
+        this.userList = userList;
     }
 
     public String getChatroomTitle() {
@@ -82,20 +63,12 @@ public class Chatroom {
         this.chatroomWriterNationality = chatroomWriterNationality;
     }
 
-    public int getChatroomNumber() {
-        return chatroomNumber;
+    public int getChatroomMaxNumber() {
+        return chatroomMaxNumber;
     }
 
-    public void setChatroomNumber(int chatroomNumber) {
-        this.chatroomNumber = chatroomNumber;
-    }
-
-    public int getChatroomMaxNumbr() {
-        return chatroomMaxNumbr;
-    }
-
-    public void setChatroomMaxNumbr(int chatroomMaxNumbr) {
-        this.chatroomMaxNumbr = chatroomMaxNumbr;
+    public void setChatroomMaxNumber(int chatroomMaxNumber) {
+        this.chatroomMaxNumber = chatroomMaxNumber;
     }
 
     public Date getChatroomDate() {
@@ -112,5 +85,13 @@ public class Chatroom {
 
     public void setEnd(boolean end) {
         isEnd = end;
+    }
+
+    public ArrayList<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(ArrayList< User> userList) {
+        this.userList = userList;
     }
 }

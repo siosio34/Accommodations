@@ -11,10 +11,16 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.youngje.tgwing.accommodations.Data.DataFormat;
+import com.youngje.tgwing.accommodations.Data.DaumDataProcessor;
+import com.youngje.tgwing.accommodations.Data.NavigationDataProcessor;
+import com.youngje.tgwing.accommodations.Marker;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
 
+import org.json.JSONException;
+
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static android.os.Build.VERSION_CODES.M;
@@ -28,24 +34,20 @@ public class MainActivity extends AppCompatActivity {
     private static final int PEMIISSIONS_REQUEST_ALL = 8005;
     Intent intent;
 
+    private Location myLoc;
+    LocationUtil locationUtil;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //String createUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,37.2409347,127.0809925,37.2517416,127.070336);
-        //HttpHandler httpHandler = new HttpHandler();
-        //try {
-//
-        //    String result = httpHandler.execute(createUrl).get();
-        //    Log.i("temp3", result);
-//
-        //} catch (InterruptedException | ExecutionException e) {
-        //    e.printStackTrace();
-        //}
-        //
         checkAndRequestPemission();
+
+        // ##################################################### //
+        // 세구야 예제코드야 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  //
+        //////////////////////////////////////////////////////////
 
         //createUrl = DataFormat.createSeoulOpenAPIRequestURL(DataFormat.DATATYPE.WIFI, curloc.getLatitude(), curloc.getLongitude());
         //
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private void checkAndRequestPemission() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED
                     || checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED
@@ -73,32 +75,30 @@ public class MainActivity extends AppCompatActivity {
                     || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
 
-                requestPermissions(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION
-                        ,Manifest.permission.ACCESS_FINE_LOCATION
-                        ,Manifest.permission.READ_EXTERNAL_STORAGE
-                        ,Manifest.permission.WRITE_EXTERNAL_STORAGE},PEMIISSIONS_REQUEST_ALL);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
+                        , Manifest.permission.ACCESS_FINE_LOCATION
+                        , Manifest.permission.READ_EXTERNAL_STORAGE
+                        , Manifest.permission.WRITE_EXTERNAL_STORAGE}, PEMIISSIONS_REQUEST_ALL);
 
-            }
-
-            else {
-                Log.i("여기","여기여기");
+            } else {
+                Log.i("여기", "여기여기");
                 getGPSFirstTime();
                 startActivity(new Intent(this, UserSignInActivity.class));
-            }
-        }
 
-        else {
+            }
+        } else {
             getGPSFirstTime();
             startActivity(new Intent(this, UserSignInActivity.class));
+
         }
     }
 
-     private void getGPSFirstTime() {
+    private void getGPSFirstTime() {
 
-         new LocationUtil(this); // 현재위치 한번 받아옴.
-         Location curloc2 = LocationUtil.curlocation;
-         Log.i("위치",String.valueOf(curloc2.getLongitude()));
-     }
+        new LocationUtil(this); // 현재위치 한번 받아옴.
+        myLoc = LocationUtil.curlocation;
+        Log.i("위치", String.valueOf(myLoc.getLongitude()));
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

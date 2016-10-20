@@ -2,38 +2,76 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#FF123456">
-    <LinearLayout
-        android:layout_width="wrap_content"
+    android:background="@drawable/rounded_linearlayout">
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="5dp"
+        android:text="채팅방 생성"
+        android:textColor="#FFFFFFFF"
+        android:textSize="16dp"
+        android:gravity="center"
+        android:background="#FF6679D8" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF5F5F5"
+        android:orientation="horizontal">
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:padding="2dp"
+            android:layout_margin="5dp"
+            android:singleLine="true"
             android:id="@+id/community_main_chatroom_popup_title"
-            android:background="@android:color/transparent"
-            android:hint="제목"/>
+            android:background="@drawable/rounded_edittext"
+            android:textColor="#FF000000"
+            android:hint="제목"
+            android:textColorHint="#33000000"/>
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:padding="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
             android:id="@+id/community_main_chatroom_popup_limitNumber"
-            android:background="@android:color/transparent"
+            android:background="@drawable/rounded_edittext"
+            android:textColor="#FF000000"
             android:inputType="number"
-            android:hint="인원수"/>
+            android:hint="인원"
+            android:textColorHint="#33000000"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FFF5F5F5"
         android:orientation="horizontal">
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:gravity="center"
             android:id="@+id/community_main_chatroom_popup_create"
-            android:text="생성"/>
+            android:background="@drawable/rounded_button"
+            android:text="생성"
+            android:textSize="20dp"
+            android:textColor="#FFFFFFFF"/>
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
             android:id="@+id/community_main_chatroom_popup_cancel"
-            android:text="취소"/>
+            android:background="@drawable/rounded_button"
+            android:text="취소"
+            android:textSize="20dp"
+            android:textColor="#FFFFFFFF"/>
     </LinearLayout>
 </LinearLayout>

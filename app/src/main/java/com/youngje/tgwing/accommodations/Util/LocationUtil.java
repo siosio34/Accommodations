@@ -36,6 +36,7 @@ public class LocationUtil implements LocationListener {
     public LocationUtil() {
 
     }
+
     public LocationUtil(Context appCtx) { // 생성자.
         ctx = appCtx;
         locationMgr = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
@@ -73,7 +74,7 @@ public class LocationUtil implements LocationListener {
                     Log.i("GPS: ", gps.toString());
                 }
                 else if (network!=null) {
-                    curlocation = gps;
+                    curlocation = network;
                     Log.i("Network: ", network.toString());
                 }
 

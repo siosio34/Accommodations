@@ -74,7 +74,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
-        myRef.child("currentUser").setValue(curUser);
+        myRef.child("currentUser").push().setValue(curUser);
 
         btnMore = (ImageView) findViewById(R.id.activity_main_btn_more);
         layoutMore = (View) findViewById(R.id.activity_main_btn_category);
@@ -89,13 +89,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
                 }
             }
         });
-
-        // // java code
-        // MapView mapView = new MapView(this);
-        // mapView.setDaumMapApiKey("b751bc30d4efe34c1ef20e644f655766");
-
-        // ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
-        // mapViewContainer.addView(mapView);
 
         mMapView = (MapView)findViewById(R.id.map_view);
         mMapView.setDaumMapApiKey(getString(daum_api_key));
@@ -344,17 +337,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         mMapView.setShowCurrentLocationMarker(true);
         mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
-//        mCurLocOnOffButton.setChecked(true);
-//        mCurLocOnOffButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-//                if (isChecked)
-//                    mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
-//                else{
-//                    mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);
-//                }
-//            }
-//        });
+
     }
 
     private Object fetch(String address) throws MalformedURLException,IOException {
