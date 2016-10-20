@@ -33,16 +33,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
+        //String createUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,37.2409347,127.0809925,37.2517416,127.070336);
+        //HttpHandler httpHandler = new HttpHandler();
+        //try {
+//
+        //    String result = httpHandler.execute(createUrl).get();
+        //    Log.i("temp3", result);
+//
+        //} catch (InterruptedException | ExecutionException e) {
+        //    e.printStackTrace();
+        //}
+        //
         checkAndRequestPemission();
 
-
-
-
-
-        // ------ Test Code -------------  //
-        // String createUrl;
-        //HttpHandler httpHandler = new HttpHandler();
         //createUrl = DataFormat.createSeoulOpenAPIRequestURL(DataFormat.DATATYPE.WIFI, curloc.getLatitude(), curloc.getLongitude());
         //
         //try {
@@ -92,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
      private void getGPSFirstTime() {
 
          new LocationUtil(this); // 현재위치 한번 받아옴.
-
          Location curloc2 = LocationUtil.curlocation;
          Log.i("위치",String.valueOf(curloc2.getLongitude()));
      }

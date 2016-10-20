@@ -70,9 +70,13 @@ public class DataFormat {
 
 
         // ------------- 서울시 공공 데이터 ----------------- //
-        WIFI("wifi/RESULT.json?"), TOILET("toilet/RESULT.json?");
+        WIFI("wifi/RESULT.json?"), TOILET("toilet/RESULT.json?"),
 
         // --------- 한국관광공사 api 데이터 ----------------- //
+
+
+        // ------------- 네비게이션 데이터 ------------------ //
+        NAVI("walkset.json?");
 
 
         private final String value;
@@ -155,6 +159,8 @@ public class DataFormat {
 
     }
 
+
+
     public static String createTourAPIRequestURL(Locale locale,String appName) {
 
         //  MobileApp 파라미터는 서비스(웹,앱 등)별로 활용 통계를 산출하기 위한 항목입니다. URL요청 시 반드시 기재 부탁드립니다.//====//== 파라미터 인코딩 예시(JSP 기준)
@@ -178,6 +184,37 @@ public class DataFormat {
         // TODO: 2016. 10. 2. locale 에따라서 바까야됨 일단은 영어로
         String requestUrl = "http://api.visitkorea.or.kr/openapi/service/rest/EngService + ";
         return requestUrl;
+    }
+
+    public static String createNavigationAPIRequestURL(DATATYPE dataformat,double startlat,double startLon, double endlat,double endLon) {
+
+        //http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX= 37.2517416&eY=127.070336
+        //http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX=37.2517416&eY=127.070336
+        //http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX=37.2517416&eY=127.070336
+
+        String requestUrl = "http://map.daum.net/route/" + dataformat.getValue();
+
+        List<NameValuePair> params = new LinkedList<NameValuePair>();
+
+        params.add(new BasicNameValuePair("sX","37.2409347"));
+        params.add(new BasicNameValuePair("sY","127.0809925"));
+        //params.add(new BasicNameValuePair("eName","영통역 홈플러스"));
+        params.add(new BasicNameValuePair("eX","37.251741"));
+        params.add(new BasicNameValuePair("eY","127.070336"));
+        //params.add(new BasicNameValuePair("orderBy", "\"INSTL_X\""));
+        //params.add(new BasicNameValuePair("startAt", String.valueOf(126.9780 - 0.03)));
+        //params.add(new BasicNameValuePair("endAt", String.valueOf(126.9780 + 0.03)));
+
+        String paramString = URLEncodedUtils.format(params, "utf-8");
+
+        requestUrl += paramString;
+
+
+        String requestUrl2 = "http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX=37.2517416&eY=127.070336";
+        String requestUrl3 = "http://map.daum.net/route/walkset.json?sName=경희대학교+국제캠퍼스&sX=517685&sY=1040009&eName=영통역+분당선&eX=515821&eY=1042318&ids=P24254845%2CP15110708";
+        return requestUrl2;
+
+
     }
 
 

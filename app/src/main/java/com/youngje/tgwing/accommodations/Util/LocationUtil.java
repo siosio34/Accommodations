@@ -21,7 +21,6 @@ public class LocationUtil implements LocationListener {
     private double lat;
     private double lon;
     Context ctx;
-    private String provider;
 
     LocationManager locationMgr;        // 위치 관리자
 
@@ -31,7 +30,6 @@ public class LocationUtil implements LocationListener {
     //private static final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 8001;
 
     public static Location getLocation() {
-
         return curlocation;
     }
 
@@ -91,26 +89,21 @@ public class LocationUtil implements LocationListener {
         }
     }
 
-
-
     @Override
     public void onLocationChanged(Location location) {
         curlocation = location;
     }
 
     @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
+    public void onStatusChanged(String s, int i, Bundle bundle) {}
 
     @Override
-    public void onProviderEnabled(String s) {
-
-    }
+    public void onProviderEnabled(String s) {}
 
     @Override
-    public void onProviderDisabled(String s) {
+    public void onProviderDisabled(String s) {}
 
-    }
-
+    // http://map.daum.net/route/carset.json?roadside=ON&sp=500899,1121940,
+    // %EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EC%9A%A9%EC%82%B0%EA%B5%AC%20%ED%95%9C%EB%82%A8%EB%8F%99,
+    // POINT,&ep=501611,1120655,%EC%84%9C%]
 }

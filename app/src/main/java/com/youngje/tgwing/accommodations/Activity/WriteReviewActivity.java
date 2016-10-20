@@ -38,6 +38,8 @@ import java.util.Date;
 
 import static android.widget.RatingBar.*;
 
+
+
 public class WriteReviewActivity extends AppCompatActivity {
 
     private static final String TAG = "WriteReviewActivity";
@@ -317,12 +319,8 @@ public class WriteReviewActivity extends AppCompatActivity {
                         // Get the public download URL
                         hideProgressDialog();
                         mDownloadUrl = taskSnapshot.getMetadata().getDownloadUrl();
-                        Log.i("문제1","ㅗ");
-                        // TODO: 2016. 10. 16. 유알엘 셋팅하자 
                         review.setreviewContentUrl(mDownloadUrl.toString());
-                        Log.i("문제2","ㅗ");
                         myRef.push().setValue(review);
-                        Log.i("문제3","ㅗ");
                         // TODO: 2016. 9. 19. 여기서 url 을 받고 서버에 글 써주거나 아니면 글 아이디를 받아서 거기에 url 값을 업데이트해줘야함
 
                     }

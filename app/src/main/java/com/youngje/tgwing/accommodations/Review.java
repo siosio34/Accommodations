@@ -20,7 +20,6 @@ public class Review {
     private int contentType; // 글, 사진,동영상
     private int star; // 별점
 
-    // TODO: 2016. 10. 16. commentClass를 만들어야하나 고민중
 
     public Review(){}
 

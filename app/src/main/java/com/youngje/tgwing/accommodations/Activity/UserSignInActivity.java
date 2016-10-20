@@ -113,9 +113,7 @@ public class UserSignInActivity extends BaseActivity implements
                 FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
 
                 if (user != null) {
-                    // User is signed in
-                    // TODO: 2016. 10. 12.  로그인 했을때 -> 바로앱 , 로그인 안했을때 로그인 하게하기
-                    //
+
                     checkBasicUser(user);
 
                 } else {
@@ -277,17 +275,17 @@ public class UserSignInActivity extends BaseActivity implements
                             User.setMyInstance(userTemp);
 
                             Log.i("신규 유저 정보", User.getMyInstance().toString());
-                            startActivity(new Intent(getApplicationContext(), WriteReviewActivity.class));
+                            startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
                         } else { // 존재할경우 -> 불러와야함
-                            // TODO: 2016. 9. 15. 여기서 에러가 터지네쓰벌
+
                             User.setMyInstance(userValue);
                             Log.i("기존 유저정보", User.getMyInstance().toString());
                             //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
 
-                            startActivity(new Intent(getApplicationContext(), WriteReviewActivity.class));
+                            startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                         }
 
