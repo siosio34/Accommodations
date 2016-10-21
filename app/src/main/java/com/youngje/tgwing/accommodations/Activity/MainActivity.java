@@ -44,23 +44,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
         checkAndRequestPemission();
 
         // ##################################################### //
         // 세구야 예제코드야 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  //
         //////////////////////////////////////////////////////////
 
-        //createUrl = DataFormat.createSeoulOpenAPIRequestURL(DataFormat.DATATYPE.WIFI, curloc.getLatitude(), curloc.getLongitude());
-        //
-        //try {
-        //    String result = httpHandler.execute(createUrl).get();
-        //    // TODO: 2016. 10. 15. null값일때 예외처리 해야됨
-        //    if(result != null)
-        //        Log.i("temp3", result);
-        //} catch (InterruptedException | ExecutionException e) {
-        //    e.printStackTrace();
-        //}
+
+
+
 
     }
 

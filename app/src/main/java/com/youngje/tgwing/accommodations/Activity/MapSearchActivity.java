@@ -94,6 +94,24 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         curlocate = LocationUtil.curlocation;
         curUser = User.getMyInstance();
 
+        String createUrl;
+        createUrl = DataFormat.createSeoulOpenAPIRequestURL(DataFormat.DATATYPE.WIFI, curlocate.getLatitude(), curlocate.getLongitude());
+        HttpHandler httpHandler = new HttpHandler();
+
+
+        try {
+
+            String result = httpHandler.execute(createUrl).get();
+            // TODO: 2016. 10. 15. null값일때 예외처리 해야됨
+            if(result != null)
+                Log.i("temp3", result);
+
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
         myRef.child("currentUser").child(curUser.getUserId()).setValue(curUser);
@@ -121,8 +139,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         mMapView.setPOIItemEventListener(this);
         mMapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());
         addSearch();
-
-
 
         ///////////////////////////////////drawer 부분입니다.
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
