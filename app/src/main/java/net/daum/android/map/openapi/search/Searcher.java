@@ -58,7 +58,7 @@ public class Searcher {
 			header.put(HEADER_NAME_X_APPID, appId);
 			header.put(HEADER_NAME_X_PLATFORM, HEADER_VALUE_X_PLATFORM_ANDROID);
 			String json = fetchData(url, header);
-			List<Item> itemList = parse(json);
+			List<Marker> itemList = parse(json);
 			if (onFinishSearchListener != null) {
 				if (itemList == null) {
 					onFinishSearchListener.onFail();
@@ -143,15 +143,15 @@ public class Searcher {
 		}
 	}
     
-	private List<Item> parse(String jsonString) {
-		List<Item> itemList = new ArrayList<Item>();
+	private List<Marker> parse(String jsonString) {
+		List<Marker> itemList = new ArrayList<Marker>();
 		try {
 			JSONObject reader = new JSONObject(jsonString);
 			JSONObject channel = reader.getJSONObject("channel");
 			JSONArray objects = channel.getJSONArray("item");
 			for (int i = 0; i < objects.length(); i++) {
 				JSONObject object = objects.getJSONObject(i);
-				Item item = new Item();
+				Marker item = new Marker();
 				item.title = object.getString("title");
 				item.imageUrl = object.getString("imageUrl");
 				item.address = object.getString("address");

@@ -1,45 +1,34 @@
 package com.youngje.tgwing.accommodations.Activity;
 
-import android.app.Activity;
-import android.content.ClipData;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.util.Pair;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.Data.DaumDataProcessor;
 import com.youngje.tgwing.accommodations.Data.SeoulDataProcessor;
-import com.youngje.tgwing.accommodations.Marker;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
@@ -48,7 +37,6 @@ import com.youngje.tgwing.accommodations.Util.LocationUtil;
 import net.daum.android.map.openapi.search.OnFinishSearchListener;
 import net.daum.android.map.openapi.search.Searcher;
 import net.daum.mf.map.api.CalloutBalloonAdapter;
-import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPointBounds;
@@ -56,18 +44,16 @@ import net.daum.mf.map.api.MapView;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static com.youngje.tgwing.accommodations.R.string.daum_api_key;
-import net.daum.android.map.openapi.search.Item;
+import net.daum.android.map.openapi.search.Marker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,7 +64,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     private ImageView btnMore;
     private View layoutMore;
     private EditText mSearchView;
-    private HashMap<Integer, Marker> mTagItemMap = new HashMap<Integer, Marker>();
+    private LinearLayout mListLayout;
+    private HashMap<Integer, com.youngje.tgwing.accommodations.Marker> mTagItemMap = new HashMap<Integer, com.youngje.tgwing.accommodations.Marker>();
     private MapView mMapView;
     private Location curlocate;
     private User curUser;
@@ -100,7 +87,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
 
         try {
-
             String result = httpHandler.execute(createUrl).get();
             // TODO: 2016. 10. 15. null값일때 예외처리 해야됨
             if(result != null)
@@ -116,9 +102,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         DatabaseReference myRef = database.getReference();
         myRef.child("currentUser").child(curUser.getUserId()).setValue(curUser);
 
-
-
-
         btnMore = (ImageView) findViewById(R.id.activity_main_btn_more);
         layoutMore = (View) findViewById(R.id.activity_main_btn_category);
         layoutMore.bringToFront();
@@ -127,6 +110,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             public void onClick(View view) {
                 if (layoutMore.isShown()) {
                     layoutMore.setVisibility(View.GONE);
+                    mListLayout.setVisibility(View.GONE);
                 } else {
                     layoutMore.setVisibility(View.VISIBLE);
                 }
@@ -180,10 +164,11 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
                     try{
                         String HTTPResult = httpHandler.execute(createUrl).get();
                         DaumDataProcessor DDP = new DaumDataProcessor();
-                        List<Marker> markerList = DDP.load(HTTPResult, null);
+                        List<com.youngje.tgwing.accommodations.Marker> markerList = DDP.load(HTTPResult, null);
 
                         mMapView.removeAllPOIItems();
                         showResult(markerList);
+                        showSearchResult(markerList); //검색 목록 보여줌
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -192,22 +177,23 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    /*
-                    Searcher searcher = new Searcher(); // net.daum.android.map.openapi.search.Searcher
-                    searcher.searchKeyword(getApplicationContext(), query, latitude, longitude, radius, page, apikey, new OnFinishSearchListener() {
-                        @Override
-                        public void onSuccess(List<Item> itemList) {
-                            mMapView.removeAllPOIItems(); // 기존 검색 결과 삭제
-                            showResult(itemList); // 검색 결과 보여줌
-                        }
 
-                        @Override
-                        public void onFail() {
-                            showToast("API_KEY의 제한 트래픽이 초과되었습니다.");
-                        }
+//                    Searcher searcher = new Searcher(); // net.daum.android.map.openapi.search.Searcher
+//                    searcher.searchKeyword(getApplicationContext(), query, latitude, longitude, radius, page, apikey, new OnFinishSearchListener() {
+//                        @Override
+//                        public void onSuccess(List<com.youngje.tgwing.accommodations.Marker> markerList) {
+//                            mMapView.removeAllPOIItems(); // 기존 검색 결과 삭제
+//                            showResult(markerList); // 검색 결과 보여줌
+//                            showSearchResult(markerList); //검색 목록 보여줌
+//                        }
+//
+//                        @Override
+//                        public void onFail() {
+//                            showToast("API_KEY의 제한 트래픽이 초과되었습니다.");
+//                        }
+//
+//                    });
 
-                    });
-                            */
 
                 }
 
@@ -217,6 +203,46 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         });
 
     }
+
+    // ListView 리스트뷰
+    public void searchListView(List<com.youngje.tgwing.accommodations.Marker> markerList) {
+        ListView listview;
+        SearchListViewAdapter adapter;
+        TextView ratingText = (TextView) findViewById(R.id.listview_rating_score);
+
+        // Adapter 생성
+        adapter = new SearchListViewAdapter();
+
+        // 리스트뷰 참조 및 Adapter달기
+        listview = (ListView) findViewById(R.id.activity_map_search_listView);
+        listview.setAdapter(adapter);
+
+        for(int i=0; i < markerList.size(); i++) {
+            com.youngje.tgwing.accommodations.Marker marker = markerList.get(i);
+            int iDistance = (int) marker.getDistance();
+
+            adapter.addItem(ContextCompat.getDrawable(this,R.drawable.googlelogo), iDistance+"m",
+                    marker.getTitle(), "종류", 3, "(6)", "관광지 설명~~~~~");
+        }
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
+                // get item
+                SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
+
+                String titleStr = item.getTitle();
+                String descStr = item.getDesc();
+                String NumofReviewStr = item.getReviewNum();
+                String KeteGoryStr = item.getKateGory();
+                Drawable iconDrawable = item.getIcon();
+                String DistanceStr = item.getDistance();
+
+                // TODO : use item data.
+            }
+        });
+    }
+
     public void categorySearch(DataFormat.DATATYPE dataFormat){
         mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);
 
@@ -227,21 +253,29 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         int radius = 1000; // 중심 좌표부터의 반경거리. 특정 지역을 중심으로 검색하려고 할 경우 사용. meter 단위 (0 ~ 10000)
         int page = 1; // 페이지 번호 (1 ~ 3). 한페이지에 15개
         String apikey = getString(R.string.daum_api_key);
-        /*
-        Searcher searcher = new Searcher(); // net.daum.android.map.openapi.search.Searcher
-        searcher.searchCategory(getApplicationContext(), categoryCode, latitude, longitude, radius, page, apikey, new OnFinishSearchListener() {
-            @Override
-            public void onSuccess(List<Marker> markerList) {
-                mMapView.removeAllPOIItems(); // 기존 검색 결과 삭제
-                showResult(itemList); // 검색 결과 보여줌
-            }
 
-            @Override
-            public void onFail() {
-                showToast("API_KEY의 제한 트래픽이 초과되었습니다.");
-            }
-        });
-        */
+//        Searcher searcher = new Searcher(); // net.daum.android.map.openapi.search.Searcher
+//        searcher.searchCategory(getApplicationContext(), categoryCode, latitude, longitude, radius, page, apikey, new OnFinishSearchListener() {
+//            @Override
+//            public void onSuccess(final List<com.youngje.tgwing.accommodations.Marker> markerList) {
+//                mMapView.removeAllPOIItems(); // 기존 검색 결과 삭제
+//
+//                showResult(markerList); // 검색 결과 보여줌
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        showSearchResult(markerList); // 검색 리스트 보여줌
+//                    }
+//                });
+//
+//            }
+//
+//            @Override
+//            public void onFail() {
+//                showToast("API_KEY의 제한 트래픽이 초과되었습니다.");
+//            }
+//        });
+
         if(dataFormat.equals(DataFormat.DATATYPE.WIFI) || dataFormat.equals(DataFormat.DATATYPE.TOILET)) {
             HttpHandler httpHandler = new HttpHandler();
             String createUrl = null;
@@ -249,10 +283,16 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             try {
                 String HTTPResult = httpHandler.execute(createUrl).get();
                 SeoulDataProcessor SDP = new SeoulDataProcessor();
-                List<Marker> markerList = SDP.load(HTTPResult, dataFormat);
+                final List<com.youngje.tgwing.accommodations.Marker> markerList = SDP.load(HTTPResult, dataFormat);
 
                 mMapView.removeAllPOIItems();
                 showResult(markerList);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showSearchResult(markerList); // 검색 리스트 보여줌
+                    }
+                });
                 Log.i("temptemptemp", HTTPResult);
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
@@ -266,7 +306,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
                 e.printStackTrace();
             }
         }else{
-            Toast.makeText(this,dataFormat.toString(),Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this,dataFormat.toString(),Toast.LENGTH_SHORT).show();
 
             HttpHandler httpHandler = new HttpHandler();
             String createUrl = null;
@@ -274,10 +314,11 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             try{
                 String HTTPResult = httpHandler.execute(createUrl).get();
                 DaumDataProcessor DDP = new DaumDataProcessor();
-                List<Marker> markerList = DDP.load(HTTPResult, dataFormat);
+                List<com.youngje.tgwing.accommodations.Marker> markerList = DDP.load(HTTPResult, dataFormat);
 
                 mMapView.removeAllPOIItems();
                 showResult(markerList);
+                showSearchResult(markerList);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -288,8 +329,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             }
 
         }
-
-
 
     }
 
@@ -322,7 +361,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
        // }
 
          categorySearch(datatype);
-
 
     }
     /** category codes
@@ -388,7 +426,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         @Override
         public View getCalloutBalloon(MapPOIItem poiItem) {
             if (poiItem == null) return null;
-            Marker marker = mTagItemMap.get(poiItem.getTag());
+            com.youngje.tgwing.accommodations.Marker marker = mTagItemMap.get(poiItem.getTag());
             if (marker == null) return null;
             ImageView imageViewBadge = (ImageView) mCalloutBalloon.findViewById(R.id.badge);
             TextView textViewTitle = (TextView) mCalloutBalloon.findViewById(R.id.title);
@@ -412,6 +450,13 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
+    private void showSearchResult(List<com.youngje.tgwing.accommodations.Marker> markerList) {
+        mListLayout = (LinearLayout) findViewById(R.id.activity_map_search_listLayout);
+        searchListView(markerList);
+        mListLayout.setVisibility(View.VISIBLE);
+    }
+
     private Drawable createDrawableFromUrl(String url) {
         try {
             InputStream is = (InputStream) this.fetch(url);
@@ -425,11 +470,11 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             return null;
         }
     }
-    private void showResult(List<Marker> markerList) {
+    private void showResult(List<com.youngje.tgwing.accommodations.Marker> markerList) {
         MapPointBounds mapPointBounds = new MapPointBounds();
 
         for (int i = 0; i < markerList.size(); i++) {
-            Marker marker = markerList.get(i);
+            com.youngje.tgwing.accommodations.Marker marker = markerList.get(i);
 
             MapPOIItem poiItem = new MapPOIItem();
             poiItem.setItemName(marker.getTitle());
@@ -558,7 +603,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
-        Marker marker = mTagItemMap.get(mapPOIItem.getTag());
+        com.youngje.tgwing.accommodations.Marker marker = mTagItemMap.get(mapPOIItem.getTag());
         StringBuilder sb = new StringBuilder();
         sb.append("title=").append(marker.getTitle()).append("\n");
         sb.append("imageUrl=").append(marker.getImageUrl()).append("\n");
