@@ -74,13 +74,30 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     private Location curlocate;
     private User curUser;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_search);
         curlocate = LocationUtil.curlocation;
         curUser = User.getMyInstance();
+
+        String createUrl;
+        createUrl = DataFormat.createSeoulOpenAPIRequestURL(DataFormat.DATATYPE.WIFI, curlocate.getLatitude(), curlocate.getLongitude());
+        HttpHandler httpHandler = new HttpHandler();
+
+
+        try {
+
+            String result = httpHandler.execute(createUrl).get();
+            // TODO: 2016. 10. 15. null값일때 예외처리 해야됨
+            if(result != null)
+                Log.i("temp3", result);
+
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -107,22 +124,25 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         mMapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());
         addSearch();
 
-        HttpHandler httpHandler = new HttpHandler();
-        String createUrl = null;
-        DataFormat.DATATYPE dataFormat = DataFormat.DATATYPE.WIFI;
-        createUrl = DataFormat.createSeoulOpenAPIRequestURL(dataFormat, curUser.getLat(), curUser.getLon());
-        try {
-            String HTTPResult = httpHandler.execute(createUrl).get();
-            Log.i("temptemptemp",HTTPResult);
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+     // HttpHandler httpHandler = new HttpHandler();
+     // String createUrl = null;
+     // DataFormat.DATATYPE dataFormat = DataFormat.DATATYPE.WIFI;
+     // createUrl = DataFormat.createSeoulOpenAPIRequestURL(dataFormat, curUser.getLat(), curUser.getLon());
+     // try {
+     //     String HTTPResult = httpHandler.execute(createUrl).get();
+     //     Log.i("temptemptemp",HTTPResult);
+     // } catch (InterruptedException | ExecutionException e) {
+     //     e.printStackTrace();
+     // }
 
-        try {
-            temp();
-        } catch (ExecutionException | InterruptedException | JSONException e) {
-            e.printStackTrace();
-        }
+     // try {
+     //     temp();
+     // } catch (ExecutionException | InterruptedException | JSONException e) {
+     //     e.printStackTrace();
+     // }
+
+
+
     }
 
     public void addSearch(){

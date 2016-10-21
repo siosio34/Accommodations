@@ -269,6 +269,8 @@ public class UserSignInActivity extends BaseActivity implements
 
                         if (userValue == null) {
 
+                            showProgressDialog();
+
                             name = firebaseUser.getDisplayName();
                             email = firebaseUser.getEmail();
                             photoUrl = firebaseUser.getPhotoUrl().toString();
@@ -284,12 +286,16 @@ public class UserSignInActivity extends BaseActivity implements
                            // DatabaseReference myRef = database.getReference();
                            // myRef.child("currentUser").child(userTemp.getUserId()).setValue(userTemp);
 
-                            startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+                            startActivity(new Intent(UserSignInActivity.this, MapSearchActivity.class));
+
+                            hideProgressDialog();
                             //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
                         } else { // 존재할경우 -> 불러와야함
+
+                            showProgressDialog();
 
                             User.setMyInstance(userValue);
                             Log.i("기존 유저정보", User.getMyInstance().toString());
@@ -297,7 +303,8 @@ public class UserSignInActivity extends BaseActivity implements
                            // DatabaseReference myRef = database.getReference();
                            // myRef.child("currentUser").child(User.getMyInstance().getUserId()).setValue(User.getMyInstance());
 
-                            startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+                            startActivity(new Intent(UserSignInActivity.this, MapSearchActivity.class));
+                            hideProgressDialog();
                             //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
 
                             //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
