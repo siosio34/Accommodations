@@ -262,14 +262,14 @@ public class UserSignInActivity extends BaseActivity implements
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
 
+                        showProgressDialog();
+
                         User userValue = dataSnapshot.getValue(User.class);
                         String photoUrl = null;
                         String email = null;
                         String name = null;
 
                         if (userValue == null) {
-
-                            showProgressDialog();
 
                             name = firebaseUser.getDisplayName();
                             email = firebaseUser.getEmail();
@@ -295,7 +295,7 @@ public class UserSignInActivity extends BaseActivity implements
 
                         } else { // 존재할경우 -> 불러와야함
 
-                            showProgressDialog();
+
 
                             User.setMyInstance(userValue);
                             Log.i("기존 유저정보", User.getMyInstance().toString());
