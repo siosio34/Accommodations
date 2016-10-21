@@ -31,7 +31,7 @@
             android:textAlignment="center"
             android:text="리 뷰 작 성"
             android:textSize="30sp"
-            />
+            android:id="@+id/textView6" />
 
         <ImageButton
             android:id="@+id/writeReview"

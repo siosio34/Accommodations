@@ -89,6 +89,7 @@ public class UserSignInActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         // [START config_signin]
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -117,13 +118,18 @@ public class UserSignInActivity extends BaseActivity implements
                     checkBasicUser(user);
 
                 } else {
-                    // User is signed out
-                    setContentView(R.layout.activity_user_sign_in);
+
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
 
             }
         };
+
+        setContentView(R.layout.activity_user_sign_in);
+
+        // Button listeners
+        findViewById(R.id.sign_in_button).setOnClickListener(this);
+        // [END auth_state_listener]
 
     }
 
@@ -275,7 +281,12 @@ public class UserSignInActivity extends BaseActivity implements
                             User.setMyInstance(userTemp);
 
                             Log.i("신규 유저 정보", User.getMyInstance().toString());
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference();
+                            myRef.child("currentUser").child(userTemp.getUserId()).setValue(userTemp);
+
                             startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+                            //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
@@ -283,9 +294,14 @@ public class UserSignInActivity extends BaseActivity implements
 
                             User.setMyInstance(userValue);
                             Log.i("기존 유저정보", User.getMyInstance().toString());
-                            //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference();
+                            myRef.child("currentUser").child(User.getMyInstance().getUserId()).setValue(User.getMyInstance());
 
                             startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+                            //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+
+                            //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                         }
 

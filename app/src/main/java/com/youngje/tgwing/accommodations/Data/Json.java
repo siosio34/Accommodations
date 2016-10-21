@@ -18,15 +18,9 @@ public class Json  {
 
     public static final int MAX_JSON_OBJECTS = 10;    // JSON 객체의 최대 수
 
-
     public Marker processTourapiJSONObject(JSONObject jsonObject) throws JSONException {
         Marker marker = null;
-
-
         return marker;
     }
-
-
-
 
 }

@@ -49,11 +49,20 @@ import com.squareup.picasso.Target;
 import com.youngje.tgwing.accommodations.Chat;
 import com.youngje.tgwing.accommodations.ChatManager;
 import com.youngje.tgwing.accommodations.Chatroom;
+import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.R;
+import com.youngje.tgwing.accommodations.Util.HttpHandler;
 import com.youngje.tgwing.accommodations.Util.RoundedAvatarDrawable;
 import com.youngje.tgwing.accommodations.User;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.concurrent.ExecutionException;
 
 
 public class CommunityMainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -229,11 +238,21 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
         popupView.findViewById(R.id.community_main_chatroom_popup_cancel).setOnClickListener(this);
 
         //make background dim
-        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        WindowManager.LayoutParams p = (WindowManager.LayoutParams) popupView.getLayoutParams();
-        p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        p.dimAmount = 0.5f;
-        wm.updateViewLayout(popupView, p);
+        if(android.os.Build.VERSION.SDK_INT <= 22) {
+            WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+            WindowManager.LayoutParams p = (WindowManager.LayoutParams) popupView.getLayoutParams();
+            p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            p.dimAmount = 0.5f;
+            wm.updateViewLayout(popupView, p);
+        }
+        else {
+            View parent = (View)popup.getContentView().getParent();
+            WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+            WindowManager.LayoutParams p = (WindowManager.LayoutParams)parent.getLayoutParams();
+            p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            p.dimAmount = 0.5f;
+            wm.updateViewLayout(parent, p);
+        }
     }
 
     @Override
@@ -300,7 +319,7 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
 
             //get data from db
             if (flag == 0) {
-                getAroundChatroomListAndDraw();
+                getAroundChatroomListAndDraw(chatroomAdapter);
             } else if (flag == 1) {
                 getEnteredChatroomListAndDraw(chatroomAdapter);
             }
@@ -308,9 +327,75 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
             return chatroomListView;
         }
 
-        private void getAroundChatroomListAndDraw() {
+        private void getAroundChatroomListAndDraw(final ChatRoomAdapter chatroomAdapter) {
+            try {
+                ArrayList<String> userIdList = getAroundUserList();
+                for (int i = 0; i < userIdList.size(); i++) {
+                    databaseReference.child("users").child(userIdList.get(i)).child("chatRoomID").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            final String chatroomId = dataSnapshot.getValue(String.class);
+                            System.out.println("chatroomId length is " + chatroomId.length());
+                            if(chatroomId.length() != 0) {
+                                databaseReference.child("ChatManager").child(chatroomId).child("chatroom").addListenerForSingleValueEvent(
+                                        new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                chatroomAdapter.addWithChatManagerId(dataSnapshot.getValue(Chatroom.class), chatroomId);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        }
+                                );
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            } catch(Exception e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(CommunityMainActivity.this, "문제가 생겼습니다. 다시 시도해 주세요", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
         }
 
+        public ArrayList<String> getAroundUserList() throws ExecutionException, InterruptedException, JSONException {
+            HttpHandler httpHandler = new HttpHandler();
+            String requestUrl = DataFormat.createGetAroungRequestURL(User.getMyInstance().getLat(),User.getMyInstance().getLon());
+            String result = httpHandler.execute(requestUrl).get();
+            JSONObject root = new JSONObject(result);
+
+            ArrayList<String> userIdList = new ArrayList<>();
+
+            String jsonArr = "[";
+            Iterator iterator = root.keys();
+            while(iterator.hasNext()) {
+                String key = (String)iterator.next();
+                JSONObject data = root.getJSONObject(key);
+                jsonArr+=data.toString();
+                jsonArr+=",";
+            }
+            jsonArr = jsonArr.substring(0, jsonArr.length()-1)+"]";
+
+            JSONArray jsonArray = new JSONArray(jsonArr);
+            for(int i=0 ; i<jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                userIdList.add(jsonObject.getString("userId"));
+            }
+
+            Log.i("temptemp",userIdList.toString());
+            return userIdList;
+        }
         private void getEnteredChatroomListAndDraw(final ChatRoomAdapter chatroomAdapter) {
             databaseReference.child("users").child(User.getMyInstance().getUserId()).child("myChatroomList").addListenerForSingleValueEvent(
                     new ValueEventListener() {

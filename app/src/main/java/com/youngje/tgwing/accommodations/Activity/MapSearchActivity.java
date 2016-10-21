@@ -5,9 +5,11 @@ import android.content.ClipData;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.provider.ContactsContract;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,15 +47,22 @@ import net.daum.mf.map.api.MapView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static com.youngje.tgwing.accommodations.R.string.daum_api_key;
 import net.daum.android.map.openapi.search.Item;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MapSearchActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener {
 
@@ -65,16 +74,17 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     private Location curlocate;
     private User curUser;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_search);
-        curlocate = LocationUtil.getLocation();
+        curlocate = LocationUtil.curlocation;
         curUser = User.getMyInstance();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
-        myRef.child("currentUser").push().setValue(curUser);
+        myRef.child("currentUser").child(curUser.getUserId()).setValue(curUser);
 
         btnMore = (ImageView) findViewById(R.id.activity_main_btn_more);
         layoutMore = (View) findViewById(R.id.activity_main_btn_category);
@@ -96,6 +106,23 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         mMapView.setPOIItemEventListener(this);
         mMapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());
         addSearch();
+
+        HttpHandler httpHandler = new HttpHandler();
+        String createUrl = null;
+        DataFormat.DATATYPE dataFormat = DataFormat.DATATYPE.WIFI;
+        createUrl = DataFormat.createSeoulOpenAPIRequestURL(dataFormat, curUser.getLat(), curUser.getLon());
+        try {
+            String HTTPResult = httpHandler.execute(createUrl).get();
+            Log.i("temptemptemp",HTTPResult);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            temp();
+        } catch (ExecutionException | InterruptedException | JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addSearch(){
@@ -188,10 +215,10 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         // TODO: 2016. 10. 15. 합쳐야된다.
        // if(datatype != null) {
        //     HttpHandler httpHandler = new HttpHandler();
-       //     String createUrl = null;
-       //     DataFormat.DATATYPE dataFormat = DataFormat.DATATYPE.WIFI;
-       //     createUrl = DataFormat.createSeoulOpenAPIRequestURL(dataFormat, curlocate.getLatitude(), curlocate.getLongitude());
-       //     String HTTPResult = httpHandler.execute(createUrl).get();
+        //     String createUrl = null;
+        //     DataFormat.DATATYPE dataFormat = DataFormat.DATATYPE.WIFI;
+        //     createUrl = DataFormat.createSeoulOpenAPIRequestURL(dataFormat, curlocate.getLatitude(), curlocate.getLongitude());
+        //     String HTTPResult = httpHandler.execute(createUrl).get();
 //
        //     // TODO: 2016. 10. 15. parsing 하는거 만들어야됨
        // }
@@ -417,5 +444,33 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     @Override
     public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
 
+    }
+
+    public ArrayList<String> temp() throws ExecutionException, InterruptedException, JSONException {
+        HttpHandler httpHandler = new HttpHandler();
+        String requestUrl = DataFormat.createGetAroungRequestURL(curUser.getLat(),curUser.getLon());
+        String result = httpHandler.execute(requestUrl).get();
+        JSONObject root = new JSONObject(result);
+
+        ArrayList<String> userIdList = new ArrayList<>();
+
+        String jsonArr = "[";
+        Iterator iterator = root.keys();
+        while(iterator.hasNext()) {
+            String key = (String)iterator.next();
+            JSONObject data = root.getJSONObject(key);
+            jsonArr+=data.toString();
+            jsonArr+=",";
+        }
+        jsonArr = jsonArr.substring(0, jsonArr.length()-1)+"]";
+
+        JSONArray jsonArray = new JSONArray(jsonArr);
+        for(int i=0 ; i<jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            userIdList.add(jsonObject.getString("userId"));
+        }
+
+        Log.i("temptemp",userIdList.toString());
+        return userIdList;
     }
 }

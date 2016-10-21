@@ -68,7 +68,6 @@ public class DataFormat {
         CAFE("CE7"), HOSPITAL("HP8"), PHARMACY("PM9"),
 
 
-
         // ------------- 서울시 공공 데이터 ----------------- //
         WIFI("wifi/RESULT.json?"), TOILET("toilet/RESULT.json?"),
 
@@ -112,7 +111,7 @@ public class DataFormat {
         // 서울 강남구 삼성동 20km 반경에서 약국을 찾고 json 받기
     }
 
-    public static String createDaumKeywordRequestURL(String searchString ,double lat, double lon, int radius,int sort,String format,String daumApikey) {
+    public static String createDaumKeywordRequestURL(String searchString, double lat, double lon, int radius, int sort, String format, String daumApikey) {
         String requestUrl = "";
         String curloc = Double.toString(lat) + "," + Double.toString(lon);
 
@@ -133,7 +132,7 @@ public class DataFormat {
     }
 
 
-    public static String createSeoulOpenAPIRequestURL(DATATYPE dataformat,double lat, double lon) {
+    public static String createSeoulOpenAPIRequestURL(DATATYPE dataformat, double lat, double lon) {
         String requestUrl = "";
         String dataType = dataformat.getValue();
         requestUrl = "https://tourseoul-451de.firebaseio.com/seoul/" + dataType;
@@ -142,8 +141,8 @@ public class DataFormat {
 
         List<NameValuePair> params = new LinkedList<NameValuePair>();
 
-        params.add(new BasicNameValuePair("orderBy","\"INSTL_Y\""));
-        params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lat -0.5) +"\""));
+        params.add(new BasicNameValuePair("orderBy", "\"INSTL_Y\""));
+        params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lat - 0.5) + "\""));
         params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lat + 0.5) + "\""));
         //params.add(new BasicNameValuePair("orderBy", "\"INSTL_X\""));
         //params.add(new BasicNameValuePair("startAt", String.valueOf(126.9780 - 0.03)));
@@ -153,16 +152,14 @@ public class DataFormat {
 
         requestUrl += paramString;
 
-        Log.i("requestUrl : ",requestUrl );
+        Log.i("requestUrl : ", requestUrl);
         return requestUrl;
 
 
     }
 
 
-
-
-    public static String createTourAPIRequestURL(Locale locale,String appName) {
+    public static String createTourAPIRequestURL(Locale locale, String appName) {
 
         //  MobileApp 파라미터는 서비스(웹,앱 등)별로 활용 통계를 산출하기 위한 항목입니다. URL요청 시 반드시 기재 부탁드립니다.//====//== 파라미터 인코딩 예시(JSP 기준)
         //  <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> //=== 서비스명이 영문인 경우 (인코딩 불필요)
@@ -180,14 +177,13 @@ public class DataFormat {
         // RusService 노어(러시아어)
 
 
-
         //String appName = "Accommdations";
         // TODO: 2016. 10. 2. locale 에따라서 바까야됨 일단은 영어로
         String requestUrl = "http://api.visitkorea.or.kr/openapi/service/rest/EngService + ";
         return requestUrl;
     }
 
-    public static String createNavigationAPIRequestURL(DATATYPE dataformat,double startlat,double startLon, double endlat,double endLon) {
+    public static String createNavigationAPIRequestURL(DATATYPE dataformat, double startlat, double startLon, double endlat, double endLon) {
 
         //http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX= 37.2517416&eY=127.070336
         //http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX=37.2517416&eY=127.070336
@@ -197,11 +193,11 @@ public class DataFormat {
 
         List<NameValuePair> params = new LinkedList<NameValuePair>();
 
-        params.add(new BasicNameValuePair("sX","37.2409347"));
-        params.add(new BasicNameValuePair("sY","127.0809925"));
+        params.add(new BasicNameValuePair("sX", "37.2409347"));
+        params.add(new BasicNameValuePair("sY", "127.0809925"));
         //params.add(new BasicNameValuePair("eName","영통역 홈플러스"));
-        params.add(new BasicNameValuePair("eX","37.251741"));
-        params.add(new BasicNameValuePair("eY","127.070336"));
+        params.add(new BasicNameValuePair("eX", "37.251741"));
+        params.add(new BasicNameValuePair("eY", "127.070336"));
         //params.add(new BasicNameValuePair("orderBy", "\"INSTL_X\""));
         //params.add(new BasicNameValuePair("startAt", String.valueOf(126.9780 - 0.03)));
         //params.add(new BasicNameValuePair("endAt", String.valueOf(126.9780 + 0.03)));
@@ -218,10 +214,28 @@ public class DataFormat {
 
     }
 
+    public static String createGetAroungRequestURL(double lat, double lon) {
+
+        String requestUrl = "";
+        requestUrl = "https://tourseoul-451de.firebaseio.com/currentUser.json?";
+
+        List<NameValuePair> params = new LinkedList<NameValuePair>();
+
+        params.add(new BasicNameValuePair("orderBy", "\"lat\""));
+        params.add(new BasicNameValuePair("startAt", String.valueOf(lat - 0.0225)));
+        params.add(new BasicNameValuePair("endAt", String.valueOf(lat + 0.0225)));
+        params.add(new BasicNameValuePair("orderBy", "\"lon\""));
+        params.add(new BasicNameValuePair("startAt", String.valueOf(lon - 0.0225)));
+        params.add(new BasicNameValuePair("endAt", String.valueOf(lon + 0.0225)));
+
+        String paramString = URLEncodedUtils.format(params, "utf-8");
+        requestUrl += paramString;
+
+        Log.i("requestUrl : ", requestUrl);
+        return requestUrl;
 
 
-
-
+    }
 
 
 }
