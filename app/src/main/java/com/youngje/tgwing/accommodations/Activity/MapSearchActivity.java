@@ -56,6 +56,7 @@ import net.daum.mf.map.api.MapView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -94,21 +95,21 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         curlocate = LocationUtil.curlocation;
         curUser = User.getMyInstance();
 
-        String createUrl;
-        createUrl = DataFormat.createSeoulOpenAPIRequestURL(DataFormat.DATATYPE.WIFI, curlocate.getLatitude(), curlocate.getLongitude());
-        HttpHandler httpHandler = new HttpHandler();
-
-
-        try {
-
-            String result = httpHandler.execute(createUrl).get();
-            // TODO: 2016. 10. 15. null값일때 예외처리 해야됨
-            if(result != null)
-                Log.i("temp3", result);
-
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        //String createUrl;
+        //createUrl = DataFormat.createSeoulOpenAPIRequestURL(DataFormat.DATATYPE.WIFI, curlocate.getLatitude(), curlocate.getLongitude());
+        //HttpHandler httpHandler = new HttpHandler();
+//
+//
+        //try {
+//
+        //    String result = httpHandler.execute(createUrl).get();
+        //    // TODO: 2016. 10. 15. null값일때 예외처리 해야됨
+        //    if(result != null)
+        //        Log.i("temp3", result);
+//
+        //} catch (InterruptedException | ExecutionException e) {
+        //    e.printStackTrace();
+        //}
 
 
 
@@ -176,9 +177,17 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
                     HttpHandler httpHandler = new HttpHandler();
                     String createUrl = null;
-                    createUrl = DataFormat.createDaumKeywordRequestURL(query, curUser.getLat(), curUser.getLon(),radius, page,"",apikey);
+
+                    try {
+                        createUrl = DataFormat.createDaumKeywordRequestURL(query, curUser.getLat(), curUser.getLon(),radius, page,"",apikey);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    Log.i("유알엘",createUrl);
+
                     try{
                         String HTTPResult = httpHandler.execute(createUrl).get();
+                        Log.i("키워드",HTTPResult);
                         DaumDataProcessor DDP = new DaumDataProcessor();
                         List<Marker> markerList = DDP.load(HTTPResult, null);
 
@@ -288,8 +297,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             }
 
         }
-
-
 
     }
 

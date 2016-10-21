@@ -66,7 +66,6 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
         if (urlStr.startsWith("file:\\")) ;
         // TODO: 2016. 10. 2. 파일에서 읽어올경우 처리해야됨
 
-        // 네트워크 부분은 절차가 좀 복잡하다(SSL/TLS)
         if (urlStr.startsWith("https://")) {
             HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
                 public boolean verify(String hostname, SSLSession session) {
@@ -96,6 +95,8 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
                         return new X509Certificate[0];
                     }
                 }}, new SecureRandom());
+
+
             } catch (KeyManagementException e) {
                 e.printStackTrace();
             }
@@ -107,10 +108,7 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
         try {
 
             url = new URL(urlStr);
-            URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
-            url = uri.toURL();
 
-            Log.d("URL : url", url.toString());
             conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(10000);
@@ -141,9 +139,9 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
     private String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
-
+        String line;
         try {
-            String line;
+
             while ((line = reader.readLine()) != null) {
                 sb.append(line + '\n');
             }

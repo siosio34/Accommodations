@@ -31,36 +31,34 @@ public class SeoulDataProcessor implements DataProcessor {
 
         List<Marker> markers = new ArrayList<Marker>();
         JSONObject root = convertToJSON(rawData);
-        JSONArray dataArray = null;
+
         Marker ma;
-
-        Map<String,Object> curTemp = jsonToMap(root);
-
-        /*
         String dataType = datatype.toString();
 
         if(dataType.equals("WIFI")) {
 
-            dataArray = root.getJSONObject("wifi").getJSONArray("RESULT");
-            int top = Math.min(MAX_JSON_OBJECTS, dataArray.length());
-            for (int i = 0; i < top; i++) {
-                JSONObject jo = dataArray.getJSONObject(i);
-
-                ma = processSeoulToiletObject(jo);
-                markers.add(ma);
-            }
-        }
-
-        else if(dataType.equals("TOILET")) {
-            dataArray = root.getJSONObject("toilet").getJSONArray("RESULT");
-            int top = Math.min(MAX_JSON_OBJECTS, dataArray.length());
-            for (int i = 0; i < top; i++) {
-                JSONObject jo = dataArray.getJSONObject(i);
+            Iterator iterator = root.keys();
+            while(iterator.hasNext()) {
+                String key = (String)iterator.next();
+                JSONObject jo = root.getJSONObject(key);
                 ma = processSeoulWIFIObject(jo);
                 markers.add(ma);
             }
+
         }
-        */
+
+        else if(dataType.equals("TOILET")) {
+
+            Iterator iterator = root.keys();
+            while(iterator.hasNext()) {
+                String key = (String)iterator.next();
+                JSONObject data = root.getJSONObject(key);
+                ma = processSeoulToiletObject(data);
+                markers.add(ma);
+            }
+
+        }
+
         return markers;
     }
 
@@ -94,49 +92,49 @@ public class SeoulDataProcessor implements DataProcessor {
         }
     }
 
-    public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
-        Map<String, Object> retMap = new HashMap<String, Object>();
-
-        if(json != JSONObject.NULL) {
-            retMap = toMap(json);
-        }
-        return retMap;
-    }
-
-    public static Map<String, Object> toMap(JSONObject object) throws JSONException {
-        Map<String, Object> map = new HashMap<String, Object>();
-
-        Iterator<String> keysItr = object.keys();
-        while(keysItr.hasNext()) {
-            String key = keysItr.next();
-            Object value = object.get(key);
-
-            if(value instanceof JSONArray) {
-                value = toList((JSONArray) value);
-            }
-
-            else if(value instanceof JSONObject) {
-                value = toMap((JSONObject) value);
-            }
-            map.put(key, value);
-        }
-        return map;
-    }
-
-    public static List<Object> toList(JSONArray array) throws JSONException {
-        List<Object> list = new ArrayList<Object>();
-        for(int i = 0; i < array.length(); i++) {
-            Object value = array.get(i);
-            if(value instanceof JSONArray) {
-                value = toList((JSONArray) value);
-            }
-
-            else if(value instanceof JSONObject) {
-                value = toMap((JSONObject) value);
-            }
-            list.add(value);
-        }
-        return list;
-    }
+    //public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
+    //    Map<String, Object> retMap = new HashMap<String, Object>();
+//
+    //    if(json != JSONObject.NULL) {
+    //        retMap = toMap(json);
+    //    }
+    //    return retMap;
+    //}
+//
+    //public static Map<String, Object> toMap(JSONObject object) throws JSONException {
+    //    Map<String, Object> map = new HashMap<String, Object>();
+//
+    //    Iterator<String> keysItr = object.keys();
+    //    while(keysItr.hasNext()) {
+    //        String key = keysItr.next();
+    //        Object value = object.get(key);
+//
+    //        if(value instanceof JSONArray) {
+    //            value = toList((JSONArray) value);
+    //        }
+//
+    //        else if(value instanceof JSONObject) {
+    //            value = toMap((JSONObject) value);
+    //        }
+    //        map.put(key, value);
+    //    }
+    //    return map;
+    //}
+//
+    //public static List<Object> toList(JSONArray array) throws JSONException {
+    //    List<Object> list = new ArrayList<Object>();
+    //    for(int i = 0; i < array.length(); i++) {
+    //        Object value = array.get(i);
+    //        if(value instanceof JSONArray) {
+    //            value = toList((JSONArray) value);
+    //        }
+//
+    //        else if(value instanceof JSONObject) {
+    //            value = toMap((JSONObject) value);
+    //        }
+    //        list.add(value);
+    //    }
+    //    return list;
+    //}
 }
 

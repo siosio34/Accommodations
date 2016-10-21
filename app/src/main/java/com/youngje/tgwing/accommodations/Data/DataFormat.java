@@ -10,6 +10,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EncodingUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -112,14 +113,15 @@ public class DataFormat {
         // 서울 강남구 삼성동 20km 반경에서 약국을 찾고 json 받기
     }
 
-    public static String createDaumKeywordRequestURL(String searchString, double lat, double lon, int radius, int sort, String format, String daumApikey) {
-        String requestUrl = "";
+    public static String createDaumKeywordRequestURL(String searchString, double lat, double lon, int radius, int sort, String format, String daumApikey) throws UnsupportedEncodingException {
+        String requestUrl;
         String curloc = Double.toString(lat) + "," + Double.toString(lon);
+        String queryEncode = URLEncoder.encode(searchString,"utf-8");
 
         requestUrl = "https://apis.daum.net/local/v1/search/keyword.json?" +
-                "apikey=" + daumApikey + "&query=" + searchString +
-                "&location=" + curloc + "&radius=" + radius +
-                "&sort=" + sort;
+                "apikey=" + daumApikey + "&query=" + queryEncode + "&location=" + curloc +
+                "&radius=" + radius + "&sort=" + sort;
+
 
         return requestUrl;
 
@@ -130,6 +132,7 @@ public class DataFormat {
 
         //https://apis.daum.net/local/v1/search/keyword.json?apikey={apikey}&query=카카오프렌즈
         // &location=37.514322572335935,127.06283102249932&radius=20000
+
     }
 
 
@@ -142,12 +145,27 @@ public class DataFormat {
 
         List<NameValuePair> params = new LinkedList<NameValuePair>();
 
-        params.add(new BasicNameValuePair("orderBy", "\"INSTL_Y\""));
-        params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lat - 0.5) + "\""));
-        params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lat + 0.5) + "\""));
-        //params.add(new BasicNameValuePair("orderBy", "\"INSTL_X\""));
-        //params.add(new BasicNameValuePair("startAt", String.valueOf(126.9780 - 0.03)));
-        //params.add(new BasicNameValuePair("endAt", String.valueOf(126.9780 + 0.03)));
+        if(dataformat.toString().equals("WIFI")) {
+            params.add(new BasicNameValuePair("orderBy", "\"INSTL_Y\""));
+            params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lat - 0.5) + "\""));
+            params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lat + 0.5) + "\""));
+            //params.add(new BasicNameValuePair("orderBy", "\"INSTL_X\""));
+            //params.add(new BasicNameValuePair("startAt", String.valueOf(126.9780 - 0.03)));
+            //params.add(new BasicNameValuePair("endAt", String.valueOf(126.9780 + 0.03)));
+
+            // TODO: 2016. 10. 22. 간격조절
+        }
+
+        else if (dataformat.toString().equals("TOILET")) {
+
+            params.add(new BasicNameValuePair("orderBy", "\"Y_WGS84\""));
+            params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lat - 0.5) + "\""));
+            params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lat + 0.5) + "\""));
+            //params.add(new BasicNameValuePair("orderBy", "\"X_WGS84\""));
+            //params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lat - 0.5) + "\""));
+            //params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lat + 0.5) + "\""));
+
+        }
 
         String paramString = URLEncodedUtils.format(params, "utf-8");
 
@@ -155,7 +173,6 @@ public class DataFormat {
 
         Log.i("requestUrl : ", requestUrl);
         return requestUrl;
-
 
     }
 
