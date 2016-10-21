@@ -279,9 +279,10 @@ public class UserSignInActivity extends BaseActivity implements
                             User.setMyInstance(userTemp);
 
                             Log.i("신규 유저 정보", User.getMyInstance().toString());
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = database.getReference();
-                            myRef.child("currentUser").child(userTemp.getUserId()).setValue(userTemp);
+
+                           // FirebaseDatabase database = FirebaseDatabase.getInstance();
+                           // DatabaseReference myRef = database.getReference();
+                           // myRef.child("currentUser").child(userTemp.getUserId()).setValue(userTemp);
 
                             startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
@@ -292,9 +293,9 @@ public class UserSignInActivity extends BaseActivity implements
 
                             User.setMyInstance(userValue);
                             Log.i("기존 유저정보", User.getMyInstance().toString());
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = database.getReference();
-                            myRef.child("currentUser").child(User.getMyInstance().getUserId()).setValue(User.getMyInstance());
+                           // FirebaseDatabase database = FirebaseDatabase.getInstance();
+                           // DatabaseReference myRef = database.getReference();
+                           // myRef.child("currentUser").child(User.getMyInstance().getUserId()).setValue(User.getMyInstance());
 
                             startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
