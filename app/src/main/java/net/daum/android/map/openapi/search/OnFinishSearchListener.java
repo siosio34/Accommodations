@@ -6,3 +6,4 @@ public interface OnFinishSearchListener {
 	public void onSuccess(List<Item> itemList);
 	public void onFail();
 }
+

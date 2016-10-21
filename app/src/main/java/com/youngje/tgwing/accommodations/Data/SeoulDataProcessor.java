@@ -11,7 +11,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by joyeongje on 2016. 10. 8..
@@ -30,9 +34,13 @@ public class SeoulDataProcessor implements DataProcessor {
         JSONArray dataArray = null;
         Marker ma;
 
-        String dataType = datatype.getValue();
+        Map<String,Object> curTemp = jsonToMap(root);
+
+        /*
+        String dataType = datatype.toString();
 
         if(dataType.equals("WIFI")) {
+
             dataArray = root.getJSONObject("wifi").getJSONArray("RESULT");
             int top = Math.min(MAX_JSON_OBJECTS, dataArray.length());
             for (int i = 0; i < top; i++) {
@@ -52,7 +60,7 @@ public class SeoulDataProcessor implements DataProcessor {
                 markers.add(ma);
             }
         }
-
+        */
         return markers;
     }
 
@@ -60,8 +68,8 @@ public class SeoulDataProcessor implements DataProcessor {
 
         Marker marker = null;
 
-        marker = new SeoulMarker(jsonObject.getString("POI_ID"),jsonObject.getString("Y_WGS84"),
-                jsonObject.getString("X_WGS84"),jsonObject.getString("FNAME"),"","",0,"TOILET");
+        marker = new SeoulMarker(jsonObject.getString("POI_ID"),Double.parseDouble(jsonObject.getString("Y_WGS84")),
+                Double.parseDouble(jsonObject.getString("X_WGS84")),jsonObject.getString("FNAME"),"","",0,"TOILET");
 
         return marker;
     }
@@ -71,8 +79,8 @@ public class SeoulDataProcessor implements DataProcessor {
         List<Marker> markersList = new ArrayList<Marker>();
         Marker marker = null;
 
-        marker = new SeoulMarker(jsonObject.getString("INSTL_DIV"),jsonObject.getString("INSTL_Y"),
-                jsonObject.getString("INSTL_X"),jsonObject.getString("PLACE_NAME"),"","",0,"WIFI");
+        marker = new SeoulMarker(jsonObject.getString("INSTL_DIV"),Double.parseDouble(jsonObject.getString("INSTL_Y")),
+                Double.parseDouble(jsonObject.getString("INSTL_X")),jsonObject.getString("PLACE_NAME"),"","",0,"WIFI");
 
         return  marker;
 
@@ -86,5 +94,49 @@ public class SeoulDataProcessor implements DataProcessor {
         }
     }
 
+    public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
+        Map<String, Object> retMap = new HashMap<String, Object>();
 
+        if(json != JSONObject.NULL) {
+            retMap = toMap(json);
+        }
+        return retMap;
+    }
+
+    public static Map<String, Object> toMap(JSONObject object) throws JSONException {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        Iterator<String> keysItr = object.keys();
+        while(keysItr.hasNext()) {
+            String key = keysItr.next();
+            Object value = object.get(key);
+
+            if(value instanceof JSONArray) {
+                value = toList((JSONArray) value);
+            }
+
+            else if(value instanceof JSONObject) {
+                value = toMap((JSONObject) value);
+            }
+            map.put(key, value);
+        }
+        return map;
+    }
+
+    public static List<Object> toList(JSONArray array) throws JSONException {
+        List<Object> list = new ArrayList<Object>();
+        for(int i = 0; i < array.length(); i++) {
+            Object value = array.get(i);
+            if(value instanceof JSONArray) {
+                value = toList((JSONArray) value);
+            }
+
+            else if(value instanceof JSONObject) {
+                value = toMap((JSONObject) value);
+            }
+            list.add(value);
+        }
+        return list;
+    }
 }
+
