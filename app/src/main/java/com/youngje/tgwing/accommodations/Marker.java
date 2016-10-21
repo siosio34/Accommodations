@@ -15,8 +15,8 @@ abstract public class Marker implements Comparable<Marker> {
     public static Marker selectedMarker = null;
 
     private String id;
-    private String lat;
-    private String lon;
+    private double lat;
+    private double lon;
     private String title;
     private String imageUrl;
     private String markerURL;
@@ -26,7 +26,7 @@ abstract public class Marker implements Comparable<Marker> {
 
     }
 
-    public Marker(String id, String lat, String lon,String title,String markerURL,String imageUrl,double distance) {
+    public Marker(String id, double lat, double lon,String title,String markerURL,String imageUrl,double distance) {
 
         this.id = id;
         this.lat = lat;
@@ -64,19 +64,19 @@ abstract public class Marker implements Comparable<Marker> {
         this.distance = distance;
     }
 
-    public String getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(String lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public String getLon() {
+    public double getLon() {
         return lon;
     }
 
-    public void setLon(String lon) {
+    public void setLon(double lon) {
         this.lon = lon;
     }
 

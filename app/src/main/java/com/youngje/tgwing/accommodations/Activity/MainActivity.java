@@ -46,10 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         checkAndRequestPemission();
 
-
-
-
-
     }
 
 
