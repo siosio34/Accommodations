@@ -164,6 +164,7 @@ public class UserSignInActivity extends BaseActivity implements
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
+
                 // Google Sign In failed, update UI appropriately
                 // [START_EXCLUDE]
                 //  updateUI(null);
@@ -187,9 +188,6 @@ public class UserSignInActivity extends BaseActivity implements
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(UserSignInActivity.this, "Authentication failed.",
