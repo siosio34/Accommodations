@@ -109,34 +109,60 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
 
     public void enterRoom(final String chatManagerId) {
         databaseReference.child("ChatManager").child(chatManagerId).child("chatroom").runTransaction(new Transaction.Handler() {
+            int check=-1;
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
                 Chatroom chatroom = mutableData.getValue(Chatroom.class);
 
-                int maxNumber = chatroom.getChatroomMaxNumber();
-                int currentNumber = chatroom.getUserList().size();
+                ArrayList<User> list = chatroom.getUserList();
+                boolean isRoomMember = false;
+                for(int i=0; i<list.size(); i++)
+                    if(list.get(i).getUserId().equals(User.getMyInstance().getUserId())) {
+                        isRoomMember = true;
+                        break;
+                    }
 
-                if (currentNumber < maxNumber) {
-                    ArrayList<User> userList = chatroom.getUserList();
-                    boolean isExist = false;
-                    for (int i = 0; i < userList.size(); i++)
-                        if (userList.get(i).getUserEmail().compareTo(User.getMyInstance().getUserEmail()) == 0) {
-                            isExist = true;
-                            break;
-                        }
+                if(isRoomMember || !chatroom.isEnd()) {
+                    int maxNumber = chatroom.getChatroomMaxNumber();
+                    int currentNumber = chatroom.getUserList().size();
 
-                    if (isExist == false)
+                    if(isRoomMember)
+                        check = 1;
+                    else if (currentNumber < maxNumber) {
                         mutableData.child("userList").child(Integer.toString(currentNumber)).setValue(User.getMyInstance());
+                        check = 1;
+                    }
+                    else
+                        check = 2;
+                }
+                else if(chatroom.isEnd()) {
+                    check = 0;
+                }
 
-                    return Transaction.success(mutableData);
-                } else
-                    return Transaction.abort();
+                return Transaction.success(mutableData);
             }
 
             @Override
             public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
                 if(databaseError == null) {
-                    if(b == true) {
+                    if(check == 0) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(CommunityMainActivity.this, "마감된 방입니다.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    else if(check == 2) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(CommunityMainActivity.this, "방이 꽉 찼습니다.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                    }
+                    else if (check == 1) {
                         Intent intent = new Intent(CommunityMainActivity.this, CommunityChatroomActivity.class);
                         intent.putExtra("chatManagerId", chatManagerId);
                         startActivityForResult(intent, COMMUNITY_CHATROOM_REQUEST_CODE);
@@ -145,7 +171,7 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(CommunityMainActivity.this, "방이 꽉 찼습니다.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(CommunityMainActivity.this, "방 입장에 문제가 생겼습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -167,92 +193,143 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
     }
 
     public void createRoom() {
-        databaseReference.child("ChatManager").push().addListenerForSingleValueEvent(
+        databaseReference.child("users").child(User.getMyInstance().getUserId()).child("chatRoomID").addListenerForSingleValueEvent(
                 new ValueEventListener() {
-                    @Override
-                    public void onDataChange(final DataSnapshot dataSnapshot) {
-                        try {
-                            String chatroomTitle = ((EditText) popupView.findViewById(R.id.community_main_chatroom_popup_title)).getText().toString();
-                            int limitNumber = Integer.parseInt(((EditText) popupView.findViewById(R.id.community_main_chatroom_popup_limitNumber)).getText().toString());
-                            User user = User.getMyInstance();
-                            Chatroom chatroom = new Chatroom(chatroomTitle, user.getImageUri(), user.getUserName(), user.getCountry(), limitNumber, new Date(), false, new ArrayList<User>());
-                            final ChatManager chatManager = new ChatManager(chatroom, new HashMap<String, Chat>());
-                            dataSnapshot.getRef().setValue(chatManager, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue(String.class).length() == 0) {
+                    databaseReference.child("ChatManager").push().addListenerForSingleValueEvent(
+                            new ValueEventListener() {
                                 @Override
-                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                                    //add room id to User object
-                                    if(databaseError == null) {
-                                        databaseReference.getRoot().child("users").child(User.getMyInstance().getUserId()).child("chatRoomID").setValue(dataSnapshot.getKey(), new DatabaseReference.CompletionListener() {
+                                public void onDataChange(final DataSnapshot dataSnapshot) {
+                                    try {
+                                        String chatroomTitle = ((EditText) popupView.findViewById(R.id.community_main_chatroom_popup_title)).getText().toString();
+                                        int limitNumber = Integer.parseInt(((EditText) popupView.findViewById(R.id.community_main_chatroom_popup_limitNumber)).getText().toString());
+                                        User user = User.getMyInstance();
+                                        Chatroom chatroom = new Chatroom(chatroomTitle, user.getImageUri(), user.getUserName(), user.getCountry(), limitNumber, new Date(), false, new ArrayList<User>());
+                                        final ChatManager chatManager = new ChatManager(chatroom, new HashMap<String, Chat>());
+                                        dataSnapshot.getRef().setValue(chatManager, new DatabaseReference.CompletionListener() {
                                             @Override
                                             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                                                dataSnapshot.child("chatroom").child("userList").getRef().child("0").setValue(User.getMyInstance());
-                                                Intent intent = new Intent(CommunityMainActivity.this, CommunityChatroomActivity.class);
-                                                intent.putExtra("chatManagerId", dataSnapshot.getKey());
-                                                startActivityForResult(intent, COMMUNITY_CHATROOM_REQUEST_CODE);
+                                                //add room id to User object
+                                                if(databaseError == null) {
+                                                    databaseReference.getRoot().child("users").child(User.getMyInstance().getUserId()).child("chatRoomID").setValue(dataSnapshot.getKey(), new DatabaseReference.CompletionListener() {
+                                                        @Override
+                                                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                            dataSnapshot.child("chatroom").child("userList").getRef().child("0").setValue(User.getMyInstance());
+                                                            Intent intent = new Intent(CommunityMainActivity.this, CommunityChatroomActivity.class);
+                                                            intent.putExtra("chatManagerId", dataSnapshot.getKey());
+                                                            startActivityForResult(intent, COMMUNITY_CHATROOM_REQUEST_CODE);
+                                                        }
+                                                    });
+                                                }
+                                                else {
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Toast.makeText(CommunityMainActivity.this, "방 생성에 실패하였습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                                                        }
+                                                    });
+                                                }
                                             }
                                         });
-                                    }
-                                    else {
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(CommunityMainActivity.this, "방 생성에 실패하였습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
-                                            }
-                                        });
+                                    } catch(NullPointerException e) {
+                                        e.printStackTrace();
                                     }
                                 }
-                            });
-                        } catch(NullPointerException e) {
-                            e.printStackTrace();
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(CommunityMainActivity.this, "방 생성에 실패하였습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(CommunityMainActivity.this, "방 생성에 실패하였습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
                             }
-                        });
-                    }
+                    );
                 }
-        );
+                else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(CommunityMainActivity.this, "이미 만든 방이 존재합니다.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(CommunityMainActivity.this, "방 생성에 실패하였습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
     }
 
     public void popupView() {
-        //팝업으로 띄울 커스텀뷰를 설정
-        popupView = getLayoutInflater().inflate(R.layout.layout_community_main_create_chatroom_popup, null);
+        databaseReference.child("users").child(User.getMyInstance().getUserId()).child("chatRoomID").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue(String.class).length() == 0) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //팝업으로 띄울 커스텀뷰를 설정
+                            popupView = getLayoutInflater().inflate(R.layout.layout_community_main_create_chatroom_popup, null);
 
-        //팝업 객체 생성
-        popup = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            //팝업 객체 생성
+                            popup = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        //팝업 뷰 터치 가능하도록 설정
-        popup.setTouchable(true);
+                            //팝업 뷰 터치 가능하도록 설정
+                            popup.setTouchable(true);
 
-        //popupwindow를 parent view 기준으로 띄움
-        popup.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+                            //popupwindow를 parent view 기준으로 띄움
+                            popup.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
-        //register onclick listener for create and cancel
-        popupView.findViewById(R.id.community_main_chatroom_popup_create).setOnClickListener(this);
-        popupView.findViewById(R.id.community_main_chatroom_popup_cancel).setOnClickListener(this);
+                            //register onclick listener for create and cancel
+                            popupView.findViewById(R.id.community_main_chatroom_popup_create).setOnClickListener(CommunityMainActivity.this);
+                            popupView.findViewById(R.id.community_main_chatroom_popup_cancel).setOnClickListener(CommunityMainActivity.this);
 
-        //make background dim
-        if(android.os.Build.VERSION.SDK_INT <= 22) {
-            WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-            WindowManager.LayoutParams p = (WindowManager.LayoutParams) popupView.getLayoutParams();
-            p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-            p.dimAmount = 0.5f;
-            wm.updateViewLayout(popupView, p);
-        }
-        else {
-            View parent = (View)popup.getContentView().getParent();
-            WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-            WindowManager.LayoutParams p = (WindowManager.LayoutParams)parent.getLayoutParams();
-            p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-            p.dimAmount = 0.5f;
-            wm.updateViewLayout(parent, p);
-        }
+                            //make background dim
+                            if(android.os.Build.VERSION.SDK_INT <= 22) {
+                                WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+                                WindowManager.LayoutParams p = (WindowManager.LayoutParams) popupView.getLayoutParams();
+                                p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+                                p.dimAmount = 0.5f;
+                                wm.updateViewLayout(popupView, p);
+                            }
+                            else {
+                                View parent = (View)popup.getContentView().getParent();
+                                WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+                                WindowManager.LayoutParams p = (WindowManager.LayoutParams)parent.getLayoutParams();
+                                p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+                                p.dimAmount = 0.5f;
+                                wm.updateViewLayout(parent, p);
+                            }
+                        }
+                    });
+                }
+                else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(CommunityMainActivity.this, "이미 만든 방이 존재합니다.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -454,11 +531,12 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View v = convertView;
+                Chatroom chatroom = chatList.get(position);
+                String chatManagerId = chatManagerIdList.get(position);
+
                 if (v == null)
                     v = getLayoutInflater().inflate(R.layout.layout_community_main_chatroom, null);
 
-                Chatroom chatroom = chatList.get(position);
-                String chatManagerId = chatManagerIdList.get(position);
                 return drawChatroomToList(chatroom, v, chatManagerId);
             }
 
@@ -469,6 +547,7 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
 
                 //set chatroom writer profile
                 final ImageView profilePicView = (ImageView)chatroomView.findViewById(R.id.community_main_chatroom_writerProfilePic);
+
                 Picasso.with(CommunityMainActivity.this).load(chatroom.getChatroomWriterProfilePic()).into(new Target() {
 
                     @Override
@@ -489,7 +568,10 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
 
                 //set chatroom writer name
                 TextView chatroomWriterName = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_writerName);
-                chatroomWriterName.setText(chatroom.getChatroomWriterName());
+                if(chatManagerId.equals(User.getMyInstance().getChatRoomID()))
+                    chatroomWriterName.setText("나");
+                else
+                    chatroomWriterName.setText(chatroom.getChatroomWriterName());
 
                 //set chatroom writer nationality
                 ImageView chatroomNationality = (ImageView)chatroomView.findViewById(R.id.community_main_chatroom_nationality);
@@ -520,6 +602,14 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
                 TextView chatroomTitle = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_title);
                 chatroomTitle.setText(chatroom.getChatroomTitle());
 
+                if(chatroom.isEnd()) {
+                    profilePicView.setAlpha(25);
+                    chatroomWriterName.setAlpha((float)0.1);
+                    chatroomNationality.setAlpha(25);
+                    chatroomNumber.setAlpha((float)0.1);
+                    chatroomDate.setAlpha((float)0.1);
+                    chatroomTitle.setAlpha((float)0.1);
+                }
                 return chatroomView;
             }
         }

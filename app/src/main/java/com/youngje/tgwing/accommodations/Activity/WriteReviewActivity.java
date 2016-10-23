@@ -268,9 +268,6 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         // TODO: 2016. 10. 16. wifi 후기남길필요있나 ? 없다 ! 따라서 와이파이 후기는 제외
 
-        //(String markerId,String userId,String userName,String userImageUrl,String title,String content,
-        //        String reviewContentUrl,Date CreateDate,int ContentType,int star)
-
         // TODO: 2016. 10. 16. test 할때는 markerId 로 먼저하자
 
         Review review = new Review(markerId,userId,userName,userImageUrl,userCountry,content,"",currentDate,0,0);

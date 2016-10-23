@@ -1,6 +1,6 @@
 package net.daum.android.map.openapi.search;
 
-public class Item {
+public class Marker {
 	public String title;
 	public String imageUrl;
 	public String address;

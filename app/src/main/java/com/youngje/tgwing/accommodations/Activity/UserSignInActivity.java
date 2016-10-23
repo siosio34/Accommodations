@@ -89,7 +89,6 @@ public class UserSignInActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         // [START config_signin]
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -114,22 +113,22 @@ public class UserSignInActivity extends BaseActivity implements
                 FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
 
                 if (user != null) {
-
                     checkBasicUser(user);
-
                 } else {
-
                     Log.d(TAG, "onAuthStateChanged:signed_out");
+                    setContentView(R.layout.activity_user_sign_in);
+                    findViewById(R.id.sign_in_button).setOnClickListener(UserSignInActivity.this);
+
                 }
 
             }
         };
 
-        setContentView(R.layout.activity_user_sign_in);
-
-        // Button listeners
-        findViewById(R.id.sign_in_button).setOnClickListener(this);
         // [END auth_state_listener]
+        setContentView(R.layout.activity_splash);
+        // [END auth_state_listener]
+        // Button listeners
+
 
     }
 
@@ -286,10 +285,9 @@ public class UserSignInActivity extends BaseActivity implements
                            // DatabaseReference myRef = database.getReference();
                            // myRef.child("currentUser").child(userTemp.getUserId()).setValue(userTemp);
 
-                            startActivity(new Intent(UserSignInActivity.this, MapSearchActivity.class));
+                            moveToMapSearchActivity();
 
                             hideProgressDialog();
-                            //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
@@ -303,10 +301,8 @@ public class UserSignInActivity extends BaseActivity implements
                            // DatabaseReference myRef = database.getReference();
                            // myRef.child("currentUser").child(User.getMyInstance().getUserId()).setValue(User.getMyInstance());
 
-                            startActivity(new Intent(UserSignInActivity.this, MapSearchActivity.class));
+                            moveToMapSearchActivity();
                             hideProgressDialog();
-                            //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
-
                             //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                         }
@@ -335,4 +331,13 @@ public class UserSignInActivity extends BaseActivity implements
         }
 
     }
+
+    private void moveToMapSearchActivity() {
+        Intent intent = new Intent(UserSignInActivity.this, MapSearchActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
 }

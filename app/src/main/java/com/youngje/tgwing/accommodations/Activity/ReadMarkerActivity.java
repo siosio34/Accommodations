@@ -28,8 +28,5 @@ public class ReadMarkerActivity extends Activity {
             }
         });
 
-
-
-
     }
 }

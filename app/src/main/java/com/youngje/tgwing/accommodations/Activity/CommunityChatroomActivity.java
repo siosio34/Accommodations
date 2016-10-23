@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -73,12 +74,12 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community_chatroom);
-        setNavigationBar();
 
         //firebase에서 채팅룸의 데이터를 가져오기 위한 구별자.
         chatManagerId = getIntent().getStringExtra("chatManagerId");
 
         getChatroomInfo();
+        setNavigationBar();
     }
 
     @Override
@@ -92,11 +93,12 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
                 databaseReference.child("ChatManager").child(chatManagerId).child("chatList").push().setValue(chat);
                 break;
             case R.id.community_chatroom_exit:
-                databaseReference.child("users").child(User.getMyInstance().getUserId()).child("myChatroomList").addListenerForSingleValueEvent(new ValueEventListener() {
+                System.out.println("exit!!");
+                databaseReference.child("users").child(User.getMyInstance().getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         GenericTypeIndicator<ArrayList<String>> t = new GenericTypeIndicator<ArrayList<String>>() {};
-                        ArrayList<String> list = dataSnapshot.getValue(t);
+                        ArrayList<String> list = dataSnapshot.child("myChatroomList").getValue(t);
                         for(int i=0; i < list.size(); i++){
                             String chatroomId = list.get(i);
                             if(chatroomId.compareTo(chatManagerId) == 0) {
@@ -105,15 +107,22 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
                             }
                             //something here
                         }
-                        if(User.getMyInstance().getUserId() == chatManagerId) {
-                            dataSnapshot.getRef().setValue(list, new DatabaseReference.CompletionListener() {
+                        dataSnapshot.child("myChatroomList").getRef().setValue(list);
+                        User.getMyInstance().setMyChatRoomList(list);
+                        databaseReference.child("currentUser").child(User.getMyInstance().getUserId()).setValue(User.getMyInstance());
+
+                        if(dataSnapshot.child("chatRoomID").getValue(String.class).equals(chatManagerId)) {
+                            dataSnapshot.child("chatRoomID").getRef().setValue("", new DatabaseReference.CompletionListener() {
                                 @Override
-                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                public void onComplete(DatabaseError databaseError, DatabaseReference dr) {
                                     if (databaseError == null) {
-                                        databaseReference.child("ChatManager").child(User.getMyInstance().getUserId()).setValue(null, new DatabaseReference.CompletionListener() {
+                                        databaseReference.child("ChatManager").child(chatManagerId).setValue(null, new DatabaseReference.CompletionListener() {
                                             @Override
-                                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                            public void onComplete(DatabaseError databaseError, DatabaseReference dr) {
                                                 if (databaseError == null) {
+                                                    User.getMyInstance().setChatRoomID("");
+                                                    databaseReference.child("currentUser").child(User.getMyInstance().getUserId()).setValue(User.getMyInstance());
+                                                    finish();
                                                 }
                                             }
                                         });
@@ -121,6 +130,8 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
                                 }
                             });
                         }
+                        else
+                            finish();
                     }
 
                     @Override
@@ -135,36 +146,66 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
                 });
                 break;
             case R.id.community_chatroom_end:
-                if(User.getMyInstance().getUserId() == chatManagerId) {
-                    databaseReference.child("ChatManager").child(chatManagerId).child("chatroom").child("isEnd").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            boolean isEnd = dataSnapshot.getValue(boolean.class);
-                            if(isEnd == true)
-                                dataSnapshot.getRef().setValue(false);
-                            else
-                                dataSnapshot.getRef().setValue(true);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            runOnUiThread(new Runnable() {
+                databaseReference.child("users").child(User.getMyInstance().getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.child("chatRoomID").getValue(String.class).equals(chatManagerId)) {
+                            databaseReference.child("ChatManager").child(chatManagerId).child("chatroom").child("end").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void run() {
-                                    Toast.makeText(CommunityChatroomActivity.this, "마감하기에 실패하셨습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    boolean isEnd = dataSnapshot.getValue(boolean.class);
+                                    if(isEnd == true) {
+                                        dataSnapshot.getRef().setValue(false);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(CommunityChatroomActivity.this, "마감해제하였습니다.", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+
+                                    }
+                                    else {
+                                        dataSnapshot.getRef().setValue(true);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(CommunityChatroomActivity.this, "마감하였습니다.", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(CommunityChatroomActivity.this, "마감하기에 실패하셨습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
                                 }
                             });
                         }
-                    });
-                }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(CommunityChatroomActivity.this, "마감하기에 실패하셨습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
                 break;
         }
     }
 
     private void setNavigationBar() {
         dlDrawer = (DrawerLayout)findViewById(R.id.community_chatroom_drawer);
-        findViewById(R.id.community_chatroom_exit).setOnClickListener(this);
-        findViewById(R.id.community_chatroom_end).setOnClickListener(this);
+        dlDrawer.findViewById(R.id.community_chatroom_exit).setOnClickListener(this);
+        dlDrawer.findViewById(R.id.community_chatroom_end).setOnClickListener(this);
 
         dtToggle = new ActionBarDrawerToggle(this, dlDrawer, R.string.open_drawer, R.string.close_drawer){
 

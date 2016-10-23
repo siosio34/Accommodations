@@ -30,6 +30,8 @@ public class DataFormat {
     private final String TOUR_KEY = "6P%2BoZASTR%2FyMvmypmG5GiuDxZywpTc43N4KDgbWDU9nzKaYCi%2Bx%2BQAMUBIKS7s%2BOML3LSCUkENhFVKV4KY3%2FQg%3D%3D";
     private final String SEOUL_APP_KEY = "437770464173696f373353734d7345";
 
+
+
     // TODO: 2016. 10. 6. 이거 다 strings.xml 로 옮기고 
 
     //private final String TOUR_AMERICA   = "6P%2BoZASTR%2FyMvmypmG5GiuDxZywpTc43N4KDgbWDU9nzKaYCi%2Bx%2BQAMUBIKS7s%2BOML3LSCUkENhFVKV4KY3%2FQg%3D%3D";
@@ -207,27 +209,34 @@ public class DataFormat {
         //http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX=37.2517416&eY=127.070336
         //http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX=37.2517416&eY=127.070336
 
-        String requestUrl = "http://map.daum.net/route/" + dataformat.getValue();
+        String requestUrl= "http://map.daum.net/route/walkset.json?" + "sX=" + Double.toString(517685) +
+                "&sY=" + Double.toString(1040009) +
+                "&eX=" + Double.toString(515821) +
+                "&eY=" + Double.toString(1042318);
 
-        List<NameValuePair> params = new LinkedList<NameValuePair>();
+        Log.d("으에리퀘스트유알엘",requestUrl);
+        // TODO: 2016. 10. 22. 네비게이션 마커해결
+        // TODO: 2016. 10. 22. 서울데이터 예외처리
 
-        params.add(new BasicNameValuePair("sX", "37.2409347"));
-        params.add(new BasicNameValuePair("sY", "127.0809925"));
-        //params.add(new BasicNameValuePair("eName","영통역 홈플러스"));
-        params.add(new BasicNameValuePair("eX", "37.251741"));
-        params.add(new BasicNameValuePair("eY", "127.070336"));
-        //params.add(new BasicNameValuePair("orderBy", "\"INSTL_X\""));
-        //params.add(new BasicNameValuePair("startAt", String.valueOf(126.9780 - 0.03)));
-        //params.add(new BasicNameValuePair("endAt", String.valueOf(126.9780 + 0.03)));
-
-        String paramString = URLEncodedUtils.format(params, "utf-8");
-
-        requestUrl += paramString;
-
-
-        String requestUrl2 = "http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX=37.2517416&eY=127.070336";
-        String requestUrl3 = "http://map.daum.net/route/walkset.json?sName=경희대학교+국제캠퍼스&sX=517685&sY=1040009&eName=영통역+분당선&eX=515821&eY=1042318&ids=P24254845%2CP15110708";
-        return requestUrl2;
+        //List<NameValuePair> params = new LinkedList<NameValuePair>();
+//
+        //params.add(new BasicNameValuePair("sX", "37.2409347"));
+        //params.add(new BasicNameValuePair("sY", "127.0809925"));
+        ////params.add(new BasicNameValuePair("eName","영통역 홈플러스"));
+        //params.add(new BasicNameValuePair("eX", "37.251741"));
+        //params.add(new BasicNameValuePair("eY", "127.070336"));
+        ////params.add(new BasicNameValuePair("orderBy", "\"INSTL_X\""));
+        ////params.add(new BasicNameValuePair("startAt", String.valueOf(126.9780 - 0.03)));
+        ////params.add(new BasicNameValuePair("endAt", String.valueOf(126.9780 + 0.03)));
+//
+        //String paramString = URLEncodedUtils.format(params, "utf-8");
+//
+        //requestUrl += paramString;
+//
+//
+        //String requestUrl2 = "http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX=37.2517416&eY=127.070336";
+        //String requestUrl3 = "http://map.daum.net/route/walkset.json?sName=경희대학교+국제캠퍼스&sX=517685&sY=1040009&eName=영통역+분당선&eX=515821&eY=1042318&ids=P24254845%2CP15110708";
+        return requestUrl;
 
 
     }
