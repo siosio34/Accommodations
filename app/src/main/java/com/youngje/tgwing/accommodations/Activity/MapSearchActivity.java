@@ -2,6 +2,7 @@ package com.youngje.tgwing.accommodations.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -39,9 +40,11 @@ import com.youngje.tgwing.accommodations.Util.LocationUtil;
 import net.daum.android.map.openapi.search.OnFinishSearchListener;
 import net.daum.android.map.openapi.search.Searcher;
 import net.daum.mf.map.api.CalloutBalloonAdapter;
+import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPointBounds;
+import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapView;
 
 import java.io.IOException;
@@ -552,6 +555,33 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         }
     }
 
+    //맵 Lon 이랑 Lan 나타내주는게 없어서 맨 밑에다가 두개 정보만 담고있는 class임시로 만들어놨습니다.
+    //나중에 원하는 걸로 수정때리면 되여
+    private void drawLineFromStartPoint(pointOnMap startPoint, List<pointOnMap> pointOnMapList){
+        MapPolyline polyline = new MapPolyline();
+        polyline.setTag(1000);
+        // Polyline 색 지정
+        polyline.setLineColor(Color.argb(128, 255, 51, 0));
+
+        //시작점 추가
+        polyline.addPoint(MapPoint.mapPointWithCONGCoord(startPoint.getLat(),startPoint.getLon()));
+
+        //리스트에서 그 어진 포인트로 선그려줌
+        for(int i=0;i<pointOnMapList.size();i++){
+            //bessel 좌표 -> 형이 예제에서 보여준 좌표 라면 CONGCoord쓰고
+            polyline.addPoint(MapPoint.mapPointWithCONGCoord(pointOnMapList.get(i).getLat(),pointOnMapList.get(i).getLon()));
+            //아니고 WGS84인 위도 경도라면 요거 쓰면됨
+            //polyline.addPoint(MapPoint.mapPointWithGeoCoord(pointOnMapList.get(i).getLat(),pointOnMapList.get(i).getLon()));
+        }
+
+        //맵에 추가
+        mMapView.addPolyline(polyline);
+
+        //경로가 모두 나오는 화면으로 이동
+        MapPointBounds mapPointBounds = new MapPointBounds(polyline.getMapPoints());
+        int padding = 100; // px
+        mMapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
+    }
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float v) {
 
@@ -577,6 +607,33 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         mMapView.setCurrentLocationEventListener(this);
         mMapView.setShowCurrentLocationMarker(true);
         mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+
+
+
+        //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
+        pointOnMap startPoint = new pointOnMap(517681.0,1040128.0);
+        List<pointOnMap> tempArray = new ArrayList<pointOnMap>();
+        tempArray.add(new pointOnMap(517650.0,1040126.0));
+        tempArray.add(new pointOnMap(517601.0,1040137.0));
+        tempArray.add(new pointOnMap(517580.0,1040155.0));
+        tempArray.add(new pointOnMap(517573.0,1040166.0));
+        tempArray.add(new pointOnMap(517563.0,1040215.0));
+        tempArray.add(new pointOnMap(517550.0,1040345.0));
+        tempArray.add(new pointOnMap(517537.0,1040379.0));
+        tempArray.add(new pointOnMap(517506.0,1040410.0));
+        tempArray.add(new pointOnMap(517454.0,1040440.0));
+        tempArray.add(new pointOnMap(517438.0,1040457.0));
+        tempArray.add(new pointOnMap(517430.0,1040478.0));
+        tempArray.add(new pointOnMap(517424.0,1040574.0));
+        tempArray.add(new pointOnMap(517419.0,1040651.0));
+        tempArray.add(new pointOnMap(517414.0,1040771.0));
+        tempArray.add(new pointOnMap(517410.0,1040863.0));
+        tempArray.add(new pointOnMap(517405.0,1040978.0));
+        tempArray.add(new pointOnMap(517402.0,1041041.0));
+        tempArray.add(new pointOnMap(517401.0,1041073.0));
+
+        drawLineFromStartPoint(startPoint,tempArray);
+        //요기까지
     }
 
     private Object fetch(String address) throws MalformedURLException,IOException {
@@ -698,4 +755,19 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         Log.i("temptemp",userIdList.toString());
         return userIdList;
     }
+}
+
+
+class pointOnMap{
+    public pointOnMap(double Lat, double Lon){
+        setLat(Lat);
+        setLon(Lon);
+    }
+    public pointOnMap(){}
+    private double Lat;
+    private double Lon;
+    public double getLat(){return Lat;}
+    public double getLon(){return Lon;}
+    public void setLat(double Lat){this.Lat = Lat;}
+    public void setLon(double Lon){this.Lon = Lon;}
 }
