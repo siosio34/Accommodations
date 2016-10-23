@@ -114,6 +114,7 @@ public class UserSignInActivity extends BaseActivity implements
 
                 if (user != null) {
                     checkBasicUser(user);
+
                 } else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                     setContentView(R.layout.activity_user_sign_in);
@@ -292,8 +293,6 @@ public class UserSignInActivity extends BaseActivity implements
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
                         } else { // 존재할경우 -> 불러와야함
-
-
 
                             User.setMyInstance(userValue);
                             Log.i("기존 유저정보", User.getMyInstance().toString());

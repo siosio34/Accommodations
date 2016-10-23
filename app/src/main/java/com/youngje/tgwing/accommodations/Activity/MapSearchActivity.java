@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.Data.DaumDataProcessor;
+import com.youngje.tgwing.accommodations.Data.NavigationDataProcessor;
 import com.youngje.tgwing.accommodations.Data.SeoulDataProcessor;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.User;
@@ -79,25 +80,54 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ////http://map.daum.net/route/walkset.json?
+        // sX=37.2409347&sY=127.0809925&eX=37.2517416&eY=127.070336
+
         setContentView(R.layout.activity_map_search);
         curlocate = LocationUtil.curlocation;
         curUser = User.getMyInstance();
 
+        String startCreateUrl;
+        String endCreateUrl;
+        String daumRouteRequestUrl;
 
-        String createUrl;
-        createUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,0.0,0.0,0.0,0.0);
-        HttpHandler httpHandler = new HttpHandler();
+        String fromCoord = "WGS84";
+        String toCoord = "WCONGNAMUL";
+        String type = "json";
+        String apikey = getString(R.string.daum_api_key);
 
+       // 127.07282485359492
+       // 37.252086477197
 
-        try {
-            String result = httpHandler.execute(createUrl).get();
-            // TODO: 2016. 10. 15. null값일때 예외처리 해야됨
-            if(result != null)
-                Log.i("temp3", result);
+        // 127.08058512777377
+        // 37.24433967711934
 
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        startCreateUrl = DataFormat.changeCoordRequestURL(37.24433967711934,127.08058512777377,fromCoord,toCoord,type,apikey);
+        endCreateUrl = DataFormat.changeCoordRequestURL(37.252086477197,127.07282485359492,fromCoord,toCoord,type,apikey);
+
+       try {
+           //http://map.naver.com/findroute2/findWalkRoute.nhn?call=route2&output=json&coord_type=naver&search=0&start=127.0798535%2C37.2433617%2C%EA%B2%BD%ED%9D%AC%EB%8C%80%ED%95%99%EA%B5%90+%EA%B5%AD%EC%A0%9C%EC%BA%A0%ED]
+           String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
+           String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
+           JSONObject startJsonObject = new JSONObject(myLocationResult);
+           JSONObject endJsonObject = new JSONObject(DestinationResult);
+           Double naverStartLat = startJsonObject.getDouble("y");
+           Double naverStartLon = startJsonObject.getDouble("x");
+           Double naverEndLat = endJsonObject.getDouble("y");
+           Double naverEndLon = endJsonObject.getDouble("x");
+           daumRouteRequestUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,naverStartLat,naverStartLon,naverEndLat,naverEndLon);
+
+           String result = new HttpHandler().execute(daumRouteRequestUrl).get();
+           String resultString = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
+
+           if(resultString != null)
+               Log.i("resultString", resultString);
+
+       } catch (InterruptedException | ExecutionException e) {
+           e.printStackTrace();
+       } catch (JSONException e) {
+           e.printStackTrace();
+       }
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();

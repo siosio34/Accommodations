@@ -203,17 +203,27 @@ public class DataFormat {
         return requestUrl;
     }
 
+
+
     public static String createNavigationAPIRequestURL(DATATYPE dataformat, double startlat, double startLon, double endlat, double endLon) {
 
         //http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX= 37.2517416&eY=127.070336
         //http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX=37.2517416&eY=127.070336
         //http://map.daum.net/route/walkset.json?sX=37.2409347&sY=127.0809925&eX=37.2517416&eY=127.070336
 
-        String requestUrl= "http://map.daum.net/route/walkset.json?" + "sX=" + Double.toString(517685) +
-                "&sY=" + Double.toString(1040009) +
-                "&eX=" + Double.toString(515821) +
-                "&eY=" + Double.toString(1042318);
+        //String requestUrl= "http://map.daum.net/route/walkset.json?" + "sX=" + Double.toString(517685) +
+        //        "&sY=" + Double.toString(1040009) +
+        //        "&eX=" + Double.toString(516152) +
+        //        "&eY=" + Double.toString(1042480);
 
+
+
+        String requestUrl= "http://map.daum.net/route/walkset.json?" + "sX=" + 517685 +
+                "&sY=" + 1040009 +
+                "&eX=" + 516152 +
+                "&eY=" + 1042480;
+//
+//
         Log.d("으에리퀘스트유알엘",requestUrl);
         // TODO: 2016. 10. 22. 네비게이션 마커해결
         // TODO: 2016. 10. 22. 서울데이터 예외처리
@@ -263,6 +273,35 @@ public class DataFormat {
 
 
     }
+
+    public static String changeCoordRequestURL(double lat, double lon, String fromCoord,String toCoord,String Format,String daumApikey) {
+        //https://apis.daum.net/local/geo/transcoord?
+        // apikey={apikey}&fromCoord=WTM&y=-4388.879299157299&x=160710.37729270622&
+        // toCoord=WGS84&output=json
+        String requestUrl = "";
+
+        requestUrl = "https://apis.daum.net/local/geo/transcoord?" +
+                "apikey=" + daumApikey + "&fromCoord=" + fromCoord + "&y=" + lat + "&x=" + lon +
+                "&toCoord=" + toCoord + "&output=" + Format;
+
+        Log.i("requestUrl : ", requestUrl);
+
+        return requestUrl;
+    }
+
+    //TODO : create naver map request url
+    public static String createNaverMapRequestURL(double start_lon, double start_lat, double end_lon, double end_lat) {
+        String ret = ""; // 결과 스트링
+        ret = "http://map.naver.com/findroute2/findWalkRoute.nhn?call=route2&output=json&coord_type=naver&search=0";
+
+        ret += "&start=" + Double.toString(start_lon) + "%2C" + Double.toString(start_lat)
+                + "&destination=" + Double.toString(end_lon) + "%2C" + Double.toString(end_lat);
+
+        Log.i("requestUrl : ",ret);
+        return ret;
+    }
+
+
 
 
 }

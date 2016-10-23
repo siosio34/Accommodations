@@ -19,28 +19,20 @@ public class NavigationDataProcessor {
 
     public static final int MAX_JSON_OBJECTS = 10;
 
+    public static String load(String rawData, DataFormat.DATATYPE datatype) throws JSONException {
 
-    public String load(String rawData, DataFormat.DATATYPE datatype) throws JSONException {
-
-        List<Marker> markers = new ArrayList<Marker>();
         JSONObject root = convertToJSON(rawData);
-        JSONArray dataArray = root.getJSONObject("directions").getJSONObject("sections").getJSONArray("guideList");
-        Log.i("dataArray", dataArray.toString());
+        JSONObject jsonObject = root.getJSONArray("directions").getJSONObject(0).getJSONArray("sections").getJSONObject(0);
+        JSONObject guideObject = jsonObject.getJSONArray("guideList").getJSONObject(0);
+        String guideMent = guideObject.getString("guideMent");
+        String rotationCode = guideObject.getString("rotationCode");
+        //String length = jsonObject.getString("length");
+        //String points = jsonObject.getString("points");
 
-        JSONObject jsonObject = dataArray.getJSONObject(0);
-        String guideMent = jsonObject.getString("guideMent");
-        String length = jsonObject.getString("length");
-        String points = jsonObject.getString("points");
-        String rotationCode = jsonObject.getString("rotationCode");
-
-        return (rotationCode + guideMent);
+        return (rotationCode + " " + guideMent);
     }
 
-    public Marker processDAUMNavigationObject(JSONObject jsonObject) {
-        return null;
-    }
-
-    private JSONObject convertToJSON(String rawData) {
+    private static JSONObject convertToJSON(String rawData) {
         try {
             return new JSONObject(rawData);
         } catch (JSONException e) {
