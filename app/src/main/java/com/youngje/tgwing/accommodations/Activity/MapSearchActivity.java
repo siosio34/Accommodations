@@ -569,10 +569,11 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         //리스트에서 그 어진 포인트로 선그려줌
         for(int i=0;i<pointOnMapList.size();i++){
             //bessel 좌표 -> 형이 예제에서 보여준 좌표 라면 CONGCoord쓰고
-            polyline.addPoint(MapPoint.mapPointWithCONGCoord(pointOnMapList.get(i).getLat(),pointOnMapList.get(i).getLon()));
+
+            polyline.addPoint(MapPoint.mapPointWithWCONGCoord(pointOnMapList.get(i).getLat(),pointOnMapList.get(i).getLon()));
             //아니고 WGS84인 위도 경도라면 요거 쓰면됨
             //polyline.addPoint(MapPoint.mapPointWithGeoCoord(pointOnMapList.get(i).getLat(),pointOnMapList.get(i).getLon()));
-        }
+    }
 
         //맵에 추가
         mMapView.addPolyline(polyline);
@@ -609,29 +610,20 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
 
-
         //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
-        pointOnMap startPoint = new pointOnMap(517681.0,1040128.0);
+        pointOnMap startPoint = new pointOnMap(517681,1040128);
         List<pointOnMap> tempArray = new ArrayList<pointOnMap>();
-        tempArray.add(new pointOnMap(517650.0,1040126.0));
-        tempArray.add(new pointOnMap(517601.0,1040137.0));
-        tempArray.add(new pointOnMap(517580.0,1040155.0));
-        tempArray.add(new pointOnMap(517573.0,1040166.0));
-        tempArray.add(new pointOnMap(517563.0,1040215.0));
-        tempArray.add(new pointOnMap(517550.0,1040345.0));
-        tempArray.add(new pointOnMap(517537.0,1040379.0));
-        tempArray.add(new pointOnMap(517506.0,1040410.0));
-        tempArray.add(new pointOnMap(517454.0,1040440.0));
-        tempArray.add(new pointOnMap(517438.0,1040457.0));
-        tempArray.add(new pointOnMap(517430.0,1040478.0));
-        tempArray.add(new pointOnMap(517424.0,1040574.0));
-        tempArray.add(new pointOnMap(517419.0,1040651.0));
-        tempArray.add(new pointOnMap(517414.0,1040771.0));
-        tempArray.add(new pointOnMap(517410.0,1040863.0));
-        tempArray.add(new pointOnMap(517405.0,1040978.0));
-        tempArray.add(new pointOnMap(517402.0,1041041.0));
-        tempArray.add(new pointOnMap(517401.0,1041073.0));
 
+        tempArray.add(new pointOnMap(517395,1041211));
+        tempArray.add(new pointOnMap(516844,1041182));
+        tempArray.add(new pointOnMap(516768,1041293));
+        tempArray.add(new pointOnMap(516768,1041526));
+        tempArray.add(new pointOnMap(515825,1042243));
+        tempArray.add(new pointOnMap(515864,1042269));
+        tempArray.add(new pointOnMap(516011,1042460));
+
+
+        // TODO: 2016. 10. 24. 네비를 구현할수 있을것 같다
         drawLineFromStartPoint(startPoint,tempArray);
         //요기까지
     }
