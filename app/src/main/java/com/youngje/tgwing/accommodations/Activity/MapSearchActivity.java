@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -32,13 +33,12 @@ import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.Data.DaumDataProcessor;
 import com.youngje.tgwing.accommodations.Data.NavigationDataProcessor;
 import com.youngje.tgwing.accommodations.Data.SeoulDataProcessor;
+import com.youngje.tgwing.accommodations.Navi;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
 
-import net.daum.android.map.openapi.search.OnFinishSearchListener;
-import net.daum.android.map.openapi.search.Searcher;
 import net.daum.mf.map.api.CalloutBalloonAdapter;
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
@@ -59,7 +59,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static com.youngje.tgwing.accommodations.R.string.daum_api_key;
-import net.daum.android.map.openapi.search.Marker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,43 +93,11 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         String endCreateUrl;
         String daumRouteRequestUrl;
 
-        String fromCoord = "WGS84";
-        String toCoord = "WCONGNAMUL";
-        String type = "json";
-        String apikey = getString(R.string.daum_api_key);
-
        // 127.07282485359492
        // 37.252086477197
 
         // 127.08058512777377
         // 37.24433967711934
-
-        startCreateUrl = DataFormat.changeCoordRequestURL(37.24433967711934,127.08058512777377,fromCoord,toCoord,type,apikey);
-        endCreateUrl = DataFormat.changeCoordRequestURL(37.252086477197,127.07282485359492,fromCoord,toCoord,type,apikey);
-
-       try {
-           //http://map.naver.com/findroute2/findWalkRoute.nhn?call=route2&output=json&coord_type=naver&search=0&start=127.0798535%2C37.2433617%2C%EA%B2%BD%ED%9D%AC%EB%8C%80%ED%95%99%EA%B5%90+%EA%B5%AD%EC%A0%9C%EC%BA%A0%ED]
-           String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
-           String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
-           JSONObject startJsonObject = new JSONObject(myLocationResult);
-           JSONObject endJsonObject = new JSONObject(DestinationResult);
-           Double naverStartLat = startJsonObject.getDouble("y");
-           Double naverStartLon = startJsonObject.getDouble("x");
-           Double naverEndLat = endJsonObject.getDouble("y");
-           Double naverEndLon = endJsonObject.getDouble("x");
-           daumRouteRequestUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,naverStartLat,naverStartLon,naverEndLat,naverEndLon);
-
-           String result = new HttpHandler().execute(daumRouteRequestUrl).get();
-           String resultString = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
-
-           if(resultString != null)
-               Log.i("resultString", resultString);
-
-       } catch (InterruptedException | ExecutionException e) {
-           e.printStackTrace();
-       } catch (JSONException e) {
-           e.printStackTrace();
-       }
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -747,7 +714,62 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         Log.i("temptemp",userIdList.toString());
         return userIdList;
     }
+
+    public void onNavigation(double endLat,double endLon) throws ExecutionException, InterruptedException, JSONException {
+
+        // TODO: 2016. 10. 25. navigation
+        String fromCoord = "WGS84";
+        String toCoord = "WCONGNAMUL";
+        String type = "json";
+        String apikey = getString(R.string.daum_api_key);
+
+        curlocate = LocationUtil.curlocation;
+
+        String startCreateUrl;
+        String endCreateUrl;
+        String daumRouteRequestUrl;
+
+        startCreateUrl = DataFormat.changeCoordRequestURL(curlocate.getLatitude(),curlocate.getLongitude(),fromCoord,toCoord,type,apikey);
+        endCreateUrl = DataFormat.changeCoordRequestURL(endLat,endLon,fromCoord,toCoord,type,apikey);
+
+        String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
+        String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
+        JSONObject startJsonObject = new JSONObject(myLocationResult);
+        JSONObject endJsonObject = new JSONObject(DestinationResult);
+
+        Double daumStartLat = startJsonObject.getDouble("y");
+        Double daumStartLon = startJsonObject.getDouble("x");
+        Double daumEndLat = endJsonObject.getDouble("y");
+        Double daumEndLon = endJsonObject.getDouble("x");
+        daumRouteRequestUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,daumStartLat,daumStartLon,daumEndLat,daumEndLon);
+
+        Navi navi = null;
+        String result = new HttpHandler().execute(daumRouteRequestUrl).get();
+        navi = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
+
+        if(navi == null || navi.getLength() < 30) {
+            // TODO: 2016. 10. 25. 종료 메시지 남겨야된다.
+            // TODO: 2016. 10. 25. 길 안내를 할수 없거나
+        }
+        else {
+            Toast.makeText(getApplicationContext(),navi.getGuideMent(),Toast.LENGTH_SHORT);
+        }
+
+    }
+
+    public void onNavigationButtonClick() {
+
+        // TODO: 2016. 10. 25. 이버튼을 클릭햇을때  onNavigationonNavigation 작동
+        // TODO: 2016. 10. 25. 한번 더 클릭시 네비게이션 모드 종료
+
+        
+
+    }
+
+
+
 }
+
 
 
 class pointOnMap{

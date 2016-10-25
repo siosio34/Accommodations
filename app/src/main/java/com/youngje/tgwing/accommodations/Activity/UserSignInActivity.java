@@ -289,7 +289,7 @@ public class UserSignInActivity extends BaseActivity implements
                             moveToMapSearchActivity();
 
                             hideProgressDialog();
-                            //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+                            //startActivity(new Intent(getApplicationContext(), WriteReviewActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
                         } else { // 존재할경우 -> 불러와야함
@@ -302,7 +302,7 @@ public class UserSignInActivity extends BaseActivity implements
 
                             moveToMapSearchActivity();
                             hideProgressDialog();
-                            //startActivity(new Intent(getApplicationContext(), MapSearchActivity.class));
+                            //startActivity(new Intent(getApplicationContext(), WriteReviewActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                         }
 

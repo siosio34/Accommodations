@@ -92,7 +92,11 @@ public class LocationUtil implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+
         curlocation = location;
+
+
+
     }
 
     @Override

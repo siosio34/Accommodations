@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.youngje.tgwing.accommodations.Marker;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.Review;
@@ -130,6 +131,11 @@ public class WriteReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GALLREY);
+
                 // TODO: 2016. 10. 16.  갤러리거 불러오기
 
             }
@@ -166,7 +172,6 @@ public class WriteReviewActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("asdasd1");
 
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
@@ -201,8 +206,21 @@ public class WriteReviewActivity extends AppCompatActivity {
 
             } else if (resultCode == RESULT_CANCELED)
                 Toast.makeText(this, "비디오를 취소하셨습니다.", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == REQUEST_GALLREY) {
+
+            if (resultCode == RESULT_OK) {
+                    //Get ImageURi and load with help of picasso
+                    //Uri selectedImageURI = data.getData();
+
+                    Picasso.with(this).load(data.getData()).noPlaceholder().centerCrop().fit()
+                            .into((ImageView) findViewById(R.id.loadImage));
+                loadImage.setVisibility(View.VISIBLE);
+                }
+
+            }
+
         }
-    }
+
 
     public void findVieByidwWriteReviewActivity() {
         backButton = (ImageButton) findViewById(R.id.backbutton);
