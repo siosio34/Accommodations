@@ -55,8 +55,6 @@ public class SearchListViewAdapter extends BaseAdapter {
         holder.ratingBar.setTag(position);
         holder.ratingBar.setRating(getItem(position).getRatingStar());
 
-
-
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
 
 
@@ -65,9 +63,7 @@ public class SearchListViewAdapter extends BaseAdapter {
 
         // 아이템 내 각 위젯에 데이터 반영
         holder.titleTextView.setText(getItem(position).getTitle());
-        holder.cateGoryView.setText(getItem(position).getKateGory());
-        holder.iconImageView.setImageDrawable(getItem(position).getIcon());
-        holder.descTextView.setText(getItem(position).getDesc());
+        holder.categoryView.setText(getItem(position).getCategory());
         holder.ReviewNumView.setText(getItem(position).getReviewNum());
         holder.distanceView.setText(getItem(position).getDistance());
         holder.ratingStarView.setText(new Float(getItem(position).getNumOfStar()).toString());
@@ -98,15 +94,13 @@ public class SearchListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String distance, String title, String category,float ratingbar, String ReviewNum, String desc) {
+    public void addItem(String distance, String title, String category,float ratingbar, String ReviewNum) {
         SearchListViewItem item = new SearchListViewItem();
 
-        item.setIcon(icon);
         item.setDistance(distance);
         item.setTitle(title);
-        item.setKateGory(category);
+        item.setCateGory(category);
         item.setReviewNum(ReviewNum);
-        item.setDesc(desc);
         item.setRatingStar(ratingbar);
         item.setNumOfStar(ratingbar);
         listViewItemList.add(item);
@@ -116,21 +110,17 @@ public class SearchListViewAdapter extends BaseAdapter {
 
         private TextView distanceView;
         private RatingBar ratingBar;
-        private ImageView iconImageView;
         private TextView titleTextView;
-        private TextView cateGoryView;
+        private TextView categoryView;
         private TextView ReviewNumView;
-        private TextView descTextView;
         private TextView ratingStarView;
 
 
         public ViewHolder(View view) {
             ratingBar = (RatingBar) view.findViewById(R.id.listview_rating_bar);
-            iconImageView = (ImageView) view.findViewById(R.id.listview_img);
             titleTextView = (TextView) view.findViewById(R.id.listview_title);
-            cateGoryView = (TextView) view.findViewById(R.id.listview_category);
+            categoryView = (TextView) view.findViewById(R.id.listview_category);
             ReviewNumView = (TextView) view.findViewById(R.id.listview_rating_num);
-            descTextView = (TextView) view.findViewById(R.id.listview_discription);
             distanceView = (TextView) view.findViewById(R.id.listview_distance);
             ratingStarView = (TextView) view.findViewById(R.id.listview_rating_score);
 

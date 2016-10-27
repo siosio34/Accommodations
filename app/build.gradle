@@ -37,11 +37,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.firebase:firebase-storage:9.4.0'
     compile 'com.googlecode.json-simple:json-simple:1.1'
-
-
-
     compile files('libs/libDaumMapAndroid.jar')
-
+    compile 'com.android.support:recyclerview-v7:25.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

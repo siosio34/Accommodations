@@ -89,15 +89,41 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         curlocate = LocationUtil.curlocation;
         curUser = User.getMyInstance();
 
-        String startCreateUrl;
-        String endCreateUrl;
-        String daumRouteRequestUrl;
+    //   String startCreateUrl;
+    //   String endCreateUrl;
+    //   String daumRouteRequestUrl;
 
-       // 127.07282485359492
-       // 37.252086477197
+    //   String fromCoord = "WGS84";
+    //   String toCoord = "WCONGNAMUL";
+    //   String type = "json";
+    //   String apikey = getString(R.string.daum_api_key);
 
-        // 127.08058512777377
-        // 37.24433967711934
+   //    startCreateUrl = DataFormat.changeCoordRequestURL(37.24433967711934,127.08058512777377,fromCoord,toCoord,type,apikey);
+   //    endCreateUrl = DataFormat.changeCoordRequestURL(37.252086477197,127.07282485359492,fromCoord,toCoord,type,apikey);
+
+   //   try {
+   //       //http://map.naver.com/findroute2/findWalkRoute.nhn?call=route2&output=json&coord_type=naver&search=0&start=127.0798535%2C37.2433617%2C%EA%B2%BD%ED%9D%AC%EB%8C%80%ED%95%99%EA%B5%90+%EA%B5%AD%EC%A0%9C%EC%BA%A0%ED]
+   //       String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
+   //       String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
+   //       JSONObject startJsonObject = new JSONObject(myLocationResult);
+   //       JSONObject endJsonObject = new JSONObject(DestinationResult);
+   //       Double naverStartLat = startJsonObject.getDouble("y");
+   //       Double naverStartLon = startJsonObject.getDouble("x");
+   //       Double naverEndLat = endJsonObject.getDouble("y");
+   //       Double naverEndLon = endJsonObject.getDouble("x");
+   //       daumRouteRequestUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,naverStartLat,naverStartLon,naverEndLat,naverEndLon);
+
+   //       String result = new HttpHandler().execute(daumRouteRequestUrl).get();
+   //       String resultString = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
+
+   //       if(resultString != null)
+   //           Log.i("resultString", resultString);
+
+   //   } catch (InterruptedException | ExecutionException e) {
+   //       e.printStackTrace();
+   //   } catch (JSONException e) {
+   //       e.printStackTrace();
+   //   }
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -240,8 +266,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             com.youngje.tgwing.accommodations.Marker marker = markerList.get(i);
             int iDistance = (int) marker.getDistance();
 
-            adapter.addItem(ContextCompat.getDrawable(this,R.drawable.googlelogo), iDistance+"m",
-                    marker.getTitle(), "종류", 3, "(6)", "관광지 설명~~~~~");
+            adapter.addItem(iDistance+"m",
+                    marker.getTitle(), "종류", 3, "(6)");
         }
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -249,14 +275,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
                 SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
-
-                String titleStr = item.getTitle();
-                String descStr = item.getDesc();
-                String NumofReviewStr = item.getReviewNum();
-                String KeteGoryStr = item.getKateGory();
-                Drawable iconDrawable = item.getIcon();
-                String DistanceStr = item.getDistance();
-
+                startActivity(new Intent(getApplicationContext(), SearchListDetailView.class));
                 // TODO : use item data.
             }
         });
