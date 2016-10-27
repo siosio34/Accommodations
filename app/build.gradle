@@ -12,10 +12,21 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        release {
+            storeFile file('D:/Android/keystore/debug.keystore')
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -37,11 +48,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.firebase:firebase-storage:9.4.0'
     compile 'com.googlecode.json-simple:json-simple:1.1'
-
-
-
     compile files('libs/libDaumMapAndroid.jar')
-
 }
 
 apply plugin: 'com.google.gms.google-services'

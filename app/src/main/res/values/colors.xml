@@ -3,4 +3,16 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="lightBlue">#FF6679D8</color>
+    <color name="black">#FF000000</color>
+
+    <!-- community main chatroom color -->
+    <color name="community_main_create_chatroom_name">#FFD2D2D2</color>
+    <color name="community_main_create_chatroom_title">#FF000000</color>
+
+    <!-- community main chatroom popup color -->
+    <color name="community_main_create_chatroom_popup_background">#FFFFFFFF</color>
+    <color name="community_main_create_chatroom_popup_black">#FF000000</color>
+    <color name="community_main_create_chatroom_popup_transparent_black">#30000000</color>
+    <color name="community_main_create_chatroom_popup_lightBlue">#FF6679D8</color>
 </resources>

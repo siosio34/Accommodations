@@ -2,13 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:background="#FFFFFFFF">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
         android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="5dp"
+            android:textSize="10dp"
+            android:textColor="#FF000000"
+            android:id="@+id/community_chatroom_chat_date"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,13 +29,5 @@
             android:id="@+id/community_chatroom_chat_content"
             android:textColor="#FFFFFFFF"
             android:text="adsadadasdasdasd"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="오전 3:42"
-            android:textSize="10dp"
-            android:textColor="#FF000000"
-            android:id="@+id/community_chatroom_chat_date"/>
     </LinearLayout>
 </LinearLayout>

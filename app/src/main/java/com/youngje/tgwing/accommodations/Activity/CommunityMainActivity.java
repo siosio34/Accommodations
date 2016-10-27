@@ -100,10 +100,14 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
             case R.id.community_main_chatroom_popup_create:
                 createRoom();
                 break;
+        }
+    }
 
-            case R.id.community_main_chatroom_popup_cancel:
-                popup.dismiss();
-                break;
+    @Override
+    public void onBackPressed() {
+        if(popup != null) {
+            popup.dismiss();
+            popup = null;
         }
     }
 
@@ -220,6 +224,8 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
                                                             Intent intent = new Intent(CommunityMainActivity.this, CommunityChatroomActivity.class);
                                                             intent.putExtra("chatManagerId", dataSnapshot.getKey());
                                                             startActivityForResult(intent, COMMUNITY_CHATROOM_REQUEST_CODE);
+                                                            popup.dismiss();
+                                                            popup = null;
                                                         }
                                                     });
                                                 }
@@ -289,12 +295,15 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
                             //팝업 뷰 터치 가능하도록 설정
                             popup.setTouchable(true);
 
+                            popup.setOutsideTouchable(true);
+
+                            popup.setFocusable(true);
+
                             //popupwindow를 parent view 기준으로 띄움
                             popup.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
                             //register onclick listener for create and cancel
                             popupView.findViewById(R.id.community_main_chatroom_popup_create).setOnClickListener(CommunityMainActivity.this);
-                            popupView.findViewById(R.id.community_main_chatroom_popup_cancel).setOnClickListener(CommunityMainActivity.this);
 
                             //make background dim
                             if(android.os.Build.VERSION.SDK_INT <= 22) {
@@ -412,21 +421,23 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             final String chatroomId = dataSnapshot.getValue(String.class);
-                            System.out.println("chatroomId length is " + chatroomId.length());
-                            if(chatroomId.length() != 0) {
-                                databaseReference.child("ChatManager").child(chatroomId).child("chatroom").addListenerForSingleValueEvent(
-                                        new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                chatroomAdapter.addWithChatManagerId(dataSnapshot.getValue(Chatroom.class), chatroomId);
-                                            }
+                            if(chatroomId != null) {
+                                System.out.println("chatroomId length is " + chatroomId.length());
+                                if (chatroomId.length() != 0) {
+                                    databaseReference.child("ChatManager").child(chatroomId).child("chatroom").addListenerForSingleValueEvent(
+                                            new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    chatroomAdapter.addWithChatManagerId(dataSnapshot.getValue(Chatroom.class), chatroomId);
+                                                }
 
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
 
+                                                }
                                             }
-                                        }
-                                );
+                                    );
+                                }
                             }
                         }
 

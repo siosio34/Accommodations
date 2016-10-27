@@ -14,8 +14,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,6 +71,7 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
 
     private ArrayList<User> userList;
     private UserListAdapter userListAdapter;
+    private int userNumber = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +80,11 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
 
         //firebase에서 채팅룸의 데이터를 가져오기 위한 구별자.
         chatManagerId = getIntent().getStringExtra("chatManagerId");
-
+        setChattingKeyboard();
         getChatroomInfo();
         setNavigationBar();
     }
+
 
     @Override
     public void onClick(View v) {
@@ -202,6 +206,19 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
         }
     }
 
+    private void setChattingKeyboard() {
+        findViewById(R.id.community_chatroom_content_box).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                findViewById(R.id.community_chatroom_content).requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(findViewById(R.id.community_chatroom_content), InputMethodManager.SHOW_IMPLICIT);
+                return false;
+            }
+        });
+        findViewById(R.id.community_chatroom_content).setFocusableInTouchMode(true);
+    }
+
     private void setNavigationBar() {
         dlDrawer = (DrawerLayout)findViewById(R.id.community_chatroom_drawer);
         dlDrawer.findViewById(R.id.community_chatroom_exit).setOnClickListener(this);
@@ -254,6 +271,7 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
                         // whenever data at this location is updated.
 
                         chatroom = dataSnapshot.getValue(Chatroom.class);
+                        setTitle(chatroom.getChatroomTitle());
 
                         if (chatroom == null) {
                             //방이 삭제됨
@@ -385,8 +403,10 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
         databaseReference.child("ChatManager").child(chatManagerId).child("chatroom").child("userList").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                User userList = dataSnapshot.getValue(User.class);  // chatData를 가져오고
-                userListAdapter.add(userList);
+                User user = dataSnapshot.getValue(User.class);  // chatData를 가져오고
+                userListAdapter.add(user);
+                userNumber++;
+                ((TextView)findViewById(R.id.community_chatroom_number)).setText(userNumber+"명");
             }
 
             @Override
@@ -395,7 +415,10 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                User user = dataSnapshot.getValue(User.class);  // chatData를 삭제
+                userListAdapter.remove(user);
+                userNumber--;
+                ((TextView)findViewById(R.id.community_chatroom_number)).setText(userNumber+"명");
             }
 
             @Override
