@@ -95,8 +95,6 @@ public class LocationUtil implements LocationListener {
 
         curlocation = location;
 
-
-
     }
 
     @Override

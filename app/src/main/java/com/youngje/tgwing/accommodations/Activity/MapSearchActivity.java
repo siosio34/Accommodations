@@ -137,7 +137,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             public void onClick(View view) {
                 if (layoutMore.isShown()) {
                     layoutMore.setVisibility(View.GONE);
-                    mListLayout.setVisibility(View.GONE);
+                    //mListLayout.setVisibility(View.GONE);
                 } else {
                     layoutMore.setVisibility(View.VISIBLE);
                 }
