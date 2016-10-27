@@ -2,8 +2,10 @@ package com.youngje.tgwing.accommodations.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -29,18 +31,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.Data.DaumDataProcessor;
+import com.youngje.tgwing.accommodations.Data.NavigationDataProcessor;
 import com.youngje.tgwing.accommodations.Data.SeoulDataProcessor;
+import com.youngje.tgwing.accommodations.Navi;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
 
-import net.daum.android.map.openapi.search.OnFinishSearchListener;
-import net.daum.android.map.openapi.search.Searcher;
 import net.daum.mf.map.api.CalloutBalloonAdapter;
+import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPointBounds;
+import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapView;
 
 import java.io.IOException;
@@ -55,7 +59,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static com.youngje.tgwing.accommodations.R.string.daum_api_key;
-import net.daum.android.map.openapi.search.Marker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,25 +82,48 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ////http://map.daum.net/route/walkset.json?
+        // sX=37.2409347&sY=127.0809925&eX=37.2517416&eY=127.070336
+
         setContentView(R.layout.activity_map_search);
         curlocate = LocationUtil.curlocation;
         curUser = User.getMyInstance();
 
+    //   String startCreateUrl;
+    //   String endCreateUrl;
+    //   String daumRouteRequestUrl;
 
-        String createUrl;
-        createUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,0.0,0.0,0.0,0.0);
-        HttpHandler httpHandler = new HttpHandler();
+    //   String fromCoord = "WGS84";
+    //   String toCoord = "WCONGNAMUL";
+    //   String type = "json";
+    //   String apikey = getString(R.string.daum_api_key);
 
+   //    startCreateUrl = DataFormat.changeCoordRequestURL(37.24433967711934,127.08058512777377,fromCoord,toCoord,type,apikey);
+   //    endCreateUrl = DataFormat.changeCoordRequestURL(37.252086477197,127.07282485359492,fromCoord,toCoord,type,apikey);
 
-        try {
-            String result = httpHandler.execute(createUrl).get();
-            // TODO: 2016. 10. 15. null값일때 예외처리 해야됨
-            if(result != null)
-                Log.i("temp3", result);
+   //   try {
+   //       //http://map.naver.com/findroute2/findWalkRoute.nhn?call=route2&output=json&coord_type=naver&search=0&start=127.0798535%2C37.2433617%2C%EA%B2%BD%ED%9D%AC%EB%8C%80%ED%95%99%EA%B5%90+%EA%B5%AD%EC%A0%9C%EC%BA%A0%ED]
+   //       String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
+   //       String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
+   //       JSONObject startJsonObject = new JSONObject(myLocationResult);
+   //       JSONObject endJsonObject = new JSONObject(DestinationResult);
+   //       Double naverStartLat = startJsonObject.getDouble("y");
+   //       Double naverStartLon = startJsonObject.getDouble("x");
+   //       Double naverEndLat = endJsonObject.getDouble("y");
+   //       Double naverEndLon = endJsonObject.getDouble("x");
+   //       daumRouteRequestUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,naverStartLat,naverStartLon,naverEndLat,naverEndLon);
 
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+   //       String result = new HttpHandler().execute(daumRouteRequestUrl).get();
+   //       String resultString = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
+
+   //       if(resultString != null)
+   //           Log.i("resultString", resultString);
+
+   //   } catch (InterruptedException | ExecutionException e) {
+   //       e.printStackTrace();
+   //   } catch (JSONException e) {
+   //       e.printStackTrace();
+   //   }
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -240,8 +266,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             com.youngje.tgwing.accommodations.Marker marker = markerList.get(i);
             int iDistance = (int) marker.getDistance();
 
-            adapter.addItem(ContextCompat.getDrawable(this,R.drawable.googlelogo), iDistance+"m",
-                    marker.getTitle(), "종류", 3, "(6)", "관광지 설명~~~~~");
+            adapter.addItem(iDistance+"m",
+                    marker.getTitle(), "종류", 3, "(6)");
         }
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -249,14 +275,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
                 SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
-
-                String titleStr = item.getTitle();
-                String descStr = item.getDesc();
-                String NumofReviewStr = item.getReviewNum();
-                String KeteGoryStr = item.getKateGory();
-                Drawable iconDrawable = item.getIcon();
-                String DistanceStr = item.getDistance();
-
+                startActivity(new Intent(getApplicationContext(), SearchListDetailView.class));
                 // TODO : use item data.
             }
         });
@@ -522,6 +541,34 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         }
     }
 
+    //맵 Lon 이랑 Lan 나타내주는게 없어서 맨 밑에다가 두개 정보만 담고있는 class임시로 만들어놨습니다.
+    //나중에 원하는 걸로 수정때리면 되여
+    private void drawLineFromStartPoint(pointOnMap startPoint, List<pointOnMap> pointOnMapList){
+        MapPolyline polyline = new MapPolyline();
+        polyline.setTag(1000);
+        // Polyline 색 지정
+        polyline.setLineColor(Color.argb(128, 255, 51, 0));
+
+        //시작점 추가
+        polyline.addPoint(MapPoint.mapPointWithCONGCoord(startPoint.getLat(),startPoint.getLon()));
+
+        //리스트에서 그 어진 포인트로 선그려줌
+        for(int i=0;i<pointOnMapList.size();i++){
+            //bessel 좌표 -> 형이 예제에서 보여준 좌표 라면 CONGCoord쓰고
+
+            polyline.addPoint(MapPoint.mapPointWithWCONGCoord(pointOnMapList.get(i).getLat(),pointOnMapList.get(i).getLon()));
+            //아니고 WGS84인 위도 경도라면 요거 쓰면됨
+            //polyline.addPoint(MapPoint.mapPointWithGeoCoord(pointOnMapList.get(i).getLat(),pointOnMapList.get(i).getLon()));
+    }
+
+        //맵에 추가
+        mMapView.addPolyline(polyline);
+
+        //경로가 모두 나오는 화면으로 이동
+        MapPointBounds mapPointBounds = new MapPointBounds(polyline.getMapPoints());
+        int padding = 100; // px
+        mMapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
+    }
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float v) {
 
@@ -547,6 +594,24 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         mMapView.setCurrentLocationEventListener(this);
         mMapView.setShowCurrentLocationMarker(true);
         mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+
+
+        //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
+        pointOnMap startPoint = new pointOnMap(517681,1040128);
+        List<pointOnMap> tempArray = new ArrayList<pointOnMap>();
+
+        tempArray.add(new pointOnMap(517395,1041211));
+        tempArray.add(new pointOnMap(516844,1041182));
+        tempArray.add(new pointOnMap(516768,1041293));
+        tempArray.add(new pointOnMap(516768,1041526));
+        tempArray.add(new pointOnMap(515825,1042243));
+        tempArray.add(new pointOnMap(515864,1042269));
+        tempArray.add(new pointOnMap(516011,1042460));
+
+
+        // TODO: 2016. 10. 24. 네비를 구현할수 있을것 같다
+        drawLineFromStartPoint(startPoint,tempArray);
+        //요기까지
     }
 
     private Object fetch(String address) throws MalformedURLException,IOException {
@@ -668,4 +733,74 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         Log.i("temptemp",userIdList.toString());
         return userIdList;
     }
+
+    public void onNavigation(double endLat,double endLon) throws ExecutionException, InterruptedException, JSONException {
+
+        // TODO: 2016. 10. 25. navigation
+        String fromCoord = "WGS84";
+        String toCoord = "WCONGNAMUL";
+        String type = "json";
+        String apikey = getString(R.string.daum_api_key);
+
+        curlocate = LocationUtil.curlocation;
+
+        String startCreateUrl;
+        String endCreateUrl;
+        String daumRouteRequestUrl;
+
+        startCreateUrl = DataFormat.changeCoordRequestURL(curlocate.getLatitude(),curlocate.getLongitude(),fromCoord,toCoord,type,apikey);
+        endCreateUrl = DataFormat.changeCoordRequestURL(endLat,endLon,fromCoord,toCoord,type,apikey);
+
+        String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
+        String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
+        JSONObject startJsonObject = new JSONObject(myLocationResult);
+        JSONObject endJsonObject = new JSONObject(DestinationResult);
+
+        Double daumStartLat = startJsonObject.getDouble("y");
+        Double daumStartLon = startJsonObject.getDouble("x");
+        Double daumEndLat = endJsonObject.getDouble("y");
+        Double daumEndLon = endJsonObject.getDouble("x");
+        daumRouteRequestUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,daumStartLat,daumStartLon,daumEndLat,daumEndLon);
+
+        Navi navi = null;
+        String result = new HttpHandler().execute(daumRouteRequestUrl).get();
+        navi = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
+
+        if(navi == null || navi.getLength() < 30) {
+            // TODO: 2016. 10. 25. 종료 메시지 남겨야된다.
+            // TODO: 2016. 10. 25. 길 안내를 할수 없거나
+        }
+        else {
+            Toast.makeText(getApplicationContext(),navi.getGuideMent(),Toast.LENGTH_SHORT);
+        }
+
+    }
+
+    public void onNavigationButtonClick() {
+
+        // TODO: 2016. 10. 25. 이버튼을 클릭햇을때  onNavigationonNavigation 작동
+        // TODO: 2016. 10. 25. 한번 더 클릭시 네비게이션 모드 종료
+
+        
+
+    }
+
+
+
+}
+
+
+
+class pointOnMap{
+    public pointOnMap(double Lat, double Lon){
+        setLat(Lat);
+        setLon(Lon);
+    }
+    public pointOnMap(){}
+    private double Lat;
+    private double Lon;
+    public double getLat(){return Lat;}
+    public double getLon(){return Lon;}
+    public void setLat(double Lat){this.Lat = Lat;}
+    public void setLon(double Lon){this.Lon = Lon;}
 }

@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.youngje.tgwing.accommodations.Marker;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.Review;
@@ -43,8 +44,8 @@ import static android.widget.RatingBar.*;
 public class WriteReviewActivity extends AppCompatActivity {
 
     private static final String TAG = "WriteReviewActivity";
-    ImageButton backButton;
-    ImageButton writeButton;
+    ImageView backButton;
+    ImageView writeButton;
     EditText inputText;
 
     ImageButton cameraButton;
@@ -83,16 +84,12 @@ public class WriteReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_write_review);
         findVieByidwWriteReviewActivity();
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View view) {
-
-
-
-                                              // TODO: 2016. 10. 16.  backbutoon 효과 집어넣기
-                                          }
-                                      });
-
+        backButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         writeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +127,11 @@ public class WriteReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GALLREY);
+
                 // TODO: 2016. 10. 16.  갤러리거 불러오기
 
             }
@@ -166,7 +168,6 @@ public class WriteReviewActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("asdasd1");
 
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
@@ -201,23 +202,35 @@ public class WriteReviewActivity extends AppCompatActivity {
 
             } else if (resultCode == RESULT_CANCELED)
                 Toast.makeText(this, "비디오를 취소하셨습니다.", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == REQUEST_GALLREY) {
+
+            if (resultCode == RESULT_OK) {
+                    //Get ImageURi and load with help of picasso
+                    //Uri selectedImageURI = data.getData();
+
+                    Picasso.with(this).load(data.getData()).noPlaceholder().centerCrop().fit()
+                            .into((ImageView) findViewById(R.id.loadImage));
+                loadImage.setVisibility(View.VISIBLE);
+                }
+
+            }
+
         }
-    }
+
 
     public void findVieByidwWriteReviewActivity() {
-        backButton = (ImageButton) findViewById(R.id.backbutton);
-        writeButton = (ImageButton) findViewById(R.id.writeReview);
+        backButton = (ImageView) findViewById(R.id.backbutton);
+        writeButton = (ImageView) findViewById(R.id.writeReview);
 
         cameraButton = (ImageButton) findViewById(R.id.cameraButton);
         gallaryButton = (ImageButton) findViewById(R.id.galleryButton);
         camCorderButton = (ImageButton) findViewById(R.id.camcorderButton);
 
         inputText = (EditText) findViewById(R.id.inputText);
-        ratingBar = (RatingBar) findViewById(R.id.ratinbar);
+        ratingBar = (RatingBar) findViewById(R.id.ratingbar);
 
         loadImage = (ImageView)findViewById(R.id.loadImage);
         loadVideo = (VideoView) findViewById(R.id.loadVideo);
-
 
     }
 
