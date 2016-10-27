@@ -43,8 +43,8 @@ import static android.widget.RatingBar.*;
 public class WriteReviewActivity extends AppCompatActivity {
 
     private static final String TAG = "WriteReviewActivity";
-    ImageButton backButton;
-    ImageButton writeButton;
+    ImageView backButton;
+    ImageView writeButton;
     EditText inputText;
 
     ImageButton cameraButton;
@@ -83,16 +83,12 @@ public class WriteReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_write_review);
         findVieByidwWriteReviewActivity();
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View view) {
-
-
-
-                                              // TODO: 2016. 10. 16.  backbutoon 효과 집어넣기
-                                          }
-                                      });
-
+        backButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         writeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,19 +201,18 @@ public class WriteReviewActivity extends AppCompatActivity {
     }
 
     public void findVieByidwWriteReviewActivity() {
-        backButton = (ImageButton) findViewById(R.id.backbutton);
-        writeButton = (ImageButton) findViewById(R.id.writeReview);
+        backButton = (ImageView) findViewById(R.id.backbutton);
+        writeButton = (ImageView) findViewById(R.id.writeReview);
 
         cameraButton = (ImageButton) findViewById(R.id.cameraButton);
         gallaryButton = (ImageButton) findViewById(R.id.galleryButton);
         camCorderButton = (ImageButton) findViewById(R.id.camcorderButton);
 
         inputText = (EditText) findViewById(R.id.inputText);
-        ratingBar = (RatingBar) findViewById(R.id.ratinbar);
+        ratingBar = (RatingBar) findViewById(R.id.ratingbar);
 
         loadImage = (ImageView)findViewById(R.id.loadImage);
         loadVideo = (VideoView) findViewById(R.id.loadVideo);
-
 
     }
 

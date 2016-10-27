@@ -93,7 +93,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         String startCreateUrl;
         String endCreateUrl;
         String daumRouteRequestUrl;
-
         String fromCoord = "WGS84";
         String toCoord = "WCONGNAMUL";
         String type = "json";
@@ -131,7 +130,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
        } catch (JSONException e) {
            e.printStackTrace();
        }
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
         myRef.child("currentUser").child(curUser.getUserId()).setValue(curUser);
@@ -273,8 +271,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             com.youngje.tgwing.accommodations.Marker marker = markerList.get(i);
             int iDistance = (int) marker.getDistance();
 
-            adapter.addItem(ContextCompat.getDrawable(this,R.drawable.googlelogo), iDistance+"m",
-                    marker.getTitle(), "종류", 3, "(6)", "관광지 설명~~~~~");
+            adapter.addItem(iDistance+"m",
+                    marker.getTitle(), "종류", 3, "(6)");
         }
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -282,14 +280,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
                 SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
-
-                String titleStr = item.getTitle();
-                String descStr = item.getDesc();
-                String NumofReviewStr = item.getReviewNum();
-                String KeteGoryStr = item.getKateGory();
-                Drawable iconDrawable = item.getIcon();
-                String DistanceStr = item.getDistance();
-
+                startActivity(new Intent(getApplicationContext(), SearchListDetailView.class));
                 // TODO : use item data.
             }
         });
