@@ -163,6 +163,7 @@ public class SearchListDetailView extends AppCompatActivity{
             item.setUserReview(userReview);
 //            item.setLikeNum(likeNum);
             reviewViewItemList.add(item);
+
         }
 
         private class ViewHolder {

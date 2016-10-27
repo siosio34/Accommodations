@@ -125,9 +125,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
    //       e.printStackTrace();
    //   }
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        myRef.child("currentUser").child(curUser.getUserId()).setValue(curUser);
 
         btnMore = (ImageView) findViewById(R.id.activity_main_btn_more);
         layoutMore = (View) findViewById(R.id.activity_main_btn_category);
@@ -160,11 +157,25 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         communityBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference();
+                myRef.child("currentUser").child(curUser.getUserId()).setValue(curUser);
+
                 Intent intent = new Intent(MapSearchActivity.this, CommunityMainActivity.class);
                 startActivity(intent);
             }
         });
     }
+
+    @Override
+    protected void onDestroy()
+    {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        myRef.child("currentUser").child(curUser.getUserId()).removeValue();
+    }
+
 
     void onDrawer(View view){
         mDrawer.openDrawer(mNavView);
@@ -781,11 +792,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         // TODO: 2016. 10. 25. 이버튼을 클릭햇을때  onNavigationonNavigation 작동
         // TODO: 2016. 10. 25. 한번 더 클릭시 네비게이션 모드 종료
 
-        
-
     }
-
-
 
 }
 
