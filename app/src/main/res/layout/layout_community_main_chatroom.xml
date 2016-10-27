@@ -17,7 +17,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:gravity="center"
             android:id="@+id/community_main_chatroom_distance"
             android:text="1.2km"
@@ -50,7 +49,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/community_main_chatroom_writerName"
-                    android:textColor="#FF000000"
+                    android:textSize="16dp"
+                    android:textColor="@color/community_main_create_chatroom_name"
                     android:layout_marginRight="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
