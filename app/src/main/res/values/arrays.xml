@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="drawer_menu_items">
+        <item name="drawer_My_Review">내 리뷰</item>
+        <item name="drawer_Settings">설정</item>
+        <item name="drawer_Announcement">공지사항</item>
+    </string-array>
+</resources>
