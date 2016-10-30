@@ -24,12 +24,14 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -78,7 +80,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     private MapView mMapView;
     private Location curlocate;
     private User curUser;
-
+    private ToggleButton mToggleButton;
     private DrawerLayout mDrawer;
     private NavigationView mNavView;
     private Menu mDrawerMenu;
@@ -618,6 +620,18 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         mMapView.setShowCurrentLocationMarker(true);
         mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
+        mToggleButton = (ToggleButton) findViewById(R.id.myLocationToggle);
+        mToggleButton.setChecked(false);
+        mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked)
+                    mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+                else{
+                    mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);
+                }
+            }
+        });
 
         //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
         pointOnMap startPoint = new pointOnMap(517681,1040128);
