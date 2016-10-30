@@ -2,10 +2,12 @@ package com.youngje.tgwing.accommodations.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -29,12 +31,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.Data.DaumDataProcessor;
 import com.youngje.tgwing.accommodations.Data.NavigationDataProcessor;
@@ -44,6 +49,8 @@ import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
+import com.youngje.tgwing.accommodations.Util.RoundedAvatarDrawable;
+import com.youngje.tgwing.accommodations.Util.RoundedImageView;
 
 import net.daum.mf.map.api.CalloutBalloonAdapter;
 import net.daum.mf.map.api.CameraUpdateFactory;
@@ -85,6 +92,10 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     private DrawerLayout mDrawer;
     private NavigationView mNavView;
     private Menu mDrawerMenu;
+    private RelativeLayout mNavHeader;
+    private ImageView userImageView;
+    private TextView userNameTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +108,9 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         curlocate = LocationUtil.curlocation;
         curUser = User.getMyInstance();
 
-    //   String startCreateUrl;
+
+
+        //   String startCreateUrl;
     //   String endCreateUrl;
     //   String daumRouteRequestUrl;
 
@@ -157,7 +170,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         addSearch();
 
         ///////////////////////////////////drawer 부분입니다.
-        initDrawer();
+
+
 
         ImageView communityBtn = (ImageView)findViewById(R.id.activity_main_btn_community);
         communityBtn.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +186,26 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
                 startActivity(intent);
             }
         });
+        initDrawer();
+
+      Picasso.with(this).load(curUser.getImageUri()).into(new Target() {
+
+          @Override
+          public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+              userImageView.setImageDrawable(new RoundedAvatarDrawable(bitmap, bitmap.getWidth(), bitmap.getWidth()));
+          }
+
+          @Override
+          public void onBitmapFailed(Drawable errorDrawable) {
+
+          }
+
+          @Override
+          public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+          }
+      });
+        userNameTextView.setText(curUser.getUserName());
     }
     private void initDrawer(){
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -185,8 +219,13 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
             item.setTitle(s);
         }
+
         mNavView.setNavigationItemSelectedListener(this);
+        mNavHeader = (RelativeLayout) mNavView.getHeaderView(0);
+        userImageView = (ImageView) mNavHeader.findViewById(R.id.userImageView);
+        userNameTextView = (TextView)mNavHeader.findViewById(R.id.userName);
     }
+
     @Override
     protected void onDestroy()
     {
