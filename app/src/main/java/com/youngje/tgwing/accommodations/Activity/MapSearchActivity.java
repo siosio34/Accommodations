@@ -13,8 +13,12 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.text.SpannableString;
+import android.text.style.AlignmentSpan;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -77,6 +81,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
     private DrawerLayout mDrawer;
     private NavigationView mNavView;
+    private Menu mDrawerMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,9 +154,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         addSearch();
 
         ///////////////////////////////////drawer 부분입니다.
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavView = (NavigationView) findViewById(R.id.nav_view);
-        mNavView.setNavigationItemSelectedListener(this);
+        initDrawer();
 
         ImageView communityBtn = (ImageView)findViewById(R.id.activity_main_btn_community);
         communityBtn.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +170,20 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             }
         });
     }
+    private void initDrawer(){
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavView = (NavigationView) findViewById(R.id.nav_view);
+        mDrawerMenu = mNavView.getMenu();
+        String[] meunItems = getResources().getStringArray(R.array.drawer_menu_items);
+        for(int i=0;i<meunItems.length;i++){
+            MenuItem item = mDrawerMenu.getItem(i);
+            SpannableString s = new SpannableString(meunItems[i]);
+            s.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, s.length(), 0);
 
+            item.setTitle(s);
+        }
+        mNavView.setNavigationItemSelectedListener(this);
+    }
     @Override
     protected void onDestroy()
     {
@@ -448,16 +464,12 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         mDrawer.closeDrawer(mNavView);
 
         switch(id){
-            case R.id.nav_home:
-                Toast.makeText(this,"nav_home",Toast.LENGTH_SHORT).show(); break;
-            case R.id.nav_attend:
-                Toast.makeText(this,"nav_attend",Toast.LENGTH_SHORT).show(); break;
-            case R.id.nav_attendlist:
-                Toast.makeText(this,"nav_attendlist",Toast.LENGTH_SHORT).show();  break;
-            case R.id.nav_info:
-                Toast.makeText(this,"nav_info",Toast.LENGTH_SHORT).show(); break;
-            case R.id.nav_logout:
-                Toast.makeText(this,"nav_logout",Toast.LENGTH_SHORT).show(); break;
+            case R.id.drawer_My_Review:
+                Toast.makeText(this,"drawer_My_Review",Toast.LENGTH_SHORT).show(); break;
+            case R.id.drawer_Settings:
+                Toast.makeText(this,"drawer_Settings",Toast.LENGTH_SHORT).show(); break;
+            case R.id.drawer_Announcement:
+                Toast.makeText(this,"drawer_Announcement",Toast.LENGTH_SHORT).show();  break;
         }
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.closeDrawer(GravityCompat.START);
