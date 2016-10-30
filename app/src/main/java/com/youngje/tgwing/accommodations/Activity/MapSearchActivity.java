@@ -70,6 +70,7 @@ import org.json.JSONObject;
 
 public class MapSearchActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener, NavigationView.OnNavigationItemSelectedListener {
 
+    private final static String TAG = "MapSearchActivity";
     private ImageView btnMore;
     private View layoutMore;
     private EditText mSearchView;
@@ -293,21 +294,37 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         for(int i=0; i < markerList.size(); i++) {
             com.youngje.tgwing.accommodations.Marker marker = markerList.get(i);
             int iDistance = (int) marker.getDistance();
+            String iTitle;
 
-            adapter.addItem(iDistance+"m",
-                    marker.getTitle(), "종류", 3, "(6)");
+            if(marker.getTitle().length() > 13) {
+                iTitle = (String) marker.getTitle().substring(0, 11);
+                iTitle = iTitle + "...";
+            } else {
+                iTitle = (String) marker.getTitle();
+            }
+
+            adapter.addItem(iDistance+"m", iTitle, "종류", 3, "6");
         }
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // get item
-                SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
-                startActivity(new Intent(getApplicationContext(), SearchListDetailView.class));
-                // TODO : use item data.
+                if(v.getId() == R.id.listview_navigation ){
+                    // get item
+                    SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
+                    // 네비게이션 이벤트
+                    Log.d(TAG, "Activate Navigation : " + item.getTitle());
+                } else {
+                    // get item
+                    SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
+                    startActivity(new Intent(getApplicationContext(), SearchListDetailView.class));
+                    // TODO : use item data.
+                }
+
             }
         });
     }
+
 
     public void categorySearch(DataFormat.DATATYPE dataFormat){
         mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);

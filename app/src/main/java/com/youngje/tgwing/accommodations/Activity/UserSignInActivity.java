@@ -287,7 +287,6 @@ public class UserSignInActivity extends BaseActivity implements
                            // myRef.child("currentUser").child(userTemp.getUserId()).setValue(userTemp);
 
                             moveToMapSearchActivity();
-
                             hideProgressDialog();
                             //startActivity(new Intent(getApplicationContext(), WriteReviewActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
