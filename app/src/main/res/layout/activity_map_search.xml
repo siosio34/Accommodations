@@ -27,15 +27,16 @@
             <!-- 탭뷰 -->
             <ImageView
                 android:id="@+id/activity_main_btn_menu"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="3dp"
                 android:onClick="onDrawer"
                 android:src="@mipmap/ic_icon_menu" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_container_textbox"
                 android:gravity="center_vertical"
@@ -62,7 +63,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginRight="6dp"
                 android:clickable="true"
                 android:src="@mipmap/ic_icon_more" />
 
@@ -157,7 +158,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="176dp"
                 android:layout_gravity="bottom">
 
                 <LinearLayout
@@ -191,14 +192,29 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_above="@id/activity_map_search_listLayout"
+                <ToggleButton
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:id="@+id/myLocationToggle"
+                    android:textOn=""
+                    android:textOff=""
+
+                    android:background="@drawable/toggle_button"
+                    android:layout_below="@+id/activity_map_search_listLayout"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="16dp"
+                    android:layout_alignParentEnd="true" />
+
+                <ImageView
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
                     android:id="@+id/activity_main_btn_community"
-                    android:src="@mipmap/ic_people_black_48dp" />
+                    android:src="@mipmap/ic_people_black_48dp"
+                    android:layout_below="@+id/myLocationToggle"
+                    android:layout_alignLeft="@+id/myLocationToggle"
+                    android:layout_alignStart="@+id/myLocationToggle" />
 
             </RelativeLayout>
 
