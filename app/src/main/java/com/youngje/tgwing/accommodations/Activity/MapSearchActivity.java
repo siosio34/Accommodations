@@ -189,6 +189,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     @Override
     protected void onDestroy()
     {
+        super.onDestroy();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
         myRef.child("currentUser").child(curUser.getUserId()).removeValue();
