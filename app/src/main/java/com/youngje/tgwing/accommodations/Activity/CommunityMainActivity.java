@@ -581,7 +581,7 @@ public class CommunityMainActivity extends AppCompatActivity implements View.OnC
                     }
                 });
 
-                final TextView distanceView = (TextView)findViewById(R.id.community_main_chatroom_distance);
+                final TextView distanceView = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_distance);
                 if(!User.getMyInstance().getUserId().equals(chatManagerId)) {
                     databaseReference.child("users").child(chatManagerId).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
