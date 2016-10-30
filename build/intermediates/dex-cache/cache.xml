@@ -3,375 +3,6 @@
 
     <item
         is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-24.2.1_8143703a3fe25d6098f741b811e8d4297bd8f58e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="8a36d229011e75f0caef408e1adf0d3fd4d94e02">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-9.4.0_9310614f7aab78c40872502f962d31202152757f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-24.2.1_3aa0ca26f724b5764227bdbe58a2d9143be01d24/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.2.1_aec516316af45a11321bf441f4dcf078f2a98fb1/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_4fff9e8037980abdfc9e9204f0a7d4f5c2e3dead/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-24.2.1_5b59e939fc9eb514f9290c7df156b127ea503a5f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="618485fef3ebe12127f7622abbc9b5b39057b5c2">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-9.4.0_c7453849f43e53955b4be169a8e02b47ee47c3de/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database-connection/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="0e4d53465cc141bec58f18a894e4c4e80633fa32">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-database-connection-9.4.0_686f0e25dded983aef063fd15e77aeb6bc20f99b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1/5e303a03d04e6788dddfa3655272580ae0fc13bb/json-simple-1.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="5e303a03d04e6788dddfa3655272580ae0fc13bb">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/json-simple-1.1_f9180a907a02a92ac1b2bd37a0681cc6959e7882/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="18b5697c65c4fe5b7381613b8b8ae9ac52e26fa7">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-9.4.0_c8606838acc5c03ae4204b8aa151a30ec6a3fd01/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-24.2.1_83cddb24a3ca8b585b18b8c3620ba8e4904567f4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.1/support-annotations-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.2.1_379dd2ae44fff134ea80a6a85b1f274660da29e9/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.firebase/firebase-storage/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="98e97da89d4df8e2f6eba63498d3d46a587372f2">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-storage-9.4.0_abd9fdcf89f709c7b0acd86e4257901f4e7ca53d/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.2.0/f7873a2ebde246a45c2a8d6f3247108b4c88a879/okhttp-3.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="f7873a2ebde246a45c2a8d6f3247108b4c88a879">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.2.0_a8fb04b4dc804d7f0633277a1f14fc5c967dd456/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-24.2.1_c3ca2d4d74ad557ff0ee255f119e28810cc1f660/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-24.2.1_b7928ea91fe8640005af4247d7a297181b3a91cd/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="4b630471536351be7c3c3100735c75b7ad2cbd84">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-auth-9.4.0_454db273f60e95d7298464bf8bc19229a5dda58d/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="3b7173b3df4c7029699919414400041f64519e34">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-iid-9.4.0_2d1be859f84afdbc65dde9929fb84a2304aace5e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-24.2.1_62cb9cb9fb74e4cb3a2eb9562ef82651a86e2d4f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="84bf369090a8f7e293817efbd6ccf31ada1be32b">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-database-9.4.0_f5c7a1acff7eb6997ecd1a4e43d62e744b57262a/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.6.0_e60d22f3c7068d70b16f180d177e12a980f119fe/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.firebase/firebase-storage-common/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="c8f5d56f8f8a287c95e02c542baade138a378048">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-storage-common-9.4.0_b6e2a831581ca50faf6b91c4a5ec701baeb0d6af/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="58c9f5ee817fdb8b658fd7455fadfb74119f7ee9">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-base-9.4.0_0537a3448f7f207b9399856f9fd34ec904412c5b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth-common/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="34762013d39dbe6c656050589c44e8b61b9a2c5d">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-auth-common-9.4.0_86bd6d8b8e41a66dcaef3d10c73c093d8ac6a8b0/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/design/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-24.2.1_f663f6d5eb6d95b3bc01edbcca7889bb8c83cd61/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="40162068a6f7083a23c224323ff948095eb44e1d">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_1d1587e87632c495603d7b1adc9061f757a31ecb/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="541eb1bb7caed8e79670a1db451171437338d41e">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_0da21982b00dfce87e73ca0764bf0cf10c169e78/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth-module/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="6bc41d9d6fd12d2ef23c785a259011001f4a1a5b">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-auth-module-9.4.0_e3d7c2a5e2d30123af669aa01c89f9c43ee42bb5/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-24.2.1_5587637ce2543960eb9ab825b73bd1ef1ad877af/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/picasso-2.5.2_d5a113ffe3582ce3974f82f5757f12c1e45bdb0f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="4348dd26d83b56c2058b768222c3271bce911724">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-9.4.0_9eb63f1d4994338a9ed863519e684c3337792991/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_156d02846cfc45319fb0fb90bd73d6a3128d4240/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="867dad63c33388ff8c7644b236579355036d075f">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_6ff5f77237171ee93c61fbb13cde6c86ded82834/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="a440fb3fec30ff925e9f601cc458fb6671834cb2">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-impl-9.4.0_abb6c2e456968aa50b933e77bc612c0fdf2ef8ba/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="3dee4ce5844d39d843d503fb8fe04e51e5bfffac">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-9.4.0_00fb3c6ecd02d87ef9cc6049e95a178c3bcd534b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/libs/libDaumMapAndroid.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b365841bba8bc2d592e4b22008885a6f0cd1c77d">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/2/libDaumMapAndroid_688710470a4a9170f8df6ea0a1e8252d297c8cd5/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="ac78f93fc89c497a65f9d9a352cd405996d2f65a">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-messaging-9.2.1_fd7b6f4ebd01be44766cbccbc4ea1a42132fdf6f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="88848548ab56d4fbf3d2d1b0c85bf1ff9b4c1f4b">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-9.4.0_1622a912255fecfa44e431a0fb0574af35252ca8/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_1c672f46e67e7417599e7ee07bd5481f5b9cfe49/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-24.2.1_b0a1acd0f14937932eb58237c2e3f32ab0545936/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
-        <dex dex="/Users/joyeongje/Downloads/Accommodations/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_07e7671d3f856434073331a6f9a5ecba3227417f/classes.dex" />
-<<<<<<< HEAD
-=======
-=======
         jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
@@ -387,6 +18,15 @@
         revision="24.0.2"
         sha1="b365841bba8bc2d592e4b22008885a6f0cd1c77d">
         <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\2\libDaumMapAndroid_c5d5a7083b9577a3b057770bee5e9cd61c3d9d5b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_db4d9209b2754c16b37c7c912dd44539227ea584\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -417,123 +57,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_71bc811e16dc8a08cc33fed5540a62a18af2e18c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-auth-base\9.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="58c9f5ee817fdb8b658fd7455fadfb74119f7ee9">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-auth-base-9.4.0_3fdec42ecaeee3c3768006befe31ca0bba0cb194\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\androidStudio\Accommodations\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="031f23e1d5ddfc5a405358bcb4087b17940a16d7">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_effe87d750d2dae70b90e61989ecc672b539c14a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.1_81ac76eaa207f54ed0a9c538d1ba9e5867ad83af\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database-connection\9.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="0e4d53465cc141bec58f18a894e4c4e80633fa32">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-database-connection-9.4.0_0a83f5258f8e3c57a526ef4af428d2b22d853635\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\SEGU\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.6.0\98476622f10715998eacf9240d6b479f12c66143\okio-1.6.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.6.0_eb509a7ba4d3358e658c3b78026ce45d03277349\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.firebase\firebase-iid\9.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="3b7173b3df4c7029699919414400041f64519e34">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-iid-9.4.0_0dfe53178954e4741f6772d67cffa6cb4e68cc32\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\9.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="a440fb3fec30ff925e9f601cc458fb6671834cb2">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-analytics-impl-9.4.0_1172c7b1e2c5cfa124c5e2651517f0265d559cda\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth-module\9.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="6bc41d9d6fd12d2ef23c785a259011001f4a1a5b">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-auth-module-9.4.0_ac80c26c1655d9453edeecaef55b0dfb6c79b2fa\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_067b8e79530860d69fc09ae70b9e952d74cb75c1\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_92086d223b289f19db938ecf68002363ff2cf008\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.firebase\firebase-messaging\9.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="ac78f93fc89c497a65f9d9a352cd405996d2f65a">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-messaging-9.2.1_12461ef3c6a0d325d1330076404c0af6608096f8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
-        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_db4d9209b2754c16b37c7c912dd44539227ea584\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
@@ -543,12 +66,30 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_71bc811e16dc8a08cc33fed5540a62a18af2e18c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\SEGU\.gradle\caches\modules-2\files-2.1\com.googlecode.json-simple\json-simple\1.1\5e303a03d04e6788dddfa3655272580ae0fc13bb\json-simple-1.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="5e303a03d04e6788dddfa3655272580ae0fc13bb">
         <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\json-simple-1.1_c539276997beed708254dc24b6be539226571691\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-auth-base\9.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="58c9f5ee817fdb8b658fd7455fadfb74119f7ee9">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-auth-base-9.4.0_3fdec42ecaeee3c3768006befe31ca0bba0cb194\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -576,6 +117,15 @@
         revision="24.0.2"
         sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
         <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.1_eb6332ebaf147e2bc55bb557f0426d70ad89d1df\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\androidStudio\Accommodations\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9ff438d0f1bfd274e155def77dc486b3a072ff73">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_effe87d750d2dae70b90e61989ecc672b539c14a\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -615,6 +165,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.1_81ac76eaa207f54ed0a9c538d1ba9e5867ad83af\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth\9.4.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -630,6 +189,15 @@
         revision="24.0.2"
         sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
         <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.1_ff2dbcf5f92c88e646ee8e2a6d2d87795504119e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database-connection\9.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="0e4d53465cc141bec58f18a894e4c4e80633fa32">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-database-connection-9.4.0_0a83f5258f8e3c57a526ef4af428d2b22d853635\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -678,6 +246,24 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\SEGU\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.6.0\98476622f10715998eacf9240d6b479f12c66143\okio-1.6.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.6.0_eb509a7ba4d3358e658c3b78026ce45d03277349\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.firebase\firebase-iid\9.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="3b7173b3df4c7029699919414400041f64519e34">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-iid-9.4.0_0dfe53178954e4741f6772d67cffa6cb4e68cc32\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\SEGU\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
         jumboMode="true"
         optimize="true"
@@ -687,12 +273,30 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\9.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="a440fb3fec30ff925e9f601cc458fb6671834cb2">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-analytics-impl-9.4.0_1172c7b1e2c5cfa124c5e2651517f0265d559cda\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.firebase\firebase-storage-common\9.4.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="c8f5d56f8f8a287c95e02c542baade138a378048">
         <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-storage-common-9.4.0_1deb1fed8d9aeab857b472510ca803bd1119f2d0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth-module\9.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6bc41d9d6fd12d2ef23c785a259011001f4a1a5b">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-auth-module-9.4.0_ac80c26c1655d9453edeecaef55b0dfb6c79b2fa\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -714,12 +318,30 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_067b8e79530860d69fc09ae70b9e952d74cb75c1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\androidStudio\Accommodations\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="a105360fa25d65e4feb41fcce81903c7ba80c89c">
+        sha1="f9fb8a35a61981c9bf49bf2e874b306d03044168">
         <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_7ebc5de3d1f87d1473f2a3f718e420e3c9b529a9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_92086d223b289f19db938ecf68002363ff2cf008\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -738,8 +360,15 @@
         revision="24.0.2"
         sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
         <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-24.2.1_4689818552115c712e53573160cb1fd818e6c314\classes.dex" />
->>>>>>> 7d8b6b83687163c0386dc0de92c5ebf5a1a6e4ef
->>>>>>> ce1b9bf0a7cedc08f0073d738359869e2cea92c9
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\androidStudio\Accommodations\app\build\intermediates\exploded-aar\com.google.firebase\firebase-messaging\9.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="ac78f93fc89c497a65f9d9a352cd405996d2f65a">
+        <dex dex="C:\androidStudio\Accommodations\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-messaging-9.2.1_12461ef3c6a0d325d1330076404c0af6608096f8\classes.dex" />
     </item>
 
 </items>
