@@ -29,9 +29,10 @@
                 android:id="@+id/activity_main_btn_menu"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="4dp"
                 android:onClick="onDrawer"
-                android:src="@mipmap/ic_icon_menu" />
+                android:src="@drawable/ic_icon_menu" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -65,7 +66,7 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="6dp"
                 android:clickable="true"
-                android:src="@mipmap/ic_icon_more" />
+                android:src="@drawable/ic_icon_more" />
 
         </LinearLayout>
         <!-- end 상단 NavBar -->
@@ -158,14 +159,14 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="176dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom">
 
                 <LinearLayout
                     android:id="@+id/activity_map_search_listLayout"
                     android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="#FFFFFF"
                     android:visibility="gone">
@@ -188,33 +189,35 @@
                     <ListView
                         android:id="@+id/activity_map_search_listView"
                         android:layout_width="match_parent"
-                        android:layout_height="176dp"/>
+                        android:layout_height="200dp"/>
 
                 </LinearLayout>
 
-                <ToggleButton
-                    android:layout_marginTop="25dp"
-                    android:layout_marginBottom="15dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="16dp"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:id="@+id/myLocationToggle"
-                    android:textOn=""
-                    android:textOff=""
+                    android:layout_marginBottom="16dp"
+                    android:orientation="vertical"
+                    android:layout_above="@id/activity_map_search_listLayout"
+                    android:layout_alignParentRight="true">
 
-                    android:background="@drawable/toggle_button"
-                    android:layout_below="@+id/activity_map_search_listLayout"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    <ToggleButton
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:layout_marginBottom="16dp"
+                        android:id="@+id/myLocationToggle"
+                        android:textOn=""
+                        android:textOff=""
+                        android:background="@drawable/toggle_button" />
 
-                <ImageView
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:id="@+id/activity_main_btn_community"
-                    android:src="@mipmap/ic_people_black_48dp"
-                    android:layout_below="@+id/myLocationToggle"
-                    android:layout_alignLeft="@+id/myLocationToggle"
-                    android:layout_alignStart="@+id/myLocationToggle" />
+                    <ImageView
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:id="@+id/activity_main_btn_community"
+                        android:src="@mipmap/ic_people_black_48dp" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
