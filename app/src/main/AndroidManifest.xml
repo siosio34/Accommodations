@@ -28,9 +28,9 @@
             android:name=".Activity.MapSearchActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".Activity.CommunityChatroomActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        </activity>
         <activity android:name=".Activity.SearchListDetailView" />
-        <activity android:name=".Activity.CommunityMainActivity" />
         <activity android:name=".Activity.WriteReviewActivity" />
         <activity android:name=".Activity.ReadMarkerActivity"></activity>
         

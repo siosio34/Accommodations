@@ -20,6 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/navbar"
             android:background="#FFFFFF"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -153,11 +154,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:layout_gravity="top"
+                android:id="@+id/shadow_bottom"
+                android:orientation="horizontal"
                 android:background="@drawable/ic_container_shadow_bottom" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/map_search_relativelayout"
                 android:layout_gravity="bottom">
 
                 <LinearLayout
@@ -201,9 +205,49 @@
                     android:src="@mipmap/ic_people_black_48dp" />
 
             </RelativeLayout>
-
         </FrameLayout>
-
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1200px"
+            android:id="@+id/community_main"
+            android:visibility="gone">
+            <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:id="@+id/community_main_arrowlayout"
+            android:background="#BB000000">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:id="@+id/community_main_arrow"
+                android:background="@drawable/uparrow"/>
+            </LinearLayout>
+             -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="370dp"
+                android:id="@+id/community_main_bottom"
+                android:layout_weight="15">
+                <android.support.v4.view.ViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/community_main_chatroom_viewpager">
+                </android.support.v4.view.ViewPager>
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/community_main_createChatroom"
+                    android:background="#FF6679D8"
+                    android:src="@drawable/makeroom"/>
+            </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -40,17 +40,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/community_main_chatroom_nationality"
-                    android:layout_marginRight="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/community_main_chatroom_writerName"
                     android:textSize="16dp"
                     android:textColor="@color/community_main_create_chatroom_name"
+                    android:layout_marginRight="5dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/community_main_chatroom_nationality"
                     android:layout_marginRight="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -60,29 +60,34 @@
                     android:textColor="#FF000000"
                     android:layout_gravity="right"/>
             </LinearLayout>
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
-                android:textSize="18dp"
-                android:textColor="#FF000000"
-                android:id="@+id/community_main_chatroom_title"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#FF000000"
+                    android:id="@+id/community_main_chatroom_title"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/number"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/community_main_chatroom_number"
+                    android:textColor="#FF000000" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:id="@+id/community_main_chatroom_number"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="#FFFFFFFF"
-            android:background="#FF123456"
-            android:layout_marginRight="5dp"/>
     </LinearLayout>
 </LinearLayout>
