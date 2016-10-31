@@ -67,7 +67,7 @@ public class DataFormat {
 
         // ------------- 다음 카테고리 -------------------- //
         MART("CS2"), KIDHOUSE("PS3"), SCHOOL("SC4"), INSTITUDE("AC5"), PARKING("PK6"), OIL("OL7"),
-        SUBWAY("SW8"), BANK("BK9"), CUSTOM("CT1"), AG2("AG2"), PO3("PO3"), AT4("AT4"), MOTEL("AD5"), FOOD("FD6"),
+        SUBWAY("SW8"), BANK("BK9"), CUSTOM("CT1"), AG2("AG2"), PO3("PO3"), TOUR("AT4"), MOTEL("AD5"), FOOD("FD6"),
         CAFE("CE7"), HOSPITAL("HP8"), PHARMACY("PM9"),
 
 

@@ -22,6 +22,8 @@ abstract public class Marker implements Comparable<Marker> {
     private String markerURL;
     private Double distance;
 
+    public static List<Marker> markerList;
+
     public Marker() {
 
     }

@@ -58,10 +58,10 @@ public class LocationUtil implements LocationListener {
             }
 
             if(isGpsEnabled)
-                locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5000, this);
+                locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1000, this);
 
             if(isNetworkEnabled)
-                locationMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,10000,5000, this);
+                locationMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,1000,1000, this);
 
             try {
                 // 위치 관리자로부터 gps, 네트워크의 마지막으로 알려진 장소를 얻어 옮

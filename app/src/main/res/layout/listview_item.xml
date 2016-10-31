@@ -108,8 +108,9 @@
                 android:layout_gravity="right"
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
+                android:id="@+id/navigation_button"
                 android:layout_marginLeft="15dp"
-
+                android:onClick="navigationClicked"
                 android:layout_marginBottom="8dp"
                 android:src="@drawable/ic_icon_route"
                  />
@@ -118,7 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="길찾기"
+                android:text="길 찾 기"
                 android:textStyle="bold"
                 android:textSize="10sp"/>
 

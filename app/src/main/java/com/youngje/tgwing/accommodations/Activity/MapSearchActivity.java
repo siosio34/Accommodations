@@ -72,6 +72,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import static com.youngje.tgwing.accommodations.Marker.markerList;
 import static com.youngje.tgwing.accommodations.R.string.daum_api_key;
 
 import org.json.JSONArray;
@@ -98,6 +99,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     private TextView userNameTextView;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +121,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
                     layoutMore.setVisibility(View.GONE);
                     //mListLayout.setVisibility(View.GONE);
                 } else {
+
                     layoutMore.setVisibility(View.VISIBLE);
                 }
             }
@@ -168,6 +171,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
           }
       });
         userNameTextView.setText(curUser.getUserName());
+
+
     }
     private void initDrawer(){
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -243,7 +248,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
                         String HTTPResult = httpHandler.execute(createUrl).get();
                         Log.i("키워드",HTTPResult);
                         DaumDataProcessor DDP = new DaumDataProcessor();
-                        List<com.youngje.tgwing.accommodations.Marker> markerList = DDP.load(HTTPResult, null);
+                        markerList = DDP.load(HTTPResult, null);
 
                         mMapView.removeAllPOIItems();
                         showResult(markerList);
@@ -268,10 +273,12 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
     // TODO: 2016. 10. 31. 리스트 뷰 작업해야됨.
     // ListView 리스트뷰
-    public void searchListView(List<com.youngje.tgwing.accommodations.Marker> markerList) {
+
+    public void searchListView(List<Marker> markerList) {
         // TODO: 2016. 10. 31. 거리 1000m 넘으면 수정이 필요하지않을가 싶네.
          
         ListView listview;
+        ImageView navigationView;
         SearchListViewAdapter adapter;
         TextView ratingText = (TextView) findViewById(R.id.listview_rating_score);
 
@@ -280,10 +287,11 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
         // 리스트뷰 참조 및 Adapter달기
         listview = (ListView) findViewById(R.id.activity_map_search_listView);
+        //navigationView = (ImageView)listview.findViewById(R.id.navigation_button);
         listview.setAdapter(adapter);
 
-        for(int i=0; i < markerList.size(); i++) {
-            Marker marker = markerList.get(i);
+        for(int i = 0; i < Marker.markerList.size(); i++) {
+            Marker marker = Marker.markerList.get(i);
             int iDistance = (int) marker.getDistance();
             String iTitle;
 
@@ -293,7 +301,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             } else {
                 iTitle = marker.getTitle();
             }
-
             adapter.addItem(iDistance+" m", iTitle,marker.getMarkerType(), 3, "6");
         }
 
@@ -301,20 +308,33 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                if(v.getId() == R.id.listview_navigation ){
+
+                Log.d(TAG, "Activate : " + v.getId());
+                Log.d(TAG, "Activate22" + String.valueOf(id));
+
+                if(v.getId() == R.id.navigation_button){
                     // get item
                     SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
                     // 네비게이션 이벤트
                     Log.d(TAG, "Activate Navigation : " + item.getTitle());
                 } else {
                     // get item
-                    SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
+                    Marker item = Marker.markerList.get(position);
+                    Log.d(TAG, "Activate Navigation1 : " + item.getId());
+                    Log.d(TAG, "Activate Navigation2 : " + item.getTitle());
+                    Log.d(TAG, "Activate Navigation3 : " + item.getLat());
+                    Log.d(TAG, "Activate Navigation4 : " + item.getLon());
+                    // TODO: 2016. 10. 31. 적어도 id 는 보내야됨 
                     startActivity(new Intent(getApplicationContext(), SearchListDetailView.class));
                     // TODO : use item data.
                 }
-
             }
+
         });
+
+
+
+
     }
 
 
@@ -336,7 +356,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             try {
                 String HTTPResult = httpHandler.execute(createUrl).get();
                 SeoulDataProcessor SDP = new SeoulDataProcessor();
-                final List<com.youngje.tgwing.accommodations.Marker> markerList = SDP.load(HTTPResult, dataFormat);
+                markerList = SDP.load(HTTPResult, dataFormat);
 
                 mMapView.removeAllPOIItems();
                 showResult(markerList);
@@ -368,7 +388,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             try{
                 String HTTPResult = httpHandler.execute(createUrl).get();
                 DaumDataProcessor DDP = new DaumDataProcessor();
-                List<com.youngje.tgwing.accommodations.Marker> markerList = DDP.load(HTTPResult, dataFormat);
+                markerList = DDP.load(HTTPResult, dataFormat);
 
                 mMapView.removeAllPOIItems();
                 showResult(markerList);
@@ -389,7 +409,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     public void categoryClicked(View v) throws ExecutionException, InterruptedException {
         DataFormat.DATATYPE datatype = null;
         switch (v.getId()){
-            case R.id.landmark: datatype = DataFormat.DATATYPE.AT4 ; break;
+            case R.id.landmark: datatype = DataFormat.DATATYPE.TOUR ; break;
             case R.id.restroom: datatype = DataFormat.DATATYPE.TOILET; break;
             case R.id.wifizone: datatype = DataFormat.DATATYPE.WIFI; break;
             case R.id.bank: datatype = DataFormat.DATATYPE.BANK; break;
@@ -730,8 +750,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
        //drawLineFromStartPoint(startPoint,tempArray);
         //요기까지
 
-
-
         // TODO: 2016. 10. 25. navigation
         String fromCoord = "WGS84";
         String toCoord = "WCONGNAMUL";
@@ -777,10 +795,11 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         // TODO: 2016. 10. 25. 이버튼을 클릭햇을때  onNavigationonNavigation 작동
         // TODO: 2016. 10. 25. 한번 더 클릭시 네비게이션 모드 종료
 
+
+
     }
 
 }
-
 
 
 class pointOnMap{

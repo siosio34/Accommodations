@@ -11,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.youngje.tgwing.accommodations.Marker;
 import com.youngje.tgwing.accommodations.R;
+
+import static com.youngje.tgwing.accommodations.Marker.markerList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,7 @@ import java.util.List;
  */
 
 public class SearchListViewAdapter extends BaseAdapter {
+    private static final String TAG = "SearchListViewAdapter";
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private List<SearchListViewItem> listViewItemList = new ArrayList<SearchListViewItem>();
 
@@ -37,7 +41,7 @@ public class SearchListViewAdapter extends BaseAdapter {
 
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         final int pos = position;
         final Context context = parent.getContext();
@@ -55,8 +59,8 @@ public class SearchListViewAdapter extends BaseAdapter {
         holder.ratingBar.setTag(position);
         holder.ratingBar.setRating(getItem(position).getRatingStar());
 
-        // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
 
+        // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         SearchListViewItem listViewItem = listViewItemList.get(position);
@@ -68,8 +72,23 @@ public class SearchListViewAdapter extends BaseAdapter {
         holder.distanceView.setText(getItem(position).getDistance());
         holder.ratingStarView.setText(new Float(getItem(position).getNumOfStar()).toString());
 
+        holder.navigationImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.i("POSITION", String.valueOf(position));
+                Marker marker = markerList.get(position);
+                Log.i("POSITION1", marker.getId());
+                Log.i("POSITION2", marker.getTitle());
+                Log.i("POSITION3", marker.getMarkerType());
+
+
+            }
+        });
+
         return convertView;
     }
+
     private RatingBar.OnRatingBarChangeListener onRatingChangedListener(final ViewHolder holder, final int position) {
         return new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -114,6 +133,7 @@ public class SearchListViewAdapter extends BaseAdapter {
         private TextView categoryView;
         private TextView ReviewNumView;
         private TextView ratingStarView;
+        private ImageView navigationImageView;
 
 
         public ViewHolder(View view) {
@@ -123,6 +143,7 @@ public class SearchListViewAdapter extends BaseAdapter {
             ReviewNumView = (TextView) view.findViewById(R.id.listview_rating_num);
             distanceView = (TextView) view.findViewById(R.id.listview_distance);
             ratingStarView = (TextView) view.findViewById(R.id.listview_rating_score);
+            navigationImageView = (ImageView) view.findViewById(R.id.navigation_button);
 
         }
     }
