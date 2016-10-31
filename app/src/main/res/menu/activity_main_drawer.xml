@@ -4,7 +4,6 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_My_Review"
-            android:checked="true"
             android:title="" />
         <item
             android:id="@+id/drawer_Settings"

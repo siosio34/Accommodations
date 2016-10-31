@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.Image;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -517,13 +516,15 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         mDrawer.closeDrawer(mNavView);
 
         switch(id){
             case R.id.drawer_My_Review:
-                Toast.makeText(this,"drawer_My_Review",Toast.LENGTH_SHORT).show(); break;
+                Intent intent = new Intent(MapSearchActivity.this, MyReviewActivity.class);
+                startActivity(intent);
+                break;
             case R.id.drawer_Settings:
                 Toast.makeText(this,"drawer_Settings",Toast.LENGTH_SHORT).show(); break;
             case R.id.drawer_Announcement:

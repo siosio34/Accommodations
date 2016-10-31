@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -337,7 +336,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(this, new OnFailureListener() {
                     @Override
-                    public void onFailure(@NonNull Exception exception) {
+                    public void onFailure(Exception exception) {
                         // Upload failed
                         Log.w(TAG, "uploadFromUri:onFailure", exception);
                         hideProgressDialog();
