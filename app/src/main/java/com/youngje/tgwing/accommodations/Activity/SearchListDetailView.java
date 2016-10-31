@@ -32,8 +32,6 @@ public class SearchListDetailView extends AppCompatActivity{
     private final static String TAG = "SearchListDetailView";
 
     private SearchListReviewViewAdapter mAdapter;
-    private TextView btnExit;
-    private ImageView btnWriteReview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +49,11 @@ public class SearchListDetailView extends AppCompatActivity{
         listview = (ListView) findViewById(R.id.list_detail_view_listview);
         listview.setAdapter(mAdapter);
 
+        //MainUI 데이터 설정
         mAdapter.addMainUI();
+//        ContextCompat.getDrawable(this,R.drawable.test_img_palace), "경복궁", "고궁", "1200"+"m", "서울시 광화문쪽", "1688-8282"
+
+        //List 데이터 설정
         mAdapter.addItem(ContextCompat.getDrawable(this,R.drawable.face1), 4,ContextCompat.getDrawable(this,R.drawable.googlelogo)
                 ,"Nick","2016.10.23",ContextCompat.getDrawable(this,R.drawable.test_img_palace),"경복궁 정말 좋은 것 같아효", 2000);
         mAdapter.addItem(ContextCompat.getDrawable(this,R.drawable.face1), 5,ContextCompat.getDrawable(this,R.drawable.googlelogo)
@@ -64,24 +66,6 @@ public class SearchListDetailView extends AppCompatActivity{
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                if(view.getId() == R.id.list_detail_main_exit) {
-                    btnExit = (TextView) findViewById(R.id.list_detail_main_exit);
-                    btnExit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            finish();
-                        }
-                    });
-                } else if(view.getId() == R.id.list_detail_view_add_review) {
-                    btnWriteReview = (ImageView) findViewById(R.id.list_detail_view_add_review);
-                    btnWriteReview.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(getApplicationContext(), WriteReviewActivity.class));
-                            Log.d(TAG, "moveTo : WriteReviewActivity.class");
-                        }
-                    });
-                }
             }
         });
     }
@@ -93,9 +77,8 @@ public class SearchListDetailView extends AppCompatActivity{
         private static final int TYPE_MAIN_UI = 0;
         private static final int TYPE_LIST = 1;
         private List<SearchListReviewViewItem> reviewViewItemList = new ArrayList<SearchListReviewViewItem>();
+        private List<SearchListMainItem> reviewMainUIList = new ArrayList<SearchListMainItem>();
         private LayoutInflater inflater;
-
-        private TreeSet mMainUISet = new TreeSet();
 
         public SearchListReviewViewAdapter() {
             inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -115,12 +98,35 @@ public class SearchListDetailView extends AppCompatActivity{
             if (type == TYPE_MAIN_UI) {
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.listview_detail_main_ui, parent, false);
-                    viewHolderMainUI = new ViewHolderMainUI();
+                    viewHolderMainUI = new ViewHolderMainUI(convertView);
                     convertView.setTag(viewHolderMainUI);
                 } else {
                     viewHolderMainUI = (ViewHolderMainUI) convertView.getTag();
                 }
+                SearchListMainItem listMainItem = getMainUI(position);
 
+                convertView.setClickable(false);
+                convertView.setFocusable(false);
+                viewHolderMainUI.btnExit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+                viewHolderMainUI.btnWriteReview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), WriteReviewActivity.class));
+                        Log.d(TAG, "moveTo : WriteReviewActivity.class");
+                    }
+                });
+                // TODO: 데이터가 안들어감!!!!!! 수정필요 (10.31)
+//                viewHolderMainUI.mainImageView.setImageDrawable(listMainItem.getPictureDrawable());
+//                viewHolderMainUI.mainTitle.setText(listMainItem.getTitle());
+//                viewHolderMainUI.mainCategory.setText(listMainItem.getCategory());
+//                viewHolderMainUI.mainLocation.setText(listMainItem.getLocation());
+//                viewHolderMainUI.mainContact.setText(listMainItem.getPhoneNumber());
+//                viewHolderMainUI.mainDistance.setText(listMainItem.getDistance());
             } else {
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.listview_detail_item, parent, false);
@@ -169,6 +175,10 @@ public class SearchListDetailView extends AppCompatActivity{
             return reviewViewItemList.get(position);
         }
 
+        public SearchListMainItem getMainUI(int position) {
+            return reviewMainUIList.get(position);
+        }
+
         @Override
         public int getItemViewType (int position) {
             if(position == 0) {
@@ -200,34 +210,47 @@ public class SearchListDetailView extends AppCompatActivity{
 
         }
 
+        // TODO: 데이터가 자꾸만 안들어감..! 수정필요 (10.31)
         public void addMainUI(){
-//            Drawable pictureDrawable, String title, String category, int distance, String location, String phoneNumber
-            SearchListReviewViewItem item = new SearchListReviewViewItem();
+//            Drawable pictureDrawable, String title, String category, String distance,
+//                    String location, String phoneNumber
 
-            reviewViewItemList.add(item);
+            SearchListMainItem item = new SearchListMainItem();
+//            item.setPictureDrawable(pictureDrawable);
+//            item.setTitle(title);
+//            item.setCategory(category);
+//            item.setDistance(distance);
+//            item.setLocation(location);
+//            item.setPhoneNumber(phoneNumber);
 
-            mMainUISet.add(reviewViewItemList.size()-1);
+            reviewMainUIList.add(item);
+
+            SearchListReviewViewItem addItemNum = new SearchListReviewViewItem();
+            reviewViewItemList.add(addItemNum);
         }
 
-        //    TODO: mainUI에 있는 내용을 변경할 수 있게 viewHolder, Model을 수정!(10.28)
         private class ViewHolderMainUI {
-//            private ImageView mainImageView;
-//            private TextView mainTitle;
-//            private TextView mainDistance;
-//            private TextView mainCategory;
-//            private TextView mainLocation;
-//            private TextView mainContact;
-//            public View view;
-//
-//            public ViewHolderMainUI(View view) {
-//                mainImageView = (ImageView) view.findViewById(R.id.list_detail_main_image);
-//                mainTitle = (TextView) view.findViewById(R.id.list_detail_main_title);
-//                mainDistance = (TextView) view.findViewById(R.id.list_detail_main_distance);
-//                mainCategory = (TextView) view.findViewById(R.id.list_detail_main_category);
-//                mainLocation = (TextView) view.findViewById(R.id.list_detail_main_location);
-//                mainContact = (TextView) view.findViewById(R.id.list_detail_main_phone);
-//                this.view = view;
-//            }
+            private ImageView mainImageView;
+            private TextView mainTitle;
+            private TextView mainDistance;
+            private TextView mainCategory;
+            private TextView mainLocation;
+            private TextView mainContact;
+            private TextView btnExit;
+            private ImageView btnWriteReview;
+            public View view;
+
+            public ViewHolderMainUI(View view) {
+                mainImageView = (ImageView) view.findViewById(R.id.list_detail_main_image);
+                mainTitle = (TextView) view.findViewById(R.id.list_detail_main_title);
+                mainDistance = (TextView) view.findViewById(R.id.list_detail_main_distance);
+                mainCategory = (TextView) view.findViewById(R.id.list_detail_main_category);
+                mainLocation = (TextView) view.findViewById(R.id.list_detail_main_location);
+                mainContact = (TextView) view.findViewById(R.id.list_detail_main_phone);
+                btnExit = (TextView) view.findViewById(R.id.list_detail_main_exit);
+                btnWriteReview = (ImageView) view.findViewById(R.id.list_detail_view_add_review);
+                this.view = view;
+            }
         }
 
         private class ViewHolder {
@@ -334,54 +357,54 @@ public class SearchListDetailView extends AppCompatActivity{
         }
     }
 
-//    public class SearchListMainItem {
-//        private Drawable pictureDrawable;
-//        private String title;
-//        private String category;
-//        private int distance;
-//        private String location;
-//        private String phoneNumber;
-//
-//        public Drawable getPictureDrawable() {
-//            return pictureDrawable;
-//        }
-//        public void setPictureDrawable(Drawable pictureDrawable) {
-//            this.pictureDrawable = pictureDrawable;
-//        }
-//
-//        public String getTitle() {
-//            return title;
-//        }
-//        public void setTitle(String title) {
-//            this.title = title;
-//        }
-//
-//        public String getCategory() {
-//            return category;
-//        }
-//        public void setCategory(String category) {
-//            this.category = category;
-//        }
-//
-//        public int getDistance() {
-//            return distance;
-//        }
-//        public void setDistance(int distance) {
-//            this.distance = distance;
-//        }
-//
-//        public String getLocation() {
-//            return location;
-//        }
-//        public void setLocation(String location) {
-//            this.location = location;
-//        }
-//
-//        public String getPhoneNumber() {
-//            return phoneNumber;
-//        }
-//        public void setPhoneNumber(String phoneNumber) {
-//            this.phoneNumber = phoneNumber;
-//        }
-//    }
+    public class SearchListMainItem {
+        private Drawable pictureDrawable;
+        private String title;
+        private String category;
+        private String distance;
+        private String location;
+        private String phoneNumber;
+
+        public Drawable getPictureDrawable() {
+            return pictureDrawable;
+        }
+        public void setPictureDrawable(Drawable pictureDrawable) {
+            this.pictureDrawable = pictureDrawable;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getCategory() {
+            return category;
+        }
+        public void setCategory(String category) {
+            this.category = category;
+        }
+
+        public String getDistance() {
+            return distance;
+        }
+        public void setDistance(String distance) {
+            this.distance = distance;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+        public void setLocation(String location) {
+            this.location = location;
+        }
+
+        public String getPhoneNumber() {
+            return phoneNumber;
+        }
+        public void setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+        }
+    }
 }

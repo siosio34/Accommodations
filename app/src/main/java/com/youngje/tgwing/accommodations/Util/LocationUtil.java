@@ -37,6 +37,8 @@ public class LocationUtil implements LocationListener {
 
     }
 
+
+
     public LocationUtil(Context appCtx) { // 생성자.
         ctx = appCtx;
         locationMgr = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);

@@ -18,6 +18,7 @@ import java.util.List;
 public class DaumDataProcessor implements DataProcessor {
 
     public static final int MAX_JSON_OBJECTS = 50;
+    String dataType;
 
     // TODO: 2016. 10. 6. 다른 함수 추가해야됨. 
     @Override
@@ -28,7 +29,7 @@ public class DaumDataProcessor implements DataProcessor {
         JSONArray dataArray = root.getJSONObject("channel").getJSONArray("item");
         Marker ma;
 
-        //String dataType = datatype.getValue();
+        dataType = datatype.toString();
 
         int top = Math.min(MAX_JSON_OBJECTS, dataArray.length());
         for (int i = 0; i < top; i++) {
@@ -42,7 +43,7 @@ public class DaumDataProcessor implements DataProcessor {
     public Marker processDAUMJSONObject(JSONObject jsonObject) throws JSONException {
         Marker marker = null;
 
-        marker = new DaumMarker(jsonObject.getString("id"), Double.parseDouble(jsonObject.getString("latitude")), Double.parseDouble(jsonObject.getString("longitude")), jsonObject.getString("title"), jsonObject.getString("placeUrl")
+        marker = new DaumMarker(jsonObject.getString("id"), Double.parseDouble(jsonObject.getString("latitude")), Double.parseDouble(jsonObject.getString("longitude")), jsonObject.getString("title"), dataType
                 , jsonObject.getString("placeUrl"), jsonObject.getDouble("distance"), jsonObject.getString("phone"), jsonObject.getString("address"), jsonObject.getString("newAddress")
                 , jsonObject.getString("category"));
 

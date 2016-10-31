@@ -44,6 +44,7 @@ import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.Data.DaumDataProcessor;
 import com.youngje.tgwing.accommodations.Data.NavigationDataProcessor;
 import com.youngje.tgwing.accommodations.Data.SeoulDataProcessor;
+import com.youngje.tgwing.accommodations.Marker;
 import com.youngje.tgwing.accommodations.Navi;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.User;
@@ -107,45 +108,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         setContentView(R.layout.activity_map_search);
         curlocate = LocationUtil.curlocation;
         curUser = User.getMyInstance();
-
-
-
-        //   String startCreateUrl;
-    //   String endCreateUrl;
-    //   String daumRouteRequestUrl;
-
-    //   String fromCoord = "WGS84";
-    //   String toCoord = "WCONGNAMUL";
-    //   String type = "json";
-    //   String apikey = getString(R.string.daum_api_key);
-
-   //    startCreateUrl = DataFormat.changeCoordRequestURL(37.24433967711934,127.08058512777377,fromCoord,toCoord,type,apikey);
-   //    endCreateUrl = DataFormat.changeCoordRequestURL(37.252086477197,127.07282485359492,fromCoord,toCoord,type,apikey);
-
-   //   try {
-   //       //http://map.naver.com/findroute2/findWalkRoute.nhn?call=route2&output=json&coord_type=naver&search=0&start=127.0798535%2C37.2433617%2C%EA%B2%BD%ED%9D%AC%EB%8C%80%ED%95%99%EA%B5%90+%EA%B5%AD%EC%A0%9C%EC%BA%A0%ED]
-   //       String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
-   //       String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
-   //       JSONObject startJsonObject = new JSONObject(myLocationResult);
-   //       JSONObject endJsonObject = new JSONObject(DestinationResult);
-   //       Double naverStartLat = startJsonObject.getDouble("y");
-   //       Double naverStartLon = startJsonObject.getDouble("x");
-   //       Double naverEndLat = endJsonObject.getDouble("y");
-   //       Double naverEndLon = endJsonObject.getDouble("x");
-   //       daumRouteRequestUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,naverStartLat,naverStartLon,naverEndLat,naverEndLon);
-
-   //       String result = new HttpHandler().execute(daumRouteRequestUrl).get();
-   //       String resultString = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
-
-   //       if(resultString != null)
-   //           Log.i("resultString", resultString);
-
-   //   } catch (InterruptedException | ExecutionException e) {
-   //       e.printStackTrace();
-   //   } catch (JSONException e) {
-   //       e.printStackTrace();
-   //   }
-
 
         btnMore = (ImageView) findViewById(R.id.activity_main_btn_more);
         layoutMore = (View) findViewById(R.id.activity_main_btn_category);
@@ -236,6 +198,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     }
 
 
+
+
     void onDrawer(View view){
         mDrawer.openDrawer(mNavView);
         hideSoftKeyboard();
@@ -293,23 +257,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
                         e.printStackTrace();
                     }
 
-//                    Searcher searcher = new Searcher(); // net.daum.android.map.openapi.search.Searcher
-//                    searcher.searchKeyword(getApplicationContext(), query, latitude, longitude, radius, page, apikey, new OnFinishSearchListener() {
-//                        @Override
-//                        public void onSuccess(List<com.youngje.tgwing.accommodations.Marker> markerList) {
-//                            mMapView.removeAllPOIItems(); // 기존 검색 결과 삭제
-//                            showResult(markerList); // 검색 결과 보여줌
-//                            showSearchResult(markerList); //검색 목록 보여줌
-//                        }
-//
-//                        @Override
-//                        public void onFail() {
-//                            showToast("API_KEY의 제한 트래픽이 초과되었습니다.");
-//                        }
-//
-//                    });
-
-
                 }
 
                 return true;
@@ -319,8 +266,11 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
     }
 
+    // TODO: 2016. 10. 31. 리스트 뷰 작업해야됨.
     // ListView 리스트뷰
     public void searchListView(List<com.youngje.tgwing.accommodations.Marker> markerList) {
+        // TODO: 2016. 10. 31. 거리 1000m 넘으면 수정이 필요하지않을가 싶네.
+         
         ListView listview;
         SearchListViewAdapter adapter;
         TextView ratingText = (TextView) findViewById(R.id.listview_rating_score);
@@ -333,19 +283,20 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         listview.setAdapter(adapter);
 
         for(int i=0; i < markerList.size(); i++) {
-            com.youngje.tgwing.accommodations.Marker marker = markerList.get(i);
+            Marker marker = markerList.get(i);
             int iDistance = (int) marker.getDistance();
             String iTitle;
 
             if(marker.getTitle().length() > 13) {
-                iTitle = (String) marker.getTitle().substring(0, 11);
+                iTitle = marker.getTitle().substring(0, 11);
                 iTitle = iTitle + "...";
             } else {
-                iTitle = (String) marker.getTitle();
+                iTitle = marker.getTitle();
             }
 
-            adapter.addItem(iDistance+"m", iTitle, "종류", 3, "6");
+            adapter.addItem(iDistance+" m", iTitle,marker.getMarkerType(), 3, "6");
         }
+
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -378,28 +329,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         int page = 1; // 페이지 번호 (1 ~ 3). 한페이지에 15개
         String apikey = getString(R.string.daum_api_key);
 
-//        Searcher searcher = new Searcher(); // net.daum.android.map.openapi.search.Searcher
-//        searcher.searchCategory(getApplicationContext(), categoryCode, latitude, longitude, radius, page, apikey, new OnFinishSearchListener() {
-//            @Override
-//            public void onSuccess(final List<com.youngje.tgwing.accommodations.Marker> markerList) {
-//                mMapView.removeAllPOIItems(); // 기존 검색 결과 삭제
-//
-//                showResult(markerList); // 검색 결과 보여줌
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        showSearchResult(markerList); // 검색 리스트 보여줌
-//                    }
-//                });
-//
-//            }
-//
-//            @Override
-//            public void onFail() {
-//                showToast("API_KEY의 제한 트래픽이 초과되었습니다.");
-//            }
-//        });
-
         if(dataFormat.equals(DataFormat.DATATYPE.WIFI) || dataFormat.equals(DataFormat.DATATYPE.TOILET)) {
             HttpHandler httpHandler = new HttpHandler();
             String createUrl = null;
@@ -429,7 +358,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             } catch (ExecutionException | InterruptedException | JSONException e) {
                 e.printStackTrace();
             }
-        }else{
+
+        } else{ // 다음 거 일때
 //            Toast.makeText(this,dataFormat.toString(),Toast.LENGTH_SHORT).show();
 
             HttpHandler httpHandler = new HttpHandler();
@@ -463,7 +393,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             case R.id.restroom: datatype = DataFormat.DATATYPE.TOILET; break;
             case R.id.wifizone: datatype = DataFormat.DATATYPE.WIFI; break;
             case R.id.bank: datatype = DataFormat.DATATYPE.BANK; break;
-            case R.id.market: datatype = DataFormat.DATATYPE.CONVINEIENCE;break;
+            case R.id.market: datatype = DataFormat.DATATYPE.MART;break;
             case R.id.restaurant: datatype = DataFormat.DATATYPE.FOOD; break;
             case R.id.hotel: datatype = DataFormat.DATATYPE.MOTEL; break;
             case R.id.cafe: datatype = DataFormat.DATATYPE.CAFE; break;
@@ -472,41 +402,10 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             default: datatype = null; break;
         }
 
-
-        // TODO: 2016. 10. 15. 합쳐야된다.
-       // if(datatype != null) {
-       //     HttpHandler httpHandler = new HttpHandler();
-        //     String createUrl = null;
-        //     DataFormat.DATATYPE dataFormat = DataFormat.DATATYPE.WIFI;
-        //     createUrl = DataFormat.createSeoulOpenAPIRequestURL(dataFormat, curlocate.getLatitude(), curlocate.getLongitude());
-        //     String HTTPResult = httpHandler.execute(createUrl).get();
-//
-       //     // TODO: 2016. 10. 15. parsing 하는거 만들어야됨
-       // }
-
          categorySearch(datatype);
 
     }
-    /** category codes
-     MT1 대형마트
-     CS2 편의점
-     PS3 어린이집, 유치원
-     SC4 학교
-     AC5 학원
-     PK6 주차장
-     OL7 주유소, 충전소
-     SW8 지하철역
-     BK9 은행
-     CT1 문화시설
-     AG2 중개업소
-     PO3 공공기관
-     AT4 관광명소
-     AD5 숙박
-     FD6 음식점
-     CE7 카페
-     HP8 병원
-     PM9 약국
-     */
+
     private void showToast(final String text) {
         runOnUiThread(new Runnable() {
             @Override
@@ -552,8 +451,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             TextView textViewTitle = (TextView) mCalloutBalloon.findViewById(R.id.title);
             textViewTitle.setText(marker.getTitle());
             TextView textViewDesc = (TextView) mCalloutBalloon.findViewById(R.id.desc);
-            //textViewDesc.setText(item.address);
-            imageViewBadge.setImageDrawable(createDrawableFromUrl(marker.getImageUrl()));
+
             return mCalloutBalloon;
         }
 
@@ -651,6 +549,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         int padding = 100; // px
         mMapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
     }
+
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float v) {
 
@@ -690,22 +589,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             }
         });
 
-        //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
-        pointOnMap startPoint = new pointOnMap(517681,1040128);
-        List<pointOnMap> tempArray = new ArrayList<pointOnMap>();
-
-        tempArray.add(new pointOnMap(517395,1041211));
-        tempArray.add(new pointOnMap(516844,1041182));
-        tempArray.add(new pointOnMap(516768,1041293));
-        tempArray.add(new pointOnMap(516768,1041526));
-        tempArray.add(new pointOnMap(515825,1042243));
-        tempArray.add(new pointOnMap(515864,1042269));
-        tempArray.add(new pointOnMap(516011,1042460));
-
-
-        // TODO: 2016. 10. 24. 네비를 구현할수 있을것 같다
-        drawLineFromStartPoint(startPoint,tempArray);
-        //요기까지
     }
 
     private Object fetch(String address) throws MalformedURLException,IOException {
@@ -779,10 +662,11 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
+        // TODO: 2016. 10. 31. 토스트 안뜨게 해야될것같긴하다
+        // TODO: 2016. 10. 31. 아님 리스트에 하나만뜨게
         com.youngje.tgwing.accommodations.Marker marker = mTagItemMap.get(mapPOIItem.getTag());
         StringBuilder sb = new StringBuilder();
         sb.append("title=").append(marker.getTitle()).append("\n");
-        sb.append("imageUrl=").append(marker.getImageUrl()).append("\n");
         //sb.append("address=").append(item.address).append("\n");
         //sb.append("newAddress=").append(item.newAddress).append("\n");
         //sb.append("zipcode=").append(item.zipcode).append("\n");
@@ -829,6 +713,24 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     }
 
     public void onNavigation(double endLat,double endLon) throws ExecutionException, InterruptedException, JSONException {
+
+        //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
+       //pointOnMap startPoint = new pointOnMap(517681,1040128);
+       //List<pointOnMap> tempArray = new ArrayList<pointOnMap>();
+
+       //tempArray.add(new pointOnMap(517395,1041211));
+       //tempArray.add(new pointOnMap(516844,1041182));
+       //tempArray.add(new pointOnMap(516768,1041293));
+       //tempArray.add(new pointOnMap(516768,1041526));
+       //tempArray.add(new pointOnMap(515825,1042243));
+       //tempArray.add(new pointOnMap(515864,1042269));
+       //tempArray.add(new pointOnMap(516011,1042460));
+
+       //// TODO: 2016. 10. 24. 네비를 구현할수 있을것 같다
+       //drawLineFromStartPoint(startPoint,tempArray);
+        //요기까지
+
+
 
         // TODO: 2016. 10. 25. navigation
         String fromCoord = "WGS84";
