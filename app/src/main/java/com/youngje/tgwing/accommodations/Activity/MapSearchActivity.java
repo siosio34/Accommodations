@@ -9,8 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.Image;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -200,8 +198,6 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                 DatabaseReference myRef = database.getReference();
                 myRef.child("currentUser").child(curUser.getUserId()).setValue(curUser);
                 changeMapSearchToCommunity();
-                //Intent intent = new Intent(MapSearchActivity.this, CommunityMainActivity.class);
-                //startActivity(intent);
 
             }
         });
@@ -487,13 +483,15 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         mDrawer.closeDrawer(mNavView);
 
         switch(id){
             case R.id.drawer_My_Review:
-                Toast.makeText(this,"drawer_My_Review",Toast.LENGTH_SHORT).show(); break;
+                Intent intent = new Intent(MapSearchActivity.this, MyReviewActivity.class);
+                startActivity(intent);
+                break;
             case R.id.drawer_Settings:
                 Toast.makeText(this,"drawer_Settings",Toast.LENGTH_SHORT).show(); break;
             case R.id.drawer_Announcement:
@@ -1009,14 +1007,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                     }
                 }
                 else {
-                    /*
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(CommunityMainActivity.this, "방 입장에 실패하였습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    */
+
                     enterRoom(chatManagerId);
                 }
                 System.out.println(databaseError);
@@ -1446,8 +1437,6 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                 ImageView chatroomNationality = (ImageView)chatroomView.findViewById(R.id.community_main_chatroom_nationality);
                 //chatroom.getChatroomWriterNationality()
                 chatroomNationality.setBackgroundResource(R.drawable.america);
-                //Picasso.with(CommunityMainActivity.this).load("googlelogo.png").into(chatroomNationality);
-
                 //set chatroom number
                 TextView chatroomNumber = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_number);
                 if(chatroom.getUserList() != null)
