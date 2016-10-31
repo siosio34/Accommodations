@@ -256,9 +256,6 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         myRef.child("currentUser").child(curUser.getUserId()).removeValue();
     }
 
-
-
-
     void onDrawer(View view){
         mDrawer.openDrawer(mNavView);
         hideSoftKeyboard();
