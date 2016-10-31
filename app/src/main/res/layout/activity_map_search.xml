@@ -20,6 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/navbar"
             android:background="#FFFFFF"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -52,10 +53,12 @@
                     android:background="@null"
                     android:hint="Search" />
 
+                <!--
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@mipmap/ic_icon_mic" />
+                    -->
 
             </LinearLayout>
 
@@ -155,6 +158,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:layout_gravity="top"
+                android:id="@+id/shadow_bottom"
+                android:orientation="horizontal"
                 android:background="@drawable/ic_container_shadow_bottom" />
 
             <RelativeLayout
@@ -217,12 +222,61 @@
                         android:id="@+id/activity_main_btn_community"
                         android:src="@mipmap/ic_people_black_48dp" />
 
+                    <ImageView
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:id="@+id/community_main_createChatroom"
+                        android:src="@drawable/ic_icon_add_review"
+                        android:visibility="gone"/>
                 </LinearLayout>
-
             </RelativeLayout>
-
         </FrameLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="224dp"
+            android:id="@+id/community_main"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:background="#1B4C35"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Community"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"/>
+            </LinearLayout>
 
+            <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:id="@+id/community_main_arrowlayout"
+            android:background="#BB000000">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:id="@+id/community_main_arrow"
+                android:background="@drawable/uparrow"/>
+            </LinearLayout>
+             -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/community_main_bottom"
+                android:layout_weight="15">
+                <android.support.v4.view.ViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/community_main_chatroom_viewpager">
+                </android.support.v4.view.ViewPager>
+            </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -10,8 +10,8 @@ public class SeoulMarker extends Marker{
 
     SeoulMarker() {};
 
-    public SeoulMarker(String id, double lat, double lon,String title, String imageUrl, String markerURL, double distance,String seoulDataType) {
-        super(id, lat, lon,title, imageUrl, markerURL, distance);
+    public SeoulMarker(String id, double lat, double lon,String title, String imageUrl, String markerType, double distance,String seoulDataType) {
+        super(id, lat, lon,title, imageUrl, markerType, distance);
         this.seoulDataType = seoulDataType;
 
        //this.phoneNum = phoneNum;

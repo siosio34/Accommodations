@@ -15,8 +15,8 @@ public class DaumMarker extends Marker {
     DaumMarker() {};
 
 
-    public DaumMarker(String id, double lat, double lon,String title, String imageUrl, String markerURL, double distance,String phoneNum,String address,String newAddress,String category) {
-        super(id, lat, lon,title, imageUrl, markerURL, distance);
+    public DaumMarker(String id, double lat, double lon,String title, String markerType, String markerURL, double distance,String phoneNum,String address,String newAddress,String category) {
+        super(id, lat, lon,title, markerType, markerURL, distance);
 
         this.phoneNum = phoneNum;
         this.address = address;

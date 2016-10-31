@@ -8,15 +8,21 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -219,7 +225,19 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
         findViewById(R.id.community_chatroom_content).setFocusableInTouchMode(true);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.community_chatroom_actionbar, menu);
+        return true;
+    }
+
     private void setNavigationBar() {
+        Toolbar toolbar = (Toolbar)findViewById(R.id.community_chatroom_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.back));
+
         dlDrawer = (DrawerLayout)findViewById(R.id.community_chatroom_drawer);
         dlDrawer.findViewById(R.id.community_chatroom_exit).setOnClickListener(this);
         dlDrawer.findViewById(R.id.community_chatroom_end).setOnClickListener(this);
@@ -236,8 +254,8 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
                 super.onDrawerOpened(drawerView);
             }
         };
-        dlDrawer.setDrawerListener(dtToggle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        dtToggle.setDrawerIndicatorEnabled(false);
+        dtToggle.syncState();
     }
 
     @Override
@@ -248,10 +266,18 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(dtToggle.onOptionsItemSelected(item)){
-            return true;
+        switch(item.getItemId()) {
+            case R.id.action_navigation:
+            if (dlDrawer.isDrawerOpen(Gravity.RIGHT))
+                dlDrawer.closeDrawer(Gravity.RIGHT);
+            else
+                dlDrawer.openDrawer(Gravity.RIGHT);
+                break;
+            case android.R.id.home:
+                finish();
+                break;
         }
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @Override
@@ -469,7 +495,7 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
                 Picasso.with(CommunityChatroomActivity.this).load(Uri.parse(chat.getChatWriterProfilePic())).into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        profilePicView.setImageDrawable(new RoundedAvatarDrawable(bitmap, bitmap.getWidth(), bitmap.getWidth()));
+                        profilePicView.setImageDrawable(new RoundedAvatarDrawable(bitmap, (int)(bitmap.getWidth()*1.5), (int)(bitmap.getWidth()*1.5)));
                     }
 
                     @Override
@@ -528,7 +554,7 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
             Picasso.with(CommunityChatroomActivity.this).load(Uri.parse(user.getImageUri())).into(new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    profilePicView.setImageDrawable(new RoundedAvatarDrawable(bitmap, bitmap.getWidth(), bitmap.getWidth()));
+                    profilePicView.setImageDrawable(new RoundedAvatarDrawable(bitmap, (int)(bitmap.getWidth()*1.5), (int)(bitmap.getHeight()*1.5)));
                 }
 
                 @Override
@@ -548,7 +574,7 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
 
             //국가 설정
             ImageView chatroomNationality = (ImageView)v.findViewById(R.id.community_chatroom_userlist_nationality);
-            chatroomNationality.setBackgroundResource(R.drawable.googlelogo);
+            chatroomNationality.setBackgroundResource(R.drawable.america);
 
             return v;
         }

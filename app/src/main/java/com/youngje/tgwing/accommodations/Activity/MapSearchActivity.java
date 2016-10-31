@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -11,6 +12,8 @@ import android.media.Image;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,38 +21,67 @@ import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.AlignmentSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+
+import android.widget.ArrayAdapter;
+
 import android.widget.CompoundButton;
+
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import android.widget.PopupWindow;
+
 import android.widget.RelativeLayout;
+
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+import com.youngje.tgwing.accommodations.Chat;
+import com.youngje.tgwing.accommodations.ChatManager;
+import com.youngje.tgwing.accommodations.Chatroom;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.Data.DaumDataProcessor;
 import com.youngje.tgwing.accommodations.Data.NavigationDataProcessor;
 import com.youngje.tgwing.accommodations.Data.SeoulDataProcessor;
+import com.youngje.tgwing.accommodations.Marker;
 import com.youngje.tgwing.accommodations.Navi;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
 import com.youngje.tgwing.accommodations.Util.RoundedAvatarDrawable;
+
 import com.youngje.tgwing.accommodations.Util.RoundedImageView;
+
 
 import net.daum.mf.map.api.CalloutBalloonAdapter;
 import net.daum.mf.map.api.CameraUpdateFactory;
@@ -64,21 +96,25 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import static com.youngje.tgwing.accommodations.Marker.markerList;
 import static com.youngje.tgwing.accommodations.R.string.daum_api_key;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MapSearchActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener, NavigationView.OnNavigationItemSelectedListener {
+public class MapSearchActivity extends AppCompatActivity implements View.OnClickListener, MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener, NavigationView.OnNavigationItemSelectedListener {
 
     private final static String TAG = "MapSearchActivity";
+
     private ImageView btnMore;
     private View layoutMore;
     private EditText mSearchView;
@@ -96,6 +132,19 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     private TextView userNameTextView;
 
 
+    //community chatroom activity
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private LinearLayout communityMain;
+    //community chatroom activity request code
+    private final int COMMUNITY_CHATROOM_REQUEST_CODE = 0;
+    private PopupWindow popup;
+    private View popupView;
+    private ImageView arrow;
+    private boolean isCommunity = false;
+    private boolean isFull = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,56 +156,24 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         curlocate = LocationUtil.curlocation;
         curUser = User.getMyInstance();
 
-
-
-        //   String startCreateUrl;
-    //   String endCreateUrl;
-    //   String daumRouteRequestUrl;
-
-    //   String fromCoord = "WGS84";
-    //   String toCoord = "WCONGNAMUL";
-    //   String type = "json";
-    //   String apikey = getString(R.string.daum_api_key);
-
-   //    startCreateUrl = DataFormat.changeCoordRequestURL(37.24433967711934,127.08058512777377,fromCoord,toCoord,type,apikey);
-   //    endCreateUrl = DataFormat.changeCoordRequestURL(37.252086477197,127.07282485359492,fromCoord,toCoord,type,apikey);
-
-   //   try {
-   //       //http://map.naver.com/findroute2/findWalkRoute.nhn?call=route2&output=json&coord_type=naver&search=0&start=127.0798535%2C37.2433617%2C%EA%B2%BD%ED%9D%AC%EB%8C%80%ED%95%99%EA%B5%90+%EA%B5%AD%EC%A0%9C%EC%BA%A0%ED]
-   //       String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
-   //       String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
-   //       JSONObject startJsonObject = new JSONObject(myLocationResult);
-   //       JSONObject endJsonObject = new JSONObject(DestinationResult);
-   //       Double naverStartLat = startJsonObject.getDouble("y");
-   //       Double naverStartLon = startJsonObject.getDouble("x");
-   //       Double naverEndLat = endJsonObject.getDouble("y");
-   //       Double naverEndLon = endJsonObject.getDouble("x");
-   //       daumRouteRequestUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,naverStartLat,naverStartLon,naverEndLat,naverEndLon);
-
-   //       String result = new HttpHandler().execute(daumRouteRequestUrl).get();
-   //       String resultString = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
-
-   //       if(resultString != null)
-   //           Log.i("resultString", resultString);
-
-   //   } catch (InterruptedException | ExecutionException e) {
-   //       e.printStackTrace();
-   //   } catch (JSONException e) {
-   //       e.printStackTrace();
-   //   }
-
-
         btnMore = (ImageView) findViewById(R.id.activity_main_btn_more);
         layoutMore = (View) findViewById(R.id.activity_main_btn_category);
         layoutMore.bringToFront();
         btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (layoutMore.isShown()) {
-                    layoutMore.setVisibility(View.GONE);
-                    //mListLayout.setVisibility(View.GONE);
-                } else {
-                    layoutMore.setVisibility(View.VISIBLE);
+
+                if(!isCommunity) {
+                    if (layoutMore.isShown()) {
+                        layoutMore.setVisibility(View.GONE);
+                        //mListLayout.setVisibility(View.GONE);
+                    } else {
+                        layoutMore.setVisibility(View.VISIBLE);
+                    }
+                }
+                else {
+                    changeCommunityToMapSearch(true);
+
                 }
             }
         });
@@ -166,8 +183,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         mMapView.setMapViewEventListener(this);
         mMapView.setPOIItemEventListener(this);
         mMapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());
-        addSearch();
 
+        addSearch();
         ///////////////////////////////////drawer 부분입니다.
 
 
@@ -180,9 +197,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference();
                 myRef.child("currentUser").child(curUser.getUserId()).setValue(curUser);
+                changeMapSearchToCommunity();
 
-                Intent intent = new Intent(MapSearchActivity.this, CommunityMainActivity.class);
-                startActivity(intent);
             }
         });
         initDrawer();
@@ -205,6 +221,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
           }
       });
         userNameTextView.setText(curUser.getUserName());
+
+
     }
     private void initDrawer(){
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -233,6 +251,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         DatabaseReference myRef = database.getReference();
         myRef.child("currentUser").child(curUser.getUserId()).removeValue();
     }
+
+
 
 
     void onDrawer(View view){
@@ -278,7 +298,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
                         String HTTPResult = httpHandler.execute(createUrl).get();
                         Log.i("키워드",HTTPResult);
                         DaumDataProcessor DDP = new DaumDataProcessor();
-                        List<com.youngje.tgwing.accommodations.Marker> markerList = DDP.load(HTTPResult, null);
+                        markerList = DDP.load(HTTPResult, null);
 
                         mMapView.removeAllPOIItems();
                         showResult(markerList);
@@ -292,23 +312,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
                         e.printStackTrace();
                     }
 
-//                    Searcher searcher = new Searcher(); // net.daum.android.map.openapi.search.Searcher
-//                    searcher.searchKeyword(getApplicationContext(), query, latitude, longitude, radius, page, apikey, new OnFinishSearchListener() {
-//                        @Override
-//                        public void onSuccess(List<com.youngje.tgwing.accommodations.Marker> markerList) {
-//                            mMapView.removeAllPOIItems(); // 기존 검색 결과 삭제
-//                            showResult(markerList); // 검색 결과 보여줌
-//                            showSearchResult(markerList); //검색 목록 보여줌
-//                        }
-//
-//                        @Override
-//                        public void onFail() {
-//                            showToast("API_KEY의 제한 트래픽이 초과되었습니다.");
-//                        }
-//
-//                    });
-
-
                 }
 
                 return true;
@@ -318,9 +321,14 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
     }
 
+    // TODO: 2016. 10. 31. 리스트 뷰 작업해야됨.
     // ListView 리스트뷰
-    public void searchListView(List<com.youngje.tgwing.accommodations.Marker> markerList) {
+
+    public void searchListView(List<Marker> markerList) {
+        // TODO: 2016. 10. 31. 거리 1000m 넘으면 수정이 필요하지않을가 싶네.
+         
         ListView listview;
+        ImageView navigationView;
         SearchListViewAdapter adapter;
         TextView ratingText = (TextView) findViewById(R.id.listview_rating_score);
 
@@ -329,40 +337,54 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
         // 리스트뷰 참조 및 Adapter달기
         listview = (ListView) findViewById(R.id.activity_map_search_listView);
+        //navigationView = (ImageView)listview.findViewById(R.id.navigation_button);
         listview.setAdapter(adapter);
 
-        for(int i=0; i < markerList.size(); i++) {
-            com.youngje.tgwing.accommodations.Marker marker = markerList.get(i);
+        for(int i = 0; i < Marker.markerList.size(); i++) {
+            Marker marker = Marker.markerList.get(i);
             int iDistance = (int) marker.getDistance();
             String iTitle;
 
             if(marker.getTitle().length() > 13) {
-                iTitle = (String) marker.getTitle().substring(0, 11);
+                iTitle = marker.getTitle().substring(0, 11);
                 iTitle = iTitle + "...";
             } else {
-                iTitle = (String) marker.getTitle();
+                iTitle = marker.getTitle();
             }
-
-            adapter.addItem(iDistance+"m", iTitle, "종류", 3, "6");
+            adapter.addItem(iDistance+" m", iTitle,marker.getMarkerType(), 3, "6");
         }
+
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                if(v.getId() == R.id.listview_navigation ){
+
+                Log.d(TAG, "Activate : " + v.getId());
+                Log.d(TAG, "Activate22" + String.valueOf(id));
+
+                if(v.getId() == R.id.navigation_button){
                     // get item
                     SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
                     // 네비게이션 이벤트
                     Log.d(TAG, "Activate Navigation : " + item.getTitle());
                 } else {
                     // get item
-                    SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
+                    Marker item = Marker.markerList.get(position);
+                    Log.d(TAG, "Activate Navigation1 : " + item.getId());
+                    Log.d(TAG, "Activate Navigation2 : " + item.getTitle());
+                    Log.d(TAG, "Activate Navigation3 : " + item.getLat());
+                    Log.d(TAG, "Activate Navigation4 : " + item.getLon());
+                    // TODO: 2016. 10. 31. 적어도 id 는 보내야됨 
                     startActivity(new Intent(getApplicationContext(), SearchListDetailView.class));
                     // TODO : use item data.
                 }
-
             }
+
         });
+
+
+
+
     }
 
 
@@ -377,28 +399,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         int page = 1; // 페이지 번호 (1 ~ 3). 한페이지에 15개
         String apikey = getString(R.string.daum_api_key);
 
-//        Searcher searcher = new Searcher(); // net.daum.android.map.openapi.search.Searcher
-//        searcher.searchCategory(getApplicationContext(), categoryCode, latitude, longitude, radius, page, apikey, new OnFinishSearchListener() {
-//            @Override
-//            public void onSuccess(final List<com.youngje.tgwing.accommodations.Marker> markerList) {
-//                mMapView.removeAllPOIItems(); // 기존 검색 결과 삭제
-//
-//                showResult(markerList); // 검색 결과 보여줌
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        showSearchResult(markerList); // 검색 리스트 보여줌
-//                    }
-//                });
-//
-//            }
-//
-//            @Override
-//            public void onFail() {
-//                showToast("API_KEY의 제한 트래픽이 초과되었습니다.");
-//            }
-//        });
-
         if(dataFormat.equals(DataFormat.DATATYPE.WIFI) || dataFormat.equals(DataFormat.DATATYPE.TOILET)) {
             HttpHandler httpHandler = new HttpHandler();
             String createUrl = null;
@@ -406,7 +406,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             try {
                 String HTTPResult = httpHandler.execute(createUrl).get();
                 SeoulDataProcessor SDP = new SeoulDataProcessor();
-                final List<com.youngje.tgwing.accommodations.Marker> markerList = SDP.load(HTTPResult, dataFormat);
+                markerList = SDP.load(HTTPResult, dataFormat);
 
                 mMapView.removeAllPOIItems();
                 showResult(markerList);
@@ -428,7 +428,8 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             } catch (ExecutionException | InterruptedException | JSONException e) {
                 e.printStackTrace();
             }
-        }else{
+
+        } else{ // 다음 거 일때
 //            Toast.makeText(this,dataFormat.toString(),Toast.LENGTH_SHORT).show();
 
             HttpHandler httpHandler = new HttpHandler();
@@ -437,7 +438,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             try{
                 String HTTPResult = httpHandler.execute(createUrl).get();
                 DaumDataProcessor DDP = new DaumDataProcessor();
-                List<com.youngje.tgwing.accommodations.Marker> markerList = DDP.load(HTTPResult, dataFormat);
+                markerList = DDP.load(HTTPResult, dataFormat);
 
                 mMapView.removeAllPOIItems();
                 showResult(markerList);
@@ -458,11 +459,11 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
     public void categoryClicked(View v) throws ExecutionException, InterruptedException {
         DataFormat.DATATYPE datatype = null;
         switch (v.getId()){
-            case R.id.landmark: datatype = DataFormat.DATATYPE.AT4 ; break;
+            case R.id.landmark: datatype = DataFormat.DATATYPE.TOUR ; break;
             case R.id.restroom: datatype = DataFormat.DATATYPE.TOILET; break;
             case R.id.wifizone: datatype = DataFormat.DATATYPE.WIFI; break;
             case R.id.bank: datatype = DataFormat.DATATYPE.BANK; break;
-            case R.id.market: datatype = DataFormat.DATATYPE.CONVINEIENCE;break;
+            case R.id.market: datatype = DataFormat.DATATYPE.MART;break;
             case R.id.restaurant: datatype = DataFormat.DATATYPE.FOOD; break;
             case R.id.hotel: datatype = DataFormat.DATATYPE.MOTEL; break;
             case R.id.cafe: datatype = DataFormat.DATATYPE.CAFE; break;
@@ -471,41 +472,10 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             default: datatype = null; break;
         }
 
-
-        // TODO: 2016. 10. 15. 합쳐야된다.
-       // if(datatype != null) {
-       //     HttpHandler httpHandler = new HttpHandler();
-        //     String createUrl = null;
-        //     DataFormat.DATATYPE dataFormat = DataFormat.DATATYPE.WIFI;
-        //     createUrl = DataFormat.createSeoulOpenAPIRequestURL(dataFormat, curlocate.getLatitude(), curlocate.getLongitude());
-        //     String HTTPResult = httpHandler.execute(createUrl).get();
-//
-       //     // TODO: 2016. 10. 15. parsing 하는거 만들어야됨
-       // }
-
          categorySearch(datatype);
 
     }
-    /** category codes
-     MT1 대형마트
-     CS2 편의점
-     PS3 어린이집, 유치원
-     SC4 학교
-     AC5 학원
-     PK6 주차장
-     OL7 주유소, 충전소
-     SW8 지하철역
-     BK9 은행
-     CT1 문화시설
-     AG2 중개업소
-     PO3 공공기관
-     AT4 관광명소
-     AD5 숙박
-     FD6 음식점
-     CE7 카페
-     HP8 병원
-     PM9 약국
-     */
+
     private void showToast(final String text) {
         runOnUiThread(new Runnable() {
             @Override
@@ -553,8 +523,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             TextView textViewTitle = (TextView) mCalloutBalloon.findViewById(R.id.title);
             textViewTitle.setText(marker.getTitle());
             TextView textViewDesc = (TextView) mCalloutBalloon.findViewById(R.id.desc);
-            //textViewDesc.setText(item.address);
-            imageViewBadge.setImageDrawable(createDrawableFromUrl(marker.getImageUrl()));
+
             return mCalloutBalloon;
         }
 
@@ -652,6 +621,7 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         int padding = 100; // px
         mMapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
     }
+
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float v) {
 
@@ -691,22 +661,6 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
             }
         });
 
-        //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
-        pointOnMap startPoint = new pointOnMap(517681,1040128);
-        List<pointOnMap> tempArray = new ArrayList<pointOnMap>();
-
-        tempArray.add(new pointOnMap(517395,1041211));
-        tempArray.add(new pointOnMap(516844,1041182));
-        tempArray.add(new pointOnMap(516768,1041293));
-        tempArray.add(new pointOnMap(516768,1041526));
-        tempArray.add(new pointOnMap(515825,1042243));
-        tempArray.add(new pointOnMap(515864,1042269));
-        tempArray.add(new pointOnMap(516011,1042460));
-
-
-        // TODO: 2016. 10. 24. 네비를 구현할수 있을것 같다
-        drawLineFromStartPoint(startPoint,tempArray);
-        //요기까지
     }
 
     private Object fetch(String address) throws MalformedURLException,IOException {
@@ -766,24 +720,36 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
     @Override
     public void onBackPressed() {
-        int backCount = getSupportFragmentManager().getBackStackEntryCount();
-        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
-            mDrawer.closeDrawer(GravityCompat.START);
-        } else {
-            if(backCount > 2) {
-                super.onBackPressed();
+        if(!isCommunity) {
+            int backCount = getSupportFragmentManager().getBackStackEntryCount();
+            if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+                mDrawer.closeDrawer(GravityCompat.START);
             } else {
-                finish();
+                if (backCount > 2) {
+                    super.onBackPressed();
+                } else {
+                    finish();
+                }
+            }
+        }
+        else {
+            if(popup != null) {
+                popup.dismiss();
+                popup = null;
+            }
+            else {
+                changeCommunityToMapSearch(false);
             }
         }
     }
 
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
+        // TODO: 2016. 10. 31. 토스트 안뜨게 해야될것같긴하다
+        // TODO: 2016. 10. 31. 아님 리스트에 하나만뜨게
         com.youngje.tgwing.accommodations.Marker marker = mTagItemMap.get(mapPOIItem.getTag());
         StringBuilder sb = new StringBuilder();
         sb.append("title=").append(marker.getTitle()).append("\n");
-        sb.append("imageUrl=").append(marker.getImageUrl()).append("\n");
         //sb.append("address=").append(item.address).append("\n");
         //sb.append("newAddress=").append(item.newAddress).append("\n");
         //sb.append("zipcode=").append(item.zipcode).append("\n");
@@ -831,6 +797,22 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
 
     public void onNavigation(double endLat,double endLon) throws ExecutionException, InterruptedException, JSONException {
 
+        //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
+       //pointOnMap startPoint = new pointOnMap(517681,1040128);
+       //List<pointOnMap> tempArray = new ArrayList<pointOnMap>();
+
+       //tempArray.add(new pointOnMap(517395,1041211));
+       //tempArray.add(new pointOnMap(516844,1041182));
+       //tempArray.add(new pointOnMap(516768,1041293));
+       //tempArray.add(new pointOnMap(516768,1041526));
+       //tempArray.add(new pointOnMap(515825,1042243));
+       //tempArray.add(new pointOnMap(515864,1042269));
+       //tempArray.add(new pointOnMap(516011,1042460));
+
+       //// TODO: 2016. 10. 24. 네비를 구현할수 있을것 같다
+       //drawLineFromStartPoint(startPoint,tempArray);
+        //요기까지
+
         // TODO: 2016. 10. 25. navigation
         String fromCoord = "WGS84";
         String toCoord = "WCONGNAMUL";
@@ -876,10 +858,621 @@ public class MapSearchActivity extends AppCompatActivity implements MapView.MapV
         // TODO: 2016. 10. 25. 이버튼을 클릭햇을때  onNavigationonNavigation 작동
         // TODO: 2016. 10. 25. 한번 더 클릭시 네비게이션 모드 종료
 
+
+
+    }
+
+
+    void changeCommunityToMapSearch(boolean isClick) {
+        isCommunity = false;
+
+        findViewById(R.id.community_main_createChatroom).setVisibility(View.GONE);
+        findViewById(R.id.community_main).setVisibility(View.GONE);
+        //findViewById(R.id.activity_map_search_listLayout).setVisibility(View.VISIBLE);
+        //findViewById(R.id.shadow_bottom).setVisibility(View.VISIBLE);
+        if(isClick)
+            findViewById(R.id.activity_main_btn_category).setVisibility(View.VISIBLE);
+        else
+            findViewById(R.id.activity_main_btn_category).setVisibility(View.GONE);
+        //findViewById(R.id.myLocationToggle).setVisibility(View.VISIBLE);
+        findViewById(R.id.activity_main_btn_community).setVisibility(View.VISIBLE);
+        //findViewById(R.id.navbar).setVisibility(View.VISIBLE);
+    }
+
+    void changeMapSearchToCommunity() {
+        isCommunity = true;
+
+        findViewById(R.id.activity_main_btn_category).setVisibility(View.GONE);
+        //findViewById(R.id.shadow_bottom).setVisibility(View.GONE);
+        findViewById(R.id.activity_map_search_listLayout).setVisibility(View.GONE);
+        //findViewById(R.id.myLocationToggle).setVisibility(View.GONE);
+        findViewById(R.id.activity_main_btn_community).setVisibility(View.GONE);
+        findViewById(R.id.activity_map_search_listLayout).setVisibility(View.GONE);
+        //findViewById(R.id.navbar).setVisibility(View.GONE);
+        findViewById(R.id.community_main).setVisibility(View.VISIBLE);
+        findViewById(R.id.community_main_createChatroom).setVisibility(View.VISIBLE);
+        //communityMainActivity
+        communityMain = (LinearLayout)findViewById(R.id.community_main);
+        communityMain.setVisibility(View.VISIBLE);
+        //arrow = (ImageView)findViewById(R.id.community_main_arrow);
+        ImageView createChatroomBtn = (ImageView)findViewById(R.id.community_main_createChatroom);
+        createChatroomBtn.setOnClickListener(this);
+
+        //LinearLayout uparrowLayout = (LinearLayout)findViewById(R.id.community_main_arrowlayout);
+        //uparrowLayout.setOnClickListener(this);
+
+        ViewPager chatroomListPagerAdapter = (ViewPager)findViewById(R.id.community_main_chatroom_viewpager);
+        chatroomListPagerAdapter.setAdapter(new ChatroomListPagerAdapter());
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.community_main_chatroom_body:
+                enterRoom((String)v.getTag());
+                break;
+
+            //클릭시 팝업 윈도우 생성
+            case R.id.community_main_createChatroom:
+                popupView();
+                break;
+
+            case R.id.community_main_chatroom_popup_create:
+                createRoom();
+                break;
+
+            /*
+            case R.id.community_main_arrowlayout:
+                if(isFull) {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1200);
+                    communityMain.setLayoutParams(params);
+                    //arrow.setBackgroundResource(R.drawablef.uparrow);
+                    isFull = false;
+                }
+                else {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    communityMain.setLayoutParams(params);
+                    //arrow.setBackgroundResource(R.drawable.downarrow);
+                    isFull = true;
+                }
+                break;
+             */
+        }
+    }
+
+    public void enterRoom(final String chatManagerId) {
+        databaseReference.child("ChatManager").child(chatManagerId).child("chatroom").runTransaction(new Transaction.Handler() {
+            int check=-1;
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Chatroom chatroom = mutableData.getValue(Chatroom.class);
+
+                ArrayList<User> list = chatroom.getUserList();
+                boolean isRoomMember = false;
+                for(int i=0; i<list.size(); i++)
+                    if(list.get(i).getUserId().equals(User.getMyInstance().getUserId())) {
+                        isRoomMember = true;
+                        break;
+                    }
+
+                if(isRoomMember || !chatroom.isEnd()) {
+                    int maxNumber = chatroom.getChatroomMaxNumber();
+                    int currentNumber = chatroom.getUserList().size();
+
+                    if(isRoomMember)
+                        check = 1;
+                    else if (currentNumber < maxNumber) {
+                        mutableData.child("userList").child(Integer.toString(currentNumber)).setValue(User.getMyInstance());
+                        check = 1;
+                    }
+                    else
+                        check = 2;
+                }
+                else if(chatroom.isEnd()) {
+                    check = 0;
+                }
+
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                if(databaseError == null) {
+                    if(check == 0) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MapSearchActivity.this, "마감된 방입니다.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    else if(check == 2) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MapSearchActivity.this, "방이 꽉 찼습니다.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                    }
+                    else if (check == 1) {
+                        Intent intent = new Intent(MapSearchActivity.this, CommunityChatroomActivity.class);
+                        intent.putExtra("chatManagerId", chatManagerId);
+                        startActivityForResult(intent, COMMUNITY_CHATROOM_REQUEST_CODE);
+                    }
+                    else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MapSearchActivity.this, "방 입장에 문제가 생겼습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }
+                else {
+
+                    enterRoom(chatManagerId);
+                }
+                System.out.println(databaseError);
+            }
+        });
+    }
+
+
+    public void createRoom() {
+        databaseReference.child("users").child(User.getMyInstance().getUserId()).child("chatRoomID").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.getValue(String.class).length() == 0) {
+                            databaseReference.child("ChatManager").child(User.getMyInstance().getUserId()).addListenerForSingleValueEvent(
+                                    new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                                            try {
+                                                String chatroomTitle = ((EditText) popupView.findViewById(R.id.community_main_chatroom_popup_title)).getText().toString();
+                                                int limitNumber = Integer.parseInt(((EditText) popupView.findViewById(R.id.community_main_chatroom_popup_limitNumber)).getText().toString());
+                                                User user = User.getMyInstance();
+                                                Chatroom chatroom = new Chatroom(chatroomTitle, user.getImageUri(), user.getUserName(), user.getCountry(), limitNumber, new Date(), false, new ArrayList<User>());
+                                                final ChatManager chatManager = new ChatManager(chatroom, new HashMap<String, Chat>());
+                                                dataSnapshot.getRef().setValue(chatManager, new DatabaseReference.CompletionListener() {
+                                                    @Override
+                                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                        //add room id to User object
+                                                        if(databaseError == null) {
+                                                            databaseReference.getRoot().child("users").child(User.getMyInstance().getUserId()).child("chatRoomID").setValue(User.getMyInstance().getUserId(), new DatabaseReference.CompletionListener() {
+                                                                @Override
+                                                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                                    dataSnapshot.child("chatroom").child("userList").getRef().child("0").setValue(User.getMyInstance());
+                                                                    Intent intent = new Intent(MapSearchActivity.this, CommunityChatroomActivity.class);
+                                                                    intent.putExtra("chatManagerId", User.getMyInstance().getUserId());
+                                                                    startActivityForResult(intent, COMMUNITY_CHATROOM_REQUEST_CODE);
+                                                                    popup.dismiss();
+                                                                    popup = null;
+                                                                }
+                                                            });
+                                                        }
+                                                        else {
+                                                            runOnUiThread(new Runnable() {
+                                                                @Override
+                                                                public void run() {
+                                                                    Toast.makeText(MapSearchActivity.this, "방 생성에 실패하였습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+                                                });
+                                            } catch(NullPointerException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(MapSearchActivity.this, "방 생성에 실패하였습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+                                        }
+                                    }
+                            );
+                        }
+                        else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(MapSearchActivity.this, "이미 만든 방이 존재합니다.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MapSearchActivity.this, "방 생성에 실패하였습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
+    }
+
+    public void popupView() {
+        databaseReference.child("users").child(User.getMyInstance().getUserId()).child("chatRoomID").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue(String.class).length() == 0) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //팝업으로 띄울 커스텀뷰를 설정
+                            popupView = getLayoutInflater().inflate(R.layout.layout_community_main_create_chatroom_popup, null);
+
+                            //팝업 객체 생성
+                            popup = new PopupWindow(popupView, 1000, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                            //팝업 뷰 터치 가능하도록 설정
+                            popup.setTouchable(true);
+
+                            popup.setOutsideTouchable(true);
+
+                            popup.setFocusable(true);
+
+                            //popupwindow를 parent view 기준으로 띄움
+                            popup.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+
+                            //register onclick listener for create and cancel
+                            popupView.findViewById(R.id.community_main_chatroom_popup_create).setOnClickListener(MapSearchActivity.this);
+
+                            //make background dim
+                            if(android.os.Build.VERSION.SDK_INT <= 22) {
+                                WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+                                WindowManager.LayoutParams p = (WindowManager.LayoutParams) popupView.getLayoutParams();
+                                p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+                                p.dimAmount = 0.5f;
+                                wm.updateViewLayout(popupView, p);
+                            }
+                            else {
+                                View parent = (View)popup.getContentView().getParent();
+                                WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+                                WindowManager.LayoutParams p = (WindowManager.LayoutParams)parent.getLayoutParams();
+                                p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+                                p.dimAmount = 0.5f;
+                                wm.updateViewLayout(parent, p);
+                            }
+                        }
+                    });
+                }
+                else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MapSearchActivity.this, "이미 만든 방이 존재합니다.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case COMMUNITY_CHATROOM_REQUEST_CODE:
+                if(resultCode == 9998)
+                    Toast.makeText(this, "방이 존재하지 않습니다.", Toast.LENGTH_LONG).show();
+                else if(resultCode == 9999)
+                    Toast.makeText(this, "방 접속에 실패하였습니다.", Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
+
+    private class ChatroomListPagerAdapter extends PagerAdapter {
+
+
+
+        public ChatroomListPagerAdapter() {
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            View v;
+
+            switch (position) {
+                case 0:
+                    v = getChatroomList(0);
+                    container.addView(v);
+                    break;
+
+                case 1:
+                    v = getChatroomList(1);
+                    container.addView(v);
+                    break;
+
+                default:
+                    v = null;
+            }
+
+            return v;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public boolean isViewFromObject(View pager, Object obj) {
+            return pager == obj;
+        }
+
+        public ListView getChatroomList(int flag) {
+            ArrayList<Chatroom> chatroomList = new ArrayList<>();
+            ChatroomListPagerAdapter.ChatRoomAdapter chatroomAdapter = new ChatroomListPagerAdapter.ChatRoomAdapter(MapSearchActivity.this, R.layout.layout_community_main_chatroom, chatroomList);
+            final ListView chatroomListView = new ListView(MapSearchActivity.this);
+            chatroomListView.setBackgroundColor(Color.parseColor("#66000000"));
+            chatroomListView.setDividerHeight(5);
+            chatroomListView.setDivider(new ColorDrawable(Color.parseColor("#FF345678")));
+            chatroomListView.setAdapter(chatroomAdapter);
+
+            //get data from db
+            if (flag == 0) {
+                getAroundChatroomListAndDraw(chatroomAdapter);
+            } else if (flag == 1) {
+                getEnteredChatroomListAndDraw(chatroomAdapter);
+            }
+
+            return chatroomListView;
+        }
+
+        private void getAroundChatroomListAndDraw(final ChatroomListPagerAdapter.ChatRoomAdapter chatroomAdapter) {
+            try {
+                ArrayList<String> userIdList = getAroundUserList();
+                for (int i = 0; i < userIdList.size(); i++) {
+                    databaseReference.child("users").child(userIdList.get(i)).child("chatRoomID").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            final String chatroomId = dataSnapshot.getValue(String.class);
+                            if(chatroomId != null) {
+                                System.out.println("chatroomId length is " + chatroomId.length());
+                                if (chatroomId.length() != 0) {
+                                    databaseReference.child("ChatManager").child(chatroomId).child("chatroom").addListenerForSingleValueEvent(
+                                            new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    chatroomAdapter.addWithChatManagerId(dataSnapshot.getValue(Chatroom.class), chatroomId);
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            }
+                                    );
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            } catch(Exception e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MapSearchActivity.this, "문제가 생겼습니다. 다시 시도해 주세요", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        }
+
+        public ArrayList<String> getAroundUserList() throws ExecutionException, InterruptedException, JSONException {
+            HttpHandler httpHandler = new HttpHandler();
+            String requestUrl = DataFormat.createGetAroungRequestURL(User.getMyInstance().getLat(),User.getMyInstance().getLon());
+            String result = httpHandler.execute(requestUrl).get();
+            JSONObject root = new JSONObject(result);
+
+            ArrayList<String> userIdList = new ArrayList<>();
+
+            String jsonArr = "[";
+            Iterator iterator = root.keys();
+            while(iterator.hasNext()) {
+                String key = (String)iterator.next();
+                JSONObject data = root.getJSONObject(key);
+                jsonArr+=data.toString();
+                jsonArr+=",";
+            }
+            jsonArr = jsonArr.substring(0, jsonArr.length()-1)+"]";
+
+            JSONArray jsonArray = new JSONArray(jsonArr);
+            for(int i=0 ; i<jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                userIdList.add(jsonObject.getString("userId"));
+            }
+
+            Log.i("temptemp",userIdList.toString());
+            return userIdList;
+        }
+        private void getEnteredChatroomListAndDraw(final ChatroomListPagerAdapter.ChatRoomAdapter chatroomAdapter) {
+            databaseReference.child("users").child(User.getMyInstance().getUserId()).child("myChatroomList").addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            GenericTypeIndicator<ArrayList<String>> t = new GenericTypeIndicator<ArrayList<String>>() {};
+                            ArrayList<String> chatroomList = dataSnapshot.getValue(t);
+                            if (chatroomList != null) {
+                                for(int i=0; i<chatroomList.size(); i++) {
+                                    final String value = chatroomList.get(i);
+                                    databaseReference.child("ChatManager").child(value).child("chatroom").addListenerForSingleValueEvent(
+                                            new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    chatroomAdapter.addWithChatManagerId(dataSnapshot.getValue(Chatroom.class), value);
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+                                                    //한개 문제생겼을 때에도 알려줘야하나?
+                                                }
+                                            }
+                                    );
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(MapSearchActivity.this, "내가 들어간 방 정보를 가져올 수 없습니다. 네트워크를 확인해주세요.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+            );
+        }
+
+        private class ChatRoomAdapter extends ArrayAdapter<Chatroom> {
+            private ArrayList<Chatroom> chatList;
+            private ArrayList<String> chatManagerIdList;
+
+            public ChatRoomAdapter(Context context, int chatLayoutId, ArrayList<Chatroom> chatList) {
+                super(context, chatLayoutId, chatList);
+                chatManagerIdList = new ArrayList<>();
+                this.chatList = chatList;
+            }
+
+            public void addWithChatManagerId(Chatroom chatroom, String chatManagerId) {
+                this.add(chatroom);
+                chatManagerIdList.add(chatManagerId);
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = convertView;
+                Chatroom chatroom = chatList.get(position);
+                String chatManagerId = chatManagerIdList.get(position);
+
+                if (v == null)
+                    v = getLayoutInflater().inflate(R.layout.layout_community_main_chatroom, null);
+
+                return drawChatroomToList(chatroom, v, chatManagerId);
+            }
+
+            private View drawChatroomToList(Chatroom chatroom, View chatroomView, String chatManagerId) {
+                //방마다 구별하기 위해 채팅룸 id를 구별자로 추가.
+                chatroomView.setTag(chatManagerId);
+                chatroomView.setOnClickListener(MapSearchActivity.this);
+
+                //set chatroom writer profile
+                final ImageView profilePicView = (ImageView)chatroomView.findViewById(R.id.community_main_chatroom_writerProfilePic);
+
+                Picasso.with(MapSearchActivity.this).load(chatroom.getChatroomWriterProfilePic()).into(new Target() {
+
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        profilePicView.setImageDrawable(new RoundedAvatarDrawable(bitmap, (int)(bitmap.getWidth()*1.5), (int)(bitmap.getWidth()*1.5)));
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+
+                final TextView distanceView = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_distance);
+                if(!User.getMyInstance().getUserId().equals(chatManagerId)) {
+                    databaseReference.child("users").child(chatManagerId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            Location myLoc = new Location("");
+                            myLoc.setLatitude(User.getMyInstance().getLat());
+                            myLoc.setLongitude(User.getMyInstance().getLon());
+
+                            Location userLoc = new Location("");
+                            userLoc.setLatitude(user.getLat());
+                            userLoc.setLongitude(user.getLon());
+                            distanceView.setText(String.format("%.0f", myLoc.distanceTo(userLoc))+"m");
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                else
+                    distanceView.setText("0m");
+
+                //set chatroom writer name
+                TextView chatroomWriterName = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_writerName);
+                if(chatManagerId.equals(User.getMyInstance().getChatRoomID()))
+                    chatroomWriterName.setText("나");
+                else
+                    chatroomWriterName.setText(chatroom.getChatroomWriterName());
+
+                //set chatroom writer nationality
+                ImageView chatroomNationality = (ImageView)chatroomView.findViewById(R.id.community_main_chatroom_nationality);
+                //chatroom.getChatroomWriterNationality()
+                chatroomNationality.setBackgroundResource(R.drawable.america);
+                //set chatroom number
+                TextView chatroomNumber = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_number);
+                if(chatroom.getUserList() != null)
+                    chatroomNumber.setText(chatroom.getUserList().size() + "/" + chatroom.getChatroomMaxNumber());
+                else
+                    chatroomNumber.setText(0 + "/" + chatroom.getChatroomMaxNumber());
+
+                //set chatroom date
+                TextView chatroomDate = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_date);
+                Date date = chatroom.getChatroomDate();
+                SimpleDateFormat format;
+                if(date.getHours() > 12)
+                    format = new SimpleDateFormat("오후 hh:mm");
+                else
+                    format = new SimpleDateFormat("오전 hh:mm");
+                chatroomDate.setText(format.format(date));
+
+                //set chatroom title
+                TextView chatroomTitle = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_title);
+                chatroomTitle.setText(chatroom.getChatroomTitle());
+
+                if(chatroom.isEnd()) {
+                    profilePicView.setAlpha(25);
+                    chatroomWriterName.setAlpha((float)0.1);
+                    chatroomDate.setAlpha((float)0.1);
+                    chatroomTitle.setAlpha((float)0.1);
+                }
+                return chatroomView;
+            }
+        }
     }
 
 }
-
 
 
 class pointOnMap{

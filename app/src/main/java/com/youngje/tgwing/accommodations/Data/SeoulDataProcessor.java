@@ -66,19 +66,34 @@ public class SeoulDataProcessor implements DataProcessor {
 
         Marker marker = null;
 
+        Location myLoc = LocationUtil.getLocation();
+        Location desLoc =  LocationUtil.getLocation();
+        desLoc.setLatitude(jsonObject.getDouble("Y_WGS84"));
+        desLoc.setLongitude(jsonObject.getDouble("X_WGS84"));
+
+        Double distance = (double) myLoc.distanceTo(desLoc);
+
         marker = new SeoulMarker(jsonObject.getString("POI_ID"),Double.parseDouble(jsonObject.getString("Y_WGS84")),
-                Double.parseDouble(jsonObject.getString("X_WGS84")),jsonObject.getString("FNAME"),"","",0,"TOILET");
+                Double.parseDouble(jsonObject.getString("X_WGS84")),jsonObject.getString("FNAME"),"TOILET","",distance,"TOILET");
 
         return marker;
     }
 
     public Marker processSeoulWIFIObject(JSONObject jsonObject) throws JSONException {
 
-        List<Marker> markersList = new ArrayList<Marker>();
         Marker marker = null;
 
+        Location myLoc = LocationUtil.getLocation();
+        Location desLoc =  LocationUtil.getLocation();
+
+        desLoc.setLatitude(jsonObject.getDouble("INSTL_Y"));
+        desLoc.setLongitude(jsonObject.getDouble("INSTL_X"));
+
+        Double distance = (double) myLoc.distanceTo(desLoc);
+
+
         marker = new SeoulMarker(jsonObject.getString("INSTL_DIV"),Double.parseDouble(jsonObject.getString("INSTL_Y")),
-                Double.parseDouble(jsonObject.getString("INSTL_X")),jsonObject.getString("PLACE_NAME"),"","",0,"WIFI");
+                Double.parseDouble(jsonObject.getString("INSTL_X")),jsonObject.getString("PLACE_NAME"),"WIFI","",distance,"WIFI");
 
         return  marker;
 
@@ -92,49 +107,6 @@ public class SeoulDataProcessor implements DataProcessor {
         }
     }
 
-    //public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
-    //    Map<String, Object> retMap = new HashMap<String, Object>();
-//
-    //    if(json != JSONObject.NULL) {
-    //        retMap = toMap(json);
-    //    }
-    //    return retMap;
-    //}
-//
-    //public static Map<String, Object> toMap(JSONObject object) throws JSONException {
-    //    Map<String, Object> map = new HashMap<String, Object>();
-//
-    //    Iterator<String> keysItr = object.keys();
-    //    while(keysItr.hasNext()) {
-    //        String key = keysItr.next();
-    //        Object value = object.get(key);
-//
-    //        if(value instanceof JSONArray) {
-    //            value = toList((JSONArray) value);
-    //        }
-//
-    //        else if(value instanceof JSONObject) {
-    //            value = toMap((JSONObject) value);
-    //        }
-    //        map.put(key, value);
-    //    }
-    //    return map;
-    //}
-//
-    //public static List<Object> toList(JSONArray array) throws JSONException {
-    //    List<Object> list = new ArrayList<Object>();
-    //    for(int i = 0; i < array.length(); i++) {
-    //        Object value = array.get(i);
-    //        if(value instanceof JSONArray) {
-    //            value = toList((JSONArray) value);
-    //        }
-//
-    //        else if(value instanceof JSONObject) {
-    //            value = toMap((JSONObject) value);
-    //        }
-    //        list.add(value);
-    //    }
-    //    return list;
-    //}
+
 }
 
