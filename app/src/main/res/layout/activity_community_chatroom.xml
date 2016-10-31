@@ -9,6 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFFFF">
+        <include
+            android:id="@+id/community_chatroom_toolbar"
+            layout="@layout/toolbar_community_chatroom" />
         <!--
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,7 +31,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8"
+            android:layout_weight="12"
             android:orientation="vertical"
             android:id="@+id/community_chatroom_chatList">
         </ListView>
@@ -36,14 +39,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/chatroom_edittextstyle"
             android:orientation="horizontal"
             android:layout_weight="1">
             <HorizontalScrollView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="8"
+                android:layout_weight="10"
                 android:id="@+id/community_chatroom_content_box"
-                android:background="#FFFFFFFF"
                 android:scrollbars="none">
                 <EditText
                     android:layout_width="wrap_content"
@@ -52,27 +56,27 @@
                     android:background="@android:color/transparent"
                     android:textColor="#FF000000"
                     android:singleLine="true"
-                    android:hint="내용"/>
+                    android:textColorHint="#44000000"/>
             </HorizontalScrollView>
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/community_chatroom_sendBtn"
-                android:layout_marginLeft="-5dip"
-                android:layout_marginRight="-5dip"
-                android:layout_marginTop="-5dip"
-                android:layout_marginBottom="-5dip"
+                android:background="#FF6679D8"
+                android:layout_margin="5dp"
                 android:layout_weight="2"
-                android:text="SEND"/>
+                android:text="전송"
+                android:textColor="#FFFFFFFF"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_gravity="left"
+        android:layout_gravity="right"
         android:background="#FFFFFFFF">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -80,26 +84,35 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:padding="18dp"
                 android:text="채팅 참여 인원"
-                android:textSize="24dp"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_alignParentLeft="true"
                 android:textColor="#FFFFFFFF"/>
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/participate_icon" />
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/participate_icon2" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/community_chatroom_number"
-                    android:textSize="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
                     android:textColor="#FFFFFFFF"
                     android:text="0명"/>
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
         <ListView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -114,15 +127,18 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_margin="10dp"
                 android:id="@+id/community_chatroom_exit"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="10dp"
                         android:layout_gravity="center_vertical"
                         android:background="@drawable/exit"/>
                     <TextView
@@ -137,15 +153,18 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_margin="10dp"
                 android:id="@+id/community_chatroom_end"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="10dp"
                         android:layout_gravity="center_vertical"
                         android:background="@drawable/end"/>
                     <TextView
