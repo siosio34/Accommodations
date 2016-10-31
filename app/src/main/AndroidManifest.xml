@@ -33,7 +33,7 @@
         <activity android:name=".Activity.SearchListDetailView" />
         <activity android:name=".Activity.WriteReviewActivity" />
         <activity android:name=".Activity.ReadMarkerActivity"></activity>
-        
+        <activity android:name=".Activity.UserInformationActivity" />
         
     </application>
 

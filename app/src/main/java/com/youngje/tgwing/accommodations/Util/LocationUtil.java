@@ -1,6 +1,7 @@
 package com.youngje.tgwing.accommodations.Util;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -28,7 +29,9 @@ public class LocationUtil implements LocationListener {
     private boolean isNetworkEnabled; // 네트워크 사용 여부
 
     //private static final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 8001;
+    private static Activity activity = null;
 
+    public static void setActivity(Activity m_activity) { activity = m_activity; }
     public static Location getLocation() {
         return curlocation;
     }
@@ -94,9 +97,18 @@ public class LocationUtil implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-
         curlocation = location;
-
+        /*
+        Log.i(" 위치 변경",Double.toString(curlocation.getLongitude()));
+        if(activity != null) {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(activity, curlocation.toString(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        */
     }
 
     @Override
