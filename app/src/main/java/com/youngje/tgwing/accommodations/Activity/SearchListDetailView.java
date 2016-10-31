@@ -17,9 +17,18 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.youngje.tgwing.accommodations.Marker;
 import com.youngje.tgwing.accommodations.R;
+import com.youngje.tgwing.accommodations.Review;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -37,7 +46,6 @@ public class SearchListDetailView extends AppCompatActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview_detail);
-
         reviewListView();
     }
 
@@ -48,20 +56,36 @@ public class SearchListDetailView extends AppCompatActivity{
         mAdapter = new SearchListReviewViewAdapter();
         listview = (ListView) findViewById(R.id.list_detail_view_listview);
         listview.setAdapter(mAdapter);
+        mAdapter.addMainUI(); // 위에 부분짜는거
+
+        String locationId = Marker.selectedMarker.getId();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        myRef.child("review").child("locationId").addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                    Review review = (Review)messageSnapshot.getValue();
+                    mAdapter.addItem(ContextCompat.getDrawable(SearchListDetailView.this, R.drawable.face1), review.getStar(), ContextCompat.getDrawable(SearchListDetailView.this, R.drawable.ic_icon_flag_china)
+                            ,review.getUserName() ,review.getCreateDate() , ContextCompat.getDrawable(SearchListDetailView.this,R.drawable.test_img_palace), review.getContent());
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         //MainUI 데이터 설정
-        mAdapter.addMainUI();
+
 //        ContextCompat.getDrawable(this,R.drawable.test_img_palace), "경복궁", "고궁", "1200"+"m", "서울시 광화문쪽", "1688-8282"
 
-        //List 데이터 설정
-        mAdapter.addItem(ContextCompat.getDrawable(this,R.drawable.face1), 4,ContextCompat.getDrawable(this,R.drawable.googlelogo)
-                ,"Nick","2016.10.23",ContextCompat.getDrawable(this,R.drawable.test_img_palace),"경복궁 정말 좋은 것 같아효", 2000);
-        mAdapter.addItem(ContextCompat.getDrawable(this,R.drawable.face1), 5,ContextCompat.getDrawable(this,R.drawable.googlelogo)
-                ,"Jason","2016.10.21",ContextCompat.getDrawable(this,R.drawable.test_img_palace),"여친이 생기면 꼭 다시 와야겠어요!", 1949);
-        mAdapter.addItem(ContextCompat.getDrawable(this,R.drawable.face1), 3,ContextCompat.getDrawable(this,R.drawable.googlelogo)
-                ,"Mark","2016.10.20",ContextCompat.getDrawable(this,R.drawable.test_img_palace),"전 별로였는데..?", 392);
-
-        Log.d(TAG,"I've passed here!");
+        //Log.d(TAG,"I've passed here!");
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -77,7 +101,7 @@ public class SearchListDetailView extends AppCompatActivity{
         private static final int TYPE_MAIN_UI = 0;
         private static final int TYPE_LIST = 1;
         private List<SearchListReviewViewItem> reviewViewItemList = new ArrayList<SearchListReviewViewItem>();
-        private List<SearchListMainItem> reviewMainUIList = new ArrayList<SearchListMainItem>();
+        private List<Marker> reviewMainUIList = new ArrayList<Marker>();
         private LayoutInflater inflater;
 
         public SearchListReviewViewAdapter() {
@@ -103,7 +127,6 @@ public class SearchListDetailView extends AppCompatActivity{
                 } else {
                     viewHolderMainUI = (ViewHolderMainUI) convertView.getTag();
                 }
-                SearchListMainItem listMainItem = getMainUI(position);
 
                 convertView.setClickable(false);
                 convertView.setFocusable(false);
@@ -146,7 +169,13 @@ public class SearchListDetailView extends AppCompatActivity{
                 holder.userName.setText(listViewItem.getUserName());
                 holder.nationalityView.setImageDrawable(listViewItem.getNationality());
                 holder.reviewPictureView.setImageDrawable(listViewItem.getReviewDrawable());
-                holder.dateView.setText(listViewItem.getDate());
+                Date date = listViewItem.getDate();
+                SimpleDateFormat format;
+                if(date.getHours() > 12)
+                    format = new SimpleDateFormat("오후 hh:mm");
+                else
+                    format = new SimpleDateFormat("오전 hh:mm");
+                holder.dateView.setText(format.format(date));
                 holder.reviewTextView.setText(listViewItem.getUserReview());
             }
 
@@ -175,9 +204,6 @@ public class SearchListDetailView extends AppCompatActivity{
             return reviewViewItemList.get(position);
         }
 
-        public SearchListMainItem getMainUI(int position) {
-            return reviewMainUIList.get(position);
-        }
 
         @Override
         public int getItemViewType (int position) {
@@ -193,8 +219,8 @@ public class SearchListDetailView extends AppCompatActivity{
             return 2;
         }
 
-        public void addItem(Drawable profileDrawable, float ratingScore, Drawable nationality, String userName, String date
-                ,Drawable reviewDrawable, String userReview, int likeNum) {
+        public void addItem(Drawable profileDrawable, float ratingScore, Drawable nationality, String userName, Date date
+                ,Drawable reviewDrawable, String userReview) {
             SearchListReviewViewItem item = new SearchListReviewViewItem();
 
             item.setProfileDrawable(profileDrawable);
@@ -205,7 +231,6 @@ public class SearchListDetailView extends AppCompatActivity{
             item.setDate(date);
             item.setReviewDrawable(reviewDrawable);
             item.setUserReview(userReview);
-//            item.setLikeNum(likeNum);
             reviewViewItemList.add(item);
 
         }
@@ -215,15 +240,9 @@ public class SearchListDetailView extends AppCompatActivity{
 //            Drawable pictureDrawable, String title, String category, String distance,
 //                    String location, String phoneNumber
 
-            SearchListMainItem item = new SearchListMainItem();
-//            item.setPictureDrawable(pictureDrawable);
-//            item.setTitle(title);
-//            item.setCategory(category);
-//            item.setDistance(distance);
-//            item.setLocation(location);
-//            item.setPhoneNumber(phoneNumber);
-
+            Marker item = Marker.selectedMarker;
             reviewMainUIList.add(item);
+
 
             SearchListReviewViewItem addItemNum = new SearchListReviewViewItem();
             reviewViewItemList.add(addItemNum);
@@ -289,7 +308,7 @@ public class SearchListDetailView extends AppCompatActivity{
         private String userName;
         private String userReview;
         private float ratingScore;
-        private String date;
+        private Date date;
         private int likeNum;
         private float ratingStar;
 
@@ -300,10 +319,10 @@ public class SearchListDetailView extends AppCompatActivity{
             this.reviewDrawable = reviewDrawable;
         }
 
-        public String getDate() {
+        public Date getDate() {
             return date;
         }
-        public void setDate(String date) {
+        public void setDate(Date date) {
             this.date = date;
         }
 

@@ -57,6 +57,7 @@ import com.youngje.tgwing.accommodations.Util.LocationUtil;
 import java.net.URI;
 import java.util.ArrayList;
 
+import static android.R.attr.country;
 import static android.R.attr.x;
 
 /**
@@ -68,6 +69,7 @@ public class UserSignInActivity extends BaseActivity implements
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
+    private static final int RC_SIGNINFORMATION_IN = 10001;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -84,6 +86,8 @@ public class UserSignInActivity extends BaseActivity implements
     private GoogleApiClient mGoogleApiClient;
     private TextView mStatusTextView;
     private TextView mDetailTextView;
+    private String country;
+    private String userDetailInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,11 +169,22 @@ public class UserSignInActivity extends BaseActivity implements
                 firebaseAuthWithGoogle(account);
             } else {
 
+
+
                 // Google Sign In failed, update UI appropriately
                 // [START_EXCLUDE]
-                //  updateUI(null);
-                // [END_EXCLUDE]
+                //  updateUI(null);// [END_EXCLUDE]
             }
+        }
+
+        else if(requestCode == RC_SIGNINFORMATION_IN) {
+
+            Intent intent = getIntent();
+            country = intent.getStringExtra("country");
+            userDetailInfo = intent.getStringExtra("detail");
+            Log.i("country", country);
+            Log.i("detail",userDetailInfo);
+
         }
     }
     // [END onactivityresult]
@@ -265,28 +280,35 @@ public class UserSignInActivity extends BaseActivity implements
                         showProgressDialog();
 
                         User userValue = dataSnapshot.getValue(User.class);
-                        String photoUrl = null;
-                        String email = null;
-                        String name = null;
 
                         if (userValue == null) {
+
+                           //Intent intent = new Intent(UserSignInActivity.this, MapSearchActivity.class);
+                           //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                           //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                           //startActivity(intent);
+
+
+                            String photoUrl = null;
+                            String email = null;
+                            String name = null;
 
                             name = firebaseUser.getDisplayName();
                             email = firebaseUser.getEmail();
                             photoUrl = firebaseUser.getPhotoUrl().toString();
-                            String country = null;
-
-                            User userTemp = new User(uid, name, email, "", photoUrl, country,"",curloc.getLatitude(),curloc.getLongitude(),new ArrayList<String>());
+                            User userTemp = new User(uid, name, email, "", photoUrl,country ,"",curloc.getLatitude(),curloc.getLongitude(),new ArrayList<String>());
                             registerUser(uid, userTemp);
                             User.setMyInstance(userTemp);
 
                             Log.i("신규 유저 정보", User.getMyInstance().toString());
 
-                           // FirebaseDatabase database = FirebaseDatabase.getInstance();
-                           // DatabaseReference myRef = database.getReference();
-                           // myRef.child("currentUser").child(userTemp.getUserId()).setValue(userTemp);
+                            // FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            // DatabaseReference myRef = database.getReference();
+                            // myRef.child("currentUser").child(userTemp.getUserId()).setValue(userTemp);
 
                             moveToMapSearchActivity();
+
+
                             hideProgressDialog();
                             //startActivity(new Intent(getApplicationContext(), WriteReviewActivity.class));
                             //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
@@ -315,6 +337,8 @@ public class UserSignInActivity extends BaseActivity implements
                 });
 
     }
+
+
 
     public void registerUser(String uid, User user) { // 새로운 유저 파이어 베이스에 등록
         myRef.child(uid).setValue(user);

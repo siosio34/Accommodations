@@ -5,8 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <!--1dee5001636c3e99fb8d90496c9a3f8a-->
     <string name="daum_api_key">1dee5001636c3e99fb8d90496c9a3f8a</string>
-
     <string name="hint_user_id">User ID</string>
     <string name="get_custom_token">Get Token</string>
     <string name="sign_in">Sign In</string>

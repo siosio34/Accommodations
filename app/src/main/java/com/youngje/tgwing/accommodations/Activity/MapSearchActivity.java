@@ -367,6 +367,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                 } else {
                     // get item
                     Marker item = Marker.markerList.get(position);
+                    Marker.selectedMarker = item;
                     Log.d(TAG, "Activate Navigation1 : " + item.getId());
                     Log.d(TAG, "Activate Navigation2 : " + item.getTitle());
                     Log.d(TAG, "Activate Navigation3 : " + item.getLat());
@@ -378,8 +379,6 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
             }
 
         });
-
-
 
 
     }
@@ -516,10 +515,10 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
             if (poiItem == null) return null;
             com.youngje.tgwing.accommodations.Marker marker = mTagItemMap.get(poiItem.getTag());
             if (marker == null) return null;
-            ImageView imageViewBadge = (ImageView) mCalloutBalloon.findViewById(R.id.badge);
+
             TextView textViewTitle = (TextView) mCalloutBalloon.findViewById(R.id.title);
             textViewTitle.setText(marker.getTitle());
-            TextView textViewDesc = (TextView) mCalloutBalloon.findViewById(R.id.desc);
+
 
             return mCalloutBalloon;
         }
@@ -1175,8 +1174,6 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
     }
 
     private class ChatroomListPagerAdapter extends PagerAdapter {
-
-
 
         public ChatroomListPagerAdapter() {
         }

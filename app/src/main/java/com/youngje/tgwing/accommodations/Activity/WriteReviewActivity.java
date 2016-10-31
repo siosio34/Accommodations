@@ -74,7 +74,7 @@ public class WriteReviewActivity extends AppCompatActivity {
     private Uri mDownloadUrl = null;
 
     // TODO: 2016. 10. 16. locationI 가져와야됨 
-    private String locationId = "1234";
+    private String locationId;
 
 
     @Override
@@ -82,6 +82,8 @@ public class WriteReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_review);
         findVieByidwWriteReviewActivity();
+
+        locationId = Marker.selectedMarker.getId();
 
         backButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -253,6 +255,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         String[] extension = file.getName().split("\\.");
 
         Log.i("extension",extension[1]);
+
         if (extension[1].equals("jpg") || extension[1].equals("png")) {
             return 1;
         } else if (extension[1].equals("mp4")) {
@@ -266,7 +269,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         Marker marker = Marker.getSelectedMarker();
         User curUser = User.getMyInstance();
 
-        String markerId = "1224";
+        String markerId = locationId;
         String userId = curUser.getUserId();
         String userName = curUser.getUserName();
         String userImageUrl = curUser.getImageUri();
@@ -275,18 +278,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         String content = inputText.getText().toString();
         Date currentDate = new Date();
 
-        // TODO: 2016. 10. 16. 생성자에맞게
-        // TODO: 2016. 10. 16. 리뷰 클래스에 맞게 하자
-
-        // TODO: 2016. 10. 16. wifi 후기남길필요있나 ? 없다 ! 따라서 와이파이 후기는 제외
-
-        // TODO: 2016. 10. 16. test 할때는 markerId 로 먼저하자
-
         Review review = new Review(markerId,userId,userName,userImageUrl,userCountry,content,"",currentDate,0,0);
-
-        // TODO: 2016. 10. 16. 별점 저장해야됨 맨마지막거 스탈 레이트
-
-
         return review;
     }
 
