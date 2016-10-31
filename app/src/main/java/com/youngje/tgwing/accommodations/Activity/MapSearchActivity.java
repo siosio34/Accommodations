@@ -134,8 +134,6 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
     private TextView userNameTextView;
 
 
-<<<<<<< HEAD
-=======
     //community chatroom activity
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -147,7 +145,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
     private ImageView arrow;
     private boolean isCommunity = false;
     private boolean isFull = false;
->>>>>>> ff2ebd786329c571d3605650bb94df7c6722fea6
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,14 +164,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
-                if (layoutMore.isShown()) {
-                    layoutMore.setVisibility(View.GONE);
-                    //mListLayout.setVisibility(View.GONE);
-                } else {
 
-                    layoutMore.setVisibility(View.VISIBLE);
-=======
                 if(!isCommunity) {
                     if (layoutMore.isShown()) {
                         layoutMore.setVisibility(View.GONE);
@@ -184,7 +175,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                 }
                 else {
                     changeCommunityToMapSearch(true);
->>>>>>> ff2ebd786329c571d3605650bb94df7c6722fea6
+
                 }
             }
         });
@@ -1036,8 +1027,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         });
     }
 
-<<<<<<< HEAD
-=======
+
     public void createRoom() {
         databaseReference.child("users").child(User.getMyInstance().getUserId()).child("chatRoomID").addListenerForSingleValueEvent(
                 new ValueEventListener() {
@@ -1495,7 +1485,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
 }
 
->>>>>>> ff2ebd786329c571d3605650bb94df7c6722fea6
+
 class pointOnMap{
     public pointOnMap(double Lat, double Lon){
         setLat(Lat);
