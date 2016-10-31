@@ -15,4 +15,7 @@
     <color name="community_main_create_chatroom_popup_black">#FF000000</color>
     <color name="community_main_create_chatroom_popup_transparent_black">#30000000</color>
     <color name="community_main_create_chatroom_popup_lightBlue">#FF6679D8</color>
+
+    <color name="colorMain">#7585f6</color>
+    <color name="white">#ffffff</color>
 </resources>

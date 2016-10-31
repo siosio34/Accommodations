@@ -3,32 +3,16 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/drawer_My_Review"
             android:checked="true"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="홈" />
+            android:title="" />
         <item
-            android:id="@+id/nav_attend"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="출석하기" />
+            android:id="@+id/drawer_Settings"
+            android:title="" />
         <item
-            android:id="@+id/nav_attendlist"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="출석현황" />
+            android:id="@+id/drawer_Announcement"
+            android:title="" />
 
     </group>
-
-    <item android:title="사용자">
-        <menu>
-            <item
-                android:id="@+id/nav_info"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="정보보기" />
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_share"
-                android:title="로그아웃" />
-        </menu>
-    </item>
 
 </menu>

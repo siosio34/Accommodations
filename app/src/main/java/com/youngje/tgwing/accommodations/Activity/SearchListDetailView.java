@@ -21,7 +21,7 @@ import com.youngje.tgwing.accommodations.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
+import java.util.TreeSet;
 
 /**
  * Created by JiwoonWon on 2016. 10. 22..
@@ -30,8 +30,10 @@ import java.util.zip.Inflater;
 public class SearchListDetailView extends AppCompatActivity{
 
     private final static String TAG = "SearchListDetailView";
+
+    private SearchListReviewViewAdapter mAdapter;
     private TextView btnExit;
-    private static ImageView btnWriteReview;
+    private ImageView btnWriteReview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,36 +41,22 @@ public class SearchListDetailView extends AppCompatActivity{
         setContentView(R.layout.activity_listview_detail);
 
         reviewListView();
-        btnExit = (TextView) findViewById(R.id.list_detail_view_exit);
-        btnExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        btnWriteReview = (ImageView) findViewById(R.id.list_detail_view_add_review);
-        btnWriteReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), WriteReviewActivity.class));
-                Log.d(TAG, "moveTo : WriteReviewActivity.class");
-            }
-        });
     }
 
     public void reviewListView() {
+
         ListView listview;
-        SearchListReviewViewAdapter adapter;
 
-        adapter = new SearchListReviewViewAdapter();
+        mAdapter = new SearchListReviewViewAdapter();
         listview = (ListView) findViewById(R.id.list_detail_view_listview);
-        listview.setAdapter(adapter);
+        listview.setAdapter(mAdapter);
 
-        adapter.addItem(ContextCompat.getDrawable(this,R.drawable.face1), 4,ContextCompat.getDrawable(this,R.drawable.googlelogo)
+        mAdapter.addMainUI();
+        mAdapter.addItem(ContextCompat.getDrawable(this,R.drawable.face1), 4,ContextCompat.getDrawable(this,R.drawable.googlelogo)
                 ,"Nick","2016.10.23",ContextCompat.getDrawable(this,R.drawable.test_img_palace),"경복궁 정말 좋은 것 같아효", 2000);
-        adapter.addItem(ContextCompat.getDrawable(this,R.drawable.face1), 5,ContextCompat.getDrawable(this,R.drawable.googlelogo)
+        mAdapter.addItem(ContextCompat.getDrawable(this,R.drawable.face1), 5,ContextCompat.getDrawable(this,R.drawable.googlelogo)
                 ,"Jason","2016.10.21",ContextCompat.getDrawable(this,R.drawable.test_img_palace),"여친이 생기면 꼭 다시 와야겠어요!", 1949);
-        adapter.addItem(ContextCompat.getDrawable(this,R.drawable.face1), 3,ContextCompat.getDrawable(this,R.drawable.googlelogo)
+        mAdapter.addItem(ContextCompat.getDrawable(this,R.drawable.face1), 3,ContextCompat.getDrawable(this,R.drawable.googlelogo)
                 ,"Mark","2016.10.20",ContextCompat.getDrawable(this,R.drawable.test_img_palace),"전 별로였는데..?", 392);
 
         Log.d(TAG,"I've passed here!");
@@ -76,19 +64,41 @@ public class SearchListDetailView extends AppCompatActivity{
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
+                if(view.getId() == R.id.list_detail_main_exit) {
+                    btnExit = (TextView) findViewById(R.id.list_detail_main_exit);
+                    btnExit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finish();
+                        }
+                    });
+                } else if(view.getId() == R.id.list_detail_view_add_review) {
+                    btnWriteReview = (ImageView) findViewById(R.id.list_detail_view_add_review);
+                    btnWriteReview.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(getApplicationContext(), WriteReviewActivity.class));
+                            Log.d(TAG, "moveTo : WriteReviewActivity.class");
+                        }
+                    });
+                }
             }
         });
     }
 
 
-/////////////////////////  Adapter
+    /////////////////////////  Adapter
     public class SearchListReviewViewAdapter extends BaseAdapter {
 
+        private static final int TYPE_MAIN_UI = 0;
+        private static final int TYPE_LIST = 1;
         private List<SearchListReviewViewItem> reviewViewItemList = new ArrayList<SearchListReviewViewItem>();
+        private LayoutInflater inflater;
+
+        private TreeSet mMainUISet = new TreeSet();
 
         public SearchListReviewViewAdapter() {
-
+            inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         @Override
@@ -99,30 +109,40 @@ public class SearchListDetailView extends AppCompatActivity{
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
-            final Context context = parent.getContext();
+            ViewHolderMainUI viewHolderMainUI;
+            int type = getItemViewType(position);
 
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.listview_detail_item, parent, false);
-                holder = new ViewHolder(convertView);
-                convertView.setTag(holder);
+            if (type == TYPE_MAIN_UI) {
+                if (convertView == null) {
+                    convertView = inflater.inflate(R.layout.listview_detail_main_ui, parent, false);
+                    viewHolderMainUI = new ViewHolderMainUI();
+                    convertView.setTag(viewHolderMainUI);
+                } else {
+                    viewHolderMainUI = (ViewHolderMainUI) convertView.getTag();
+                }
+
             } else {
-                holder = (ViewHolder) convertView.getTag();
+                if (convertView == null) {
+                    convertView = inflater.inflate(R.layout.listview_detail_item, parent, false);
+                    holder = new ViewHolder(convertView);
+                    convertView.setTag(holder);
+                } else {
+                    holder = (ViewHolder) convertView.getTag();
+                }
+                SearchListReviewViewItem listViewItem = getItem(position);
+
+                holder.ratingBar.setOnRatingBarChangeListener(onRatingChangedListener(holder, position));
+                holder.ratingBar.setTag(position);
+                holder.ratingBar.setRating(listViewItem.getRatingStar());
+
+                holder.profileView.setImageDrawable(listViewItem.getProfileDrawable());
+                holder.ratingScore.setText(new Float(listViewItem.getRatingScore()).toString());
+                holder.userName.setText(listViewItem.getUserName());
+                holder.nationalityView.setImageDrawable(listViewItem.getNationality());
+                holder.reviewPictureView.setImageDrawable(listViewItem.getReviewDrawable());
+                holder.dateView.setText(listViewItem.getDate());
+                holder.reviewTextView.setText(listViewItem.getUserReview());
             }
-            SearchListReviewViewItem listViewItem = getItem(position);
-
-            holder.ratingBar.setOnRatingBarChangeListener(onRatingChangedListener(holder, position));
-            holder.ratingBar.setTag(position);
-            holder.ratingBar.setRating(listViewItem.getRatingStar());
-
-            holder.profileView.setImageDrawable(listViewItem.getProfileDrawable());
-            holder.ratingScore.setText(new Float(listViewItem.getRatingScore()).toString());
-            holder.userName.setText(listViewItem.getUserName());
-            holder.nationalityView.setImageDrawable(listViewItem.getNationality());
-            holder.reviewPictureView.setImageDrawable(listViewItem.getReviewDrawable());
-            holder.dateView.setText(listViewItem.getDate());
-            holder.reviewTextView.setText(listViewItem.getUserReview());
-//            holder.likeNumView.setText(listViewItem.getLikeNum());
 
             return convertView;
         }
@@ -149,8 +169,22 @@ public class SearchListDetailView extends AppCompatActivity{
             return reviewViewItemList.get(position);
         }
 
+        @Override
+        public int getItemViewType (int position) {
+            if(position == 0) {
+                return TYPE_MAIN_UI;
+            } else {
+                return TYPE_LIST;
+            }
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
+
         public void addItem(Drawable profileDrawable, float ratingScore, Drawable nationality, String userName, String date
-                            ,Drawable reviewDrawable, String userReview, int likeNum) {
+                ,Drawable reviewDrawable, String userReview, int likeNum) {
             SearchListReviewViewItem item = new SearchListReviewViewItem();
 
             item.setProfileDrawable(profileDrawable);
@@ -163,6 +197,37 @@ public class SearchListDetailView extends AppCompatActivity{
             item.setUserReview(userReview);
 //            item.setLikeNum(likeNum);
             reviewViewItemList.add(item);
+
+        }
+
+        public void addMainUI(){
+//            Drawable pictureDrawable, String title, String category, int distance, String location, String phoneNumber
+            SearchListReviewViewItem item = new SearchListReviewViewItem();
+
+            reviewViewItemList.add(item);
+
+            mMainUISet.add(reviewViewItemList.size()-1);
+        }
+
+        //    TODO: mainUI에 있는 내용을 변경할 수 있게 viewHolder, Model을 수정!(10.28)
+        private class ViewHolderMainUI {
+//            private ImageView mainImageView;
+//            private TextView mainTitle;
+//            private TextView mainDistance;
+//            private TextView mainCategory;
+//            private TextView mainLocation;
+//            private TextView mainContact;
+//            public View view;
+//
+//            public ViewHolderMainUI(View view) {
+//                mainImageView = (ImageView) view.findViewById(R.id.list_detail_main_image);
+//                mainTitle = (TextView) view.findViewById(R.id.list_detail_main_title);
+//                mainDistance = (TextView) view.findViewById(R.id.list_detail_main_distance);
+//                mainCategory = (TextView) view.findViewById(R.id.list_detail_main_category);
+//                mainLocation = (TextView) view.findViewById(R.id.list_detail_main_location);
+//                mainContact = (TextView) view.findViewById(R.id.list_detail_main_phone);
+//                this.view = view;
+//            }
         }
 
         private class ViewHolder {
@@ -193,7 +258,7 @@ public class SearchListDetailView extends AppCompatActivity{
 
     }
 
-////////////////////  Model
+    ////////////////////  Model
     public class SearchListReviewViewItem {
         private Drawable profileDrawable;
         private Drawable nationality;
@@ -216,11 +281,11 @@ public class SearchListDetailView extends AppCompatActivity{
             return date;
         }
         public void setDate(String date) {
-        this.date = date;
-    }
+            this.date = date;
+        }
 
         public float getRatingStar() {
-                return ratingStar;
+            return ratingStar;
         }
         public void setRatingStar(float ratingStar) {
             this.ratingStar = ratingStar;
@@ -268,4 +333,55 @@ public class SearchListDetailView extends AppCompatActivity{
             this.likeNum = likeNum;
         }
     }
+
+//    public class SearchListMainItem {
+//        private Drawable pictureDrawable;
+//        private String title;
+//        private String category;
+//        private int distance;
+//        private String location;
+//        private String phoneNumber;
+//
+//        public Drawable getPictureDrawable() {
+//            return pictureDrawable;
+//        }
+//        public void setPictureDrawable(Drawable pictureDrawable) {
+//            this.pictureDrawable = pictureDrawable;
+//        }
+//
+//        public String getTitle() {
+//            return title;
+//        }
+//        public void setTitle(String title) {
+//            this.title = title;
+//        }
+//
+//        public String getCategory() {
+//            return category;
+//        }
+//        public void setCategory(String category) {
+//            this.category = category;
+//        }
+//
+//        public int getDistance() {
+//            return distance;
+//        }
+//        public void setDistance(int distance) {
+//            this.distance = distance;
+//        }
+//
+//        public String getLocation() {
+//            return location;
+//        }
+//        public void setLocation(String location) {
+//            this.location = location;
+//        }
+//
+//        public String getPhoneNumber() {
+//            return phoneNumber;
+//        }
+//        public void setPhoneNumber(String phoneNumber) {
+//            this.phoneNumber = phoneNumber;
+//        }
+//    }
 }

@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -18,9 +19,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.text.SpannableString;
+import android.text.style.AlignmentSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,20 +33,30 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+
 import android.widget.ArrayAdapter;
+
+import android.widget.CompoundButton;
+
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
 import android.widget.PopupWindow;
+
+import android.widget.RelativeLayout;
+
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
@@ -51,6 +66,10 @@ import com.squareup.picasso.Target;
 import com.youngje.tgwing.accommodations.Chat;
 import com.youngje.tgwing.accommodations.ChatManager;
 import com.youngje.tgwing.accommodations.Chatroom;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.Data.DaumDataProcessor;
 import com.youngje.tgwing.accommodations.Data.NavigationDataProcessor;
@@ -61,6 +80,9 @@ import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
 import com.youngje.tgwing.accommodations.Util.RoundedAvatarDrawable;
+
+import com.youngje.tgwing.accommodations.Util.RoundedImageView;
+
 
 import net.daum.mf.map.api.CalloutBalloonAdapter;
 import net.daum.mf.map.api.CameraUpdateFactory;
@@ -90,6 +112,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MapSearchActivity extends AppCompatActivity implements View.OnClickListener, MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener, NavigationView.OnNavigationItemSelectedListener {
+
+    private final static String TAG = "MapSearchActivity";
+
     private ImageView btnMore;
     private View layoutMore;
     private EditText mSearchView;
@@ -98,9 +123,14 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
     private MapView mMapView;
     private Location curlocate;
     private User curUser;
-
+    private ToggleButton mToggleButton;
     private DrawerLayout mDrawer;
     private NavigationView mNavView;
+    private Menu mDrawerMenu;
+    private RelativeLayout mNavHeader;
+    private ImageView userImageView;
+    private TextView userNameTextView;
+
 
     //community chatroom activity
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -125,7 +155,9 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         curlocate = LocationUtil.curlocation;
         curUser = User.getMyInstance();
 
-    //   String startCreateUrl;
+
+
+        //   String startCreateUrl;
     //   String endCreateUrl;
     //   String daumRouteRequestUrl;
 
@@ -161,9 +193,6 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
    //       e.printStackTrace();
    //   }
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        myRef.child("currentUser").child(curUser.getUserId()).setValue(curUser);
 
         btnMore = (ImageView) findViewById(R.id.activity_main_btn_more);
         layoutMore = (View) findViewById(R.id.activity_main_btn_category);
@@ -171,11 +200,16 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (layoutMore.isShown()) {
-                    layoutMore.setVisibility(View.GONE);
-                    //mListLayout.setVisibility(View.GONE);
-                } else {
-                    layoutMore.setVisibility(View.VISIBLE);
+                if(!isCommunity) {
+                    if (layoutMore.isShown()) {
+                        layoutMore.setVisibility(View.GONE);
+                        //mListLayout.setVisibility(View.GONE);
+                    } else {
+                        layoutMore.setVisibility(View.VISIBLE);
+                    }
+                }
+                else {
+                    changeCommunityToMapSearch(true);
                 }
             }
         });
@@ -188,20 +222,72 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
         addSearch();
         ///////////////////////////////////drawer 부분입니다.
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavView = (NavigationView) findViewById(R.id.nav_view);
-        mNavView.setNavigationItemSelectedListener(this);
+
+
 
         ImageView communityBtn = (ImageView)findViewById(R.id.activity_main_btn_community);
         communityBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference();
+                myRef.child("currentUser").child(curUser.getUserId()).setValue(curUser);
                 changeMapSearchToCommunity();
                 //Intent intent = new Intent(MapSearchActivity.this, CommunityMainActivity.class);
                 //startActivity(intent);
+
             }
         });
+        initDrawer();
+
+      Picasso.with(this).load(curUser.getImageUri()).into(new Target() {
+
+          @Override
+          public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+              userImageView.setImageDrawable(new RoundedAvatarDrawable(bitmap, bitmap.getWidth(), bitmap.getWidth()));
+          }
+
+          @Override
+          public void onBitmapFailed(Drawable errorDrawable) {
+
+          }
+
+          @Override
+          public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+          }
+      });
+        userNameTextView.setText(curUser.getUserName());
     }
+    private void initDrawer(){
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavView = (NavigationView) findViewById(R.id.nav_view);
+        mDrawerMenu = mNavView.getMenu();
+        String[] meunItems = getResources().getStringArray(R.array.drawer_menu_items);
+        for(int i=0;i<meunItems.length;i++){
+            MenuItem item = mDrawerMenu.getItem(i);
+            SpannableString s = new SpannableString(meunItems[i]);
+            s.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, s.length(), 0);
+
+            item.setTitle(s);
+        }
+
+        mNavView.setNavigationItemSelectedListener(this);
+        mNavHeader = (RelativeLayout) mNavView.getHeaderView(0);
+        userImageView = (ImageView) mNavHeader.findViewById(R.id.userImageView);
+        userNameTextView = (TextView)mNavHeader.findViewById(R.id.userName);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        myRef.child("currentUser").child(curUser.getUserId()).removeValue();
+    }
+
 
     void onDrawer(View view){
         mDrawer.openDrawer(mNavView);
@@ -302,21 +388,37 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         for(int i=0; i < markerList.size(); i++) {
             com.youngje.tgwing.accommodations.Marker marker = markerList.get(i);
             int iDistance = (int) marker.getDistance();
+            String iTitle;
 
-            adapter.addItem(iDistance+"m",
-                    marker.getTitle(), "종류", 3, "(6)");
+            if(marker.getTitle().length() > 13) {
+                iTitle = (String) marker.getTitle().substring(0, 11);
+                iTitle = iTitle + "...";
+            } else {
+                iTitle = (String) marker.getTitle();
+            }
+
+            adapter.addItem(iDistance+"m", iTitle, "종류", 3, "6");
         }
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // get item
-                SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
-                startActivity(new Intent(getApplicationContext(), SearchListDetailView.class));
-                // TODO : use item data.
+                if(v.getId() == R.id.listview_navigation ){
+                    // get item
+                    SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
+                    // 네비게이션 이벤트
+                    Log.d(TAG, "Activate Navigation : " + item.getTitle());
+                } else {
+                    // get item
+                    SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
+                    startActivity(new Intent(getApplicationContext(), SearchListDetailView.class));
+                    // TODO : use item data.
+                }
+
             }
         });
     }
+
 
     public void categorySearch(DataFormat.DATATYPE dataFormat){
         mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);
@@ -473,16 +575,12 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         mDrawer.closeDrawer(mNavView);
 
         switch(id){
-            case R.id.nav_home:
-                Toast.makeText(this,"nav_home",Toast.LENGTH_SHORT).show(); break;
-            case R.id.nav_attend:
-                Toast.makeText(this,"nav_attend",Toast.LENGTH_SHORT).show(); break;
-            case R.id.nav_attendlist:
-                Toast.makeText(this,"nav_attendlist",Toast.LENGTH_SHORT).show();  break;
-            case R.id.nav_info:
-                Toast.makeText(this,"nav_info",Toast.LENGTH_SHORT).show(); break;
-            case R.id.nav_logout:
-                Toast.makeText(this,"nav_logout",Toast.LENGTH_SHORT).show(); break;
+            case R.id.drawer_My_Review:
+                Toast.makeText(this,"drawer_My_Review",Toast.LENGTH_SHORT).show(); break;
+            case R.id.drawer_Settings:
+                Toast.makeText(this,"drawer_Settings",Toast.LENGTH_SHORT).show(); break;
+            case R.id.drawer_Announcement:
+                Toast.makeText(this,"drawer_Announcement",Toast.LENGTH_SHORT).show();  break;
         }
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.closeDrawer(GravityCompat.START);
@@ -632,6 +730,18 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         mMapView.setShowCurrentLocationMarker(true);
         mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
+        mToggleButton = (ToggleButton) findViewById(R.id.myLocationToggle);
+        mToggleButton.setChecked(false);
+        mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked)
+                    mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+                else{
+                    mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);
+                }
+            }
+        });
 
         //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
         pointOnMap startPoint = new pointOnMap(517681,1040128);
@@ -726,7 +836,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                 popup = null;
             }
             else {
-                changeCommunityToMapSearch();
+                changeCommunityToMapSearch(false);
             }
         }
     }
@@ -829,35 +939,42 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         // TODO: 2016. 10. 25. 이버튼을 클릭햇을때  onNavigationonNavigation 작동
         // TODO: 2016. 10. 25. 한번 더 클릭시 네비게이션 모드 종료
 
-        
-
     }
 
-    void changeCommunityToMapSearch() {
+
+    void changeCommunityToMapSearch(boolean isClick) {
         isCommunity = false;
 
+        findViewById(R.id.community_main_createChatroom).setVisibility(View.GONE);
         findViewById(R.id.community_main).setVisibility(View.GONE);
-        findViewById(R.id.activity_main_btn_category).setVisibility(View.VISIBLE);
-        findViewById(R.id.shadow_bottom).setVisibility(View.VISIBLE);
-        findViewById(R.id.map_search_relativelayout).setVisibility(View.VISIBLE);
-        findViewById(R.id.navbar).setVisibility(View.VISIBLE);
+        //findViewById(R.id.activity_map_search_listLayout).setVisibility(View.VISIBLE);
+        //findViewById(R.id.shadow_bottom).setVisibility(View.VISIBLE);
+        if(isClick)
+            findViewById(R.id.activity_main_btn_category).setVisibility(View.VISIBLE);
+        else
+            findViewById(R.id.activity_main_btn_category).setVisibility(View.GONE);
+        //findViewById(R.id.myLocationToggle).setVisibility(View.VISIBLE);
+        findViewById(R.id.activity_main_btn_community).setVisibility(View.VISIBLE);
+        //findViewById(R.id.navbar).setVisibility(View.VISIBLE);
     }
 
     void changeMapSearchToCommunity() {
         isCommunity = true;
 
         findViewById(R.id.activity_main_btn_category).setVisibility(View.GONE);
-        findViewById(R.id.shadow_bottom).setVisibility(View.GONE);
-        findViewById(R.id.map_search_relativelayout).setVisibility(View.GONE);
-        findViewById(R.id.navbar).setVisibility(View.GONE);
+        //findViewById(R.id.shadow_bottom).setVisibility(View.GONE);
+        findViewById(R.id.activity_map_search_listLayout).setVisibility(View.GONE);
+        //findViewById(R.id.myLocationToggle).setVisibility(View.GONE);
+        findViewById(R.id.activity_main_btn_community).setVisibility(View.GONE);
+        findViewById(R.id.activity_map_search_listLayout).setVisibility(View.GONE);
+        //findViewById(R.id.navbar).setVisibility(View.GONE);
         findViewById(R.id.community_main).setVisibility(View.VISIBLE);
-
+        findViewById(R.id.community_main_createChatroom).setVisibility(View.VISIBLE);
         //communityMainActivity
         communityMain = (LinearLayout)findViewById(R.id.community_main);
         communityMain.setVisibility(View.VISIBLE);
         //arrow = (ImageView)findViewById(R.id.community_main_arrow);
-
-        FloatingActionButton createChatroomBtn = (FloatingActionButton)findViewById(R.id.community_main_createChatroom);
+        ImageView createChatroomBtn = (ImageView)findViewById(R.id.community_main_createChatroom);
         createChatroomBtn.setOnClickListener(this);
 
         //LinearLayout uparrowLayout = (LinearLayout)findViewById(R.id.community_main_arrowlayout);
@@ -888,7 +1005,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                 if(isFull) {
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1200);
                     communityMain.setLayoutParams(params);
-                    //arrow.setBackgroundResource(R.drawable.uparrow);
+                    //arrow.setBackgroundResource(R.drawablef.uparrow);
                     isFull = false;
                 }
                 else {
@@ -1146,6 +1263,8 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
     }
 
     private class ChatroomListPagerAdapter extends PagerAdapter {
+
+
 
         public ChatroomListPagerAdapter() {
         }

@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.Data.DaumDataProcessor;
 import com.youngje.tgwing.accommodations.Data.NavigationDataProcessor;
@@ -98,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
         }
         // TODO: 2016. 10. 1. 완성해야될 필요성 있으
     }
+
+
 
     // 파이어베이스 데이터 많아지면 웹에서 수정,삭제가 힘듬 이 함수 필요
     public void firebaseUtilNodeAdd() {
