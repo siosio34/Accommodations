@@ -574,7 +574,16 @@ public class CommunityChatroomActivity extends AppCompatActivity implements View
 
             //국가 설정
             ImageView chatroomNationality = (ImageView)v.findViewById(R.id.community_chatroom_userlist_nationality);
-            chatroomNationality.setBackgroundResource(R.drawable.america);
+            if(user.getCountry() == null)
+                chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_us);
+            else if(user.getCountry().equals("en"))
+                chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_us);
+            else if(user.getCountry().equals("ja"))
+                chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_japan);
+            else if(user.getCountry().equals("zh-CN"))
+                chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_china);
+            else if(user.getCountry().equals("ko"))
+                chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_korea);
 
             return v;
         }

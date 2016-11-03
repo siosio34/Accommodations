@@ -20,8 +20,8 @@
         android:textStyle="bold"
         android:gravity="center"/>
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="18dp"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:id="@+id/community_chatroom_userlist_nationality"/>

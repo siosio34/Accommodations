@@ -190,6 +190,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                 }
             } else if (resultCode == RESULT_CANCELED)
                 Toast.makeText(this, "사진을 취소하셨습니다.", Toast.LENGTH_SHORT).show();
+
         } else if (requestCode == REQUEST_VIDEO) {
             if (resultCode == RESULT_OK) {
                 System.out.println("asdasd2 " + requestCode);
@@ -203,6 +204,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
             } else if (resultCode == RESULT_CANCELED)
                 Toast.makeText(this, "비디오를 취소하셨습니다.", Toast.LENGTH_SHORT).show();
+
         } else if (requestCode == REQUEST_GALLREY) {
 
             if (resultCode == RESULT_OK) {

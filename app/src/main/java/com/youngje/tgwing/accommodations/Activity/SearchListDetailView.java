@@ -50,7 +50,6 @@ public class SearchListDetailView extends AppCompatActivity{
     }
 
     public void reviewListView() {
-
         ListView listview;
 
         mAdapter = new SearchListReviewViewAdapter();

@@ -1,187 +1,176 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.youngje.tgwing.accommodations.Activity.WriteReviewActivity">
+
+    <!-- 상단 NavBar -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#999999"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/backbutton"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginRight="8dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_icon_button_back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="리뷰 작성"
+            android:letterSpacing="0.1"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#ffffff"
+            android:id="@+id/textView6" />
+
+        <ImageView
+            android:id="@+id/writeReview"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginRight="8dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:src="@drawable/ic_icon_button_save" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/ic_container_shadow_bottom" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="15dp"
+        android:orientation="horizontal">
+
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:context="com.youngje.tgwing.accommodations.Activity.WriteReviewActivity">
+            android:id="@+id/loadImage"
+            android:visibility="gone"
+            />
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
-
-        <!-- 상단 NavBar -->
-        <LinearLayout
+        <VideoView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#999999"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:id="@+id/loadVideo"
+            android:visibility="gone"
+            />
 
-            <ImageView
-                android:id="@+id/backbutton"
-                android:clickable="true"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginRight="8dp"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_icon_button_back" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/cameraButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/ic_icon_camera" />
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="리뷰 작성"
-                android:letterSpacing="0.1"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="#ffffff"
-                android:id="@+id/textView6" />
-
-            <ImageView
-                android:id="@+id/writeReview"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginRight="8dp"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                android:clickable="true"
-                android:src="@drawable/ic_icon_button_save" />
+                android:text="사진 촬영"
+                android:textAlignment="center" />
 
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="260dp"
-                android:layout_height="68dp"
-                android:layout_marginTop="80dp"
-                android:layout_marginBottom="80dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/galleryButton"
-                        android:layout_width="48dp"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitCenter"
-                        android:adjustViewBounds="true"
-                        android:background="@android:color/transparent"
-                        app:srcCompat="@drawable/ic_icon_gallery" />
-
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="앨범"
-                        android:textAlignment="center" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/cameraButton"
-                        android:layout_width="48dp"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitCenter"
-                        android:adjustViewBounds="true"
-                        android:background="@android:color/transparent"
-                        app:srcCompat="@drawable/ic_icon_camera" />
-
-                    <TextView
-                        android:id="@+id/listview_category"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="사진"
-                        android:textAlignment="center" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/camcorderButton"
-                        android:layout_width="48dp"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitCenter"
-                        android:adjustViewBounds="true"
-                        android:background="@android:color/transparent"
-                        app:srcCompat="@drawable/ic_icon_camcoder" />
-
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="동영상"
-                        android:textAlignment="center" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- 이미지, 동영상을 불러왔을 때 그 위에 올라옴! -->
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                android:id="@+id/loadImage"
-                android:visibility="gone" />
-
-            <VideoView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/loadVideo"
-                android:visibility="gone" />
-
-        </FrameLayout>
-        
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="#c7c7c7">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_gravity="top"
-                android:background="@drawable/ic_container_shadow_bottom"/>
-            
-            <TextView
+            <ImageButton
+                android:id="@+id/galleryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_gravity="bottom|left"
-                android:text="평가하기"
-                android:letterSpacing="0.1"
-                android:textSize="16sp"
-                android:textColor="#393939"/>
-            
-        </FrameLayout>
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/ic_icon_gallery" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="갤 러 리"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
 
         <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/camcorderButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/ic_icon_camcoder" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="동영상 촬영"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#c7c7c7">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_gravity="top"
+        android:background="@drawable/ic_container_shadow_bottom"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_gravity="bottom|left"
+        android:text="평가하기"
+        android:letterSpacing="0.1"
+        android:textSize="16sp"
+        android:textColor="#393939"/>
+    </FrameLayout>
+
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:gravity="center">
@@ -196,44 +185,50 @@
                 android:max="5"
                 android:stepSize="0.5"/>
 
-        </LinearLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="#c7c7c7">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_gravity="top"
-                android:background="@drawable/ic_container_shadow_bottom"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_gravity="bottom|left"
-                android:text="후기 작성"
-                android:letterSpacing="0.1"
-                android:textSize="16sp"
-                android:textColor="#393939"/>
-
-        </FrameLayout>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="top|left"
-            android:background="@null"
-            android:textSize="14sp"
-            android:hint="내용을 작성해주세요"
-            android:id="@+id/inputText" />
-
     </LinearLayout>
 
-</ScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#c7c7c7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_gravity="top"
+            android:background="@drawable/ic_container_shadow_bottom"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_gravity="bottom|left"
+            android:text="후기 작성"
+            android:letterSpacing="0.1"
+            android:textSize="16sp"
+            android:textColor="#393939"/>
+
+    </FrameLayout>
+
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="top|left"
+        android:textSize="20sp"
+        android:hint="글을 입력해 주세요"
+        android:id="@+id/inputText" />
+
+</LinearLayout>
+
+
+
+
+
+
+
+

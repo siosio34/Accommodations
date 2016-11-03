@@ -330,7 +330,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         TextView ratingText = (TextView) findViewById(R.id.listview_rating_score);
 
         // Adapter 생성
-        adapter = new SearchListViewAdapter();
+        adapter = new SearchListViewAdapter(this);
 
         // 리스트뷰 참조 및 Adapter달기
         listview = (ListView) findViewById(R.id.activity_map_search_listView);
@@ -377,10 +377,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                     // TODO : use item data.
                 }
             }
-
         });
-
-
     }
 
 
@@ -492,7 +489,10 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                 startActivity(intent);
                 break;
             case R.id.drawer_Settings:
-                Toast.makeText(this,"drawer_Settings",Toast.LENGTH_SHORT).show(); break;
+                Intent intent1 = new Intent(this, UserInformationActivity.class);
+                startActivity(intent1);
+                break;
+                //Toast.makeText(this,"drawer_Settings",Toast.LENGTH_SHORT).show(); break;
             case R.id.drawer_Announcement:
                 Toast.makeText(this,"drawer_Announcement",Toast.LENGTH_SHORT).show();  break;
         }
@@ -591,7 +591,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
     //맵 Lon 이랑 Lan 나타내주는게 없어서 맨 밑에다가 두개 정보만 담고있는 class임시로 만들어놨습니다.
     //나중에 원하는 걸로 수정때리면 되여
-    private void drawLineFromStartPoint(pointOnMap startPoint, List<pointOnMap> pointOnMapList){
+    public void drawLineFromStartPoint(pointOnMap startPoint, List<pointOnMap> pointOnMapList){
         MapPolyline polyline = new MapPolyline();
         polyline.setTag(1000);
         // Polyline 색 지정
@@ -607,7 +607,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
             polyline.addPoint(MapPoint.mapPointWithWCONGCoord(pointOnMapList.get(i).getLat(),pointOnMapList.get(i).getLon()));
             //아니고 WGS84인 위도 경도라면 요거 쓰면됨
             //polyline.addPoint(MapPoint.mapPointWithGeoCoord(pointOnMapList.get(i).getLat(),pointOnMapList.get(i).getLon()));
-    }
+        }
 
         //맵에 추가
         mMapView.addPolyline(polyline);
@@ -791,6 +791,25 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         return userIdList;
     }
 
+    public void navimode(boolean isNavi, int position) {
+        if(!isNavi) {
+            findViewById(R.id.navbar).setVisibility(View.VISIBLE);
+            findViewById(R.id.shadow_bottom).setVisibility(View.VISIBLE);
+            findViewById(R.id.activity_main_btn_category).setVisibility(View.VISIBLE);
+            findViewById(R.id.myLocationToggle).setVisibility(View.VISIBLE);
+            findViewById(R.id.activity_main_btn_community).setVisibility(View.VISIBLE);
+        }
+        else {
+            findViewById(R.id.navbar).setVisibility(View.GONE);
+            findViewById(R.id.shadow_bottom).setVisibility(View.GONE);
+            findViewById(R.id.activity_main_btn_category).setVisibility(View.GONE);
+            findViewById(R.id.myLocationToggle).setVisibility(View.GONE);
+            findViewById(R.id.activity_main_btn_community).setVisibility(View.GONE);
+            //findViewById(R.id.activity_map_search_listLayout).setVisibility(View.GONE);
+            //mMapView.removeAllPOIItems();
+        }
+    }
+
     public void onNavigation(double endLat,double endLon) throws ExecutionException, InterruptedException, JSONException {
 
         //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
@@ -883,7 +902,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.activity_map_search_listLayout).setVisibility(View.GONE);
         //findViewById(R.id.myLocationToggle).setVisibility(View.GONE);
         findViewById(R.id.activity_main_btn_community).setVisibility(View.GONE);
-        findViewById(R.id.activity_map_search_listLayout).setVisibility(View.GONE);
+        //findViewById(R.id.activity_map_search_listLayout).setVisibility(View.GONE);
         //findViewById(R.id.navbar).setVisibility(View.GONE);
         findViewById(R.id.community_main).setVisibility(View.VISIBLE);
         findViewById(R.id.community_main_createChatroom).setVisibility(View.VISIBLE);
@@ -1433,7 +1452,23 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                 //set chatroom writer nationality
                 ImageView chatroomNationality = (ImageView)chatroomView.findViewById(R.id.community_main_chatroom_nationality);
                 //chatroom.getChatroomWriterNationality()
+
+                if(chatroom.getChatroomWriterNationality() == null)
+                    chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_us);
+                else if(chatroom.getChatroomWriterNationality().equals("en"))
+                    chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_us);
+                else if(chatroom.getChatroomWriterNationality().equals("ja"))
+                    chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_japan);
+                else if(chatroom.getChatroomWriterNationality().equals("zh-CN"))
+                    chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_china);
+                else if(chatroom.getChatroomWriterNationality().equals("ko"))
+                    chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_korea);
+
+                //Picasso.with(CommunityMainActivity.this).load("googlelogo.png").into(chatroomNationality);
+
+
                 chatroomNationality.setBackgroundResource(R.drawable.america);
+
                 //set chatroom number
                 TextView chatroomNumber = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_number);
                 if(chatroom.getUserList() != null)

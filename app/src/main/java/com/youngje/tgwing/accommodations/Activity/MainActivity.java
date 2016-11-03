@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         new LocationUtil(this); // 현재위치 한번 받아옴.
         myLoc = LocationUtil.curlocation;
-        Log.i("위치", String.valueOf(myLoc.getLongitude()));
+      //  Log.i("위치", String.valueOf(myLoc.getLongitude()));
     }
 
     @Override
