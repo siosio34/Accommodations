@@ -9,32 +9,27 @@ import java.util.Date;
 public class Review {
 
     private String markerId; // == locationId
-    private String userId;
-    private String userName;
-    private String userLocale;
+    private String userId; // 유저아이디
+    private String userName; // 유저이름
     private String userImageUrl; // 유저 이미지 링크.
-    private String title;
-    private String content;
+    private String content; // 리뷰 냉ㅅㅇ
     private String reviewContentUrl; // 리뷰와 연관된 사진 동영상 링크
-    private Date createDate; // 글 쓴 시간
+   // private Date createDate; // 글 쓴 시간
     private int contentType; // 글, 사진,동영상
     private int star; // 별점
 
-
     public Review(){}
 
-    public Review(String markerId,String userId,String userName,String userImageUrl,String userLocale,String content,
-                  String reviewContentUrl,Date createDate,int contentType,int star) {
-
+    public Review(String markerId,String userId,String userName,String userImageUrl,String content,
+                  String reviewContentUrl,int contentType,int star) {
 
         this.markerId = markerId;
         this.userId = userId;
         this.userName = userName;
         this.userImageUrl = userImageUrl;
-        this.userLocale = userLocale;
         this.content = content;
         this.reviewContentUrl = reviewContentUrl;
-        this.createDate = createDate;
+        //this.createDate = createDate;
         this.contentType = contentType;
         this.star = star;
     }
@@ -55,13 +50,6 @@ public class Review {
         this.userId = userId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getContent() {
         return content;
@@ -111,19 +99,11 @@ public class Review {
         this.userName = userName;
     }
 
-    public String getUserLocale() {
-        return userLocale;
-    }
+   // public Date getCreateDate() {
+       // return createDate;
+    //}
 
-    public void setUserLocale(String userLocale) {
-        this.userLocale = userLocale;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+   // public void setCreateDate(Date createDate) {
+    //    this.createDate = createDate;
+  //  }
 }

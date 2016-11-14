@@ -49,10 +49,7 @@ public class NavigationDataProcessor {
         }
 
         navi = new Navi((rotationCode + " " + guideMent),length,time,naviXYList);
-        Log.i("navi", navi.getGuideMent());
-        Log.i("navi2", Double.toString(navi.getLength()));
-        Log.i("navi3", Double.toString(navi.getTime()));
-        Log.i("navi4", navi.getListXY().toString());
+
 
         return navi;
 

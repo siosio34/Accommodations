@@ -43,7 +43,7 @@ public class DaumDataProcessor implements DataProcessor {
     public Marker processDAUMJSONObject(JSONObject jsonObject) throws JSONException {
         Marker marker = null;
 
-        marker = new DaumMarker(jsonObject.getString("id"), Double.parseDouble(jsonObject.getString("latitude")), Double.parseDouble(jsonObject.getString("longitude")), jsonObject.getString("title"), dataType
+        marker = new DaumMarker(jsonObject.getString("id"), Double.parseDouble(jsonObject.getString("latitude")), Double.parseDouble(jsonObject.getString("longitude")), jsonObject.getString("title"),jsonObject.getString("category")
                 , jsonObject.getString("placeUrl"), jsonObject.getDouble("distance"), jsonObject.getString("phone"), jsonObject.getString("address"), jsonObject.getString("newAddress")
                 , jsonObject.getString("category"));
 

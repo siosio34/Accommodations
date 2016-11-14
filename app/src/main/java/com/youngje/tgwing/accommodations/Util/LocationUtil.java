@@ -3,11 +3,13 @@ package com.youngje.tgwing.accommodations.Util;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,6 +20,8 @@ import android.widget.Toast;
 public class LocationUtil implements LocationListener {
 
     public static Location curlocation = null;
+    public static Location hardFIxLocation;
+    public static Location DaumCurlocation;
 
     private double lat;
     private double lon;
@@ -40,11 +44,10 @@ public class LocationUtil implements LocationListener {
 
     }
 
-
-
     public LocationUtil(Context appCtx) { // 생성자.
         ctx = appCtx;
         locationMgr = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
+
 
         try {
 
@@ -57,7 +60,9 @@ public class LocationUtil implements LocationListener {
             }
 
             if(!isGpsEnabled && !isNetworkEnabled) {
-                Toast.makeText(ctx,"GPS 수신 불가",Toast.LENGTH_LONG);
+                Toast.makeText(ctx,"GPS 수신 불가",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                ctx.startActivity(intent);
             }
 
             if(isGpsEnabled)

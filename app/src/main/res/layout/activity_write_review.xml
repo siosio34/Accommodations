@@ -54,10 +54,11 @@
         android:background="@drawable/ic_container_shadow_bottom" />
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="15dp"
+        android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
         <ImageView
@@ -70,6 +71,9 @@
         <VideoView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:id="@+id/loadVideo"
             android:visibility="gone"
             />
@@ -144,7 +148,7 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <FrameLayout

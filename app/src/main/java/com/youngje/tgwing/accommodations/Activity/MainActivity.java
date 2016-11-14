@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static android.os.Build.VERSION_CODES.M;
+import static com.youngje.tgwing.accommodations.Util.LocationUtil.DaumCurlocation;
+import static com.youngje.tgwing.accommodations.Util.LocationUtil.hardFIxLocation;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         checkAndRequestPemission();
+
 
     }
 

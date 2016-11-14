@@ -30,6 +30,7 @@ import com.youngje.tgwing.accommodations.Marker;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.Review;
 import com.youngje.tgwing.accommodations.User;
+import com.youngje.tgwing.accommodations.Util.MyVideoView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -53,7 +54,7 @@ public class WriteReviewActivity extends AppCompatActivity {
     RatingBar ratingBar;
 
     ImageView loadImage;
-    VideoView loadVideo;
+   // VideoView loadVideo;
 
     private File destination = null;
 
@@ -176,14 +177,14 @@ public class WriteReviewActivity extends AppCompatActivity {
                     FileInputStream in = new FileInputStream(destination);
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inSampleSize = 10;
-                    Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
-                    loadImage.setImageBitmap(bmp);
+
+                    Picasso.with(this).load(data.getData()).noPlaceholder().centerCrop().fit()
+                            .into((ImageView)findViewById(R.id.loadImage));
 
                     loadImage.setVisibility(View.VISIBLE);
                     cameraButton.setVisibility(View.GONE);
                     camCorderButton.setVisibility(View.GONE);
                     gallaryButton.setVisibility(View.GONE);
-
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -194,10 +195,12 @@ public class WriteReviewActivity extends AppCompatActivity {
         } else if (requestCode == REQUEST_VIDEO) {
             if (resultCode == RESULT_OK) {
                 System.out.println("asdasd2 " + requestCode);
-                loadVideo.setVideoPath(destination.getPath());
-                loadVideo.start();
 
-                loadVideo.setVisibility(View.VISIBLE);
+                VideoView videoView = (VideoView)findViewById(R.id.loadVideo);
+                videoView.setVideoPath(destination.getPath());
+                videoView.start();
+
+                videoView.setVisibility(View.VISIBLE);
                 cameraButton.setVisibility(View.GONE);
                 camCorderButton.setVisibility(View.GONE);
                 gallaryButton.setVisibility(View.GONE);
@@ -213,6 +216,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
                     Picasso.with(this).load(data.getData()).noPlaceholder().centerCrop().fit()
                             .into((ImageView) findViewById(R.id.loadImage));
+
                 loadImage.setVisibility(View.VISIBLE);
                 }
 
@@ -233,7 +237,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         ratingBar = (RatingBar) findViewById(R.id.ratingbar);
 
         loadImage = (ImageView)findViewById(R.id.loadImage);
-        loadVideo = (VideoView) findViewById(R.id.loadVideo);
+        //loadVideo = (VideoView) findViewById(R.id.loadVideo);
 
     }
 
@@ -280,7 +284,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         String content = inputText.getText().toString();
         Date currentDate = new Date();
 
-        Review review = new Review(markerId,userId,userName,userImageUrl,userCountry,content,"",currentDate,0,0);
+        Review review = new Review(markerId,userId,userName,userImageUrl,content,"",0,0);
         return review;
     }
 
@@ -288,7 +292,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         Review review = makeReview(locationId);
         review.setContentType(0);
-        myRef.push().setValue(review);
+        myRef.child(locationId).push().setValue(review);
 
     }
     
@@ -323,7 +327,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                         hideProgressDialog();
                         mDownloadUrl = taskSnapshot.getMetadata().getDownloadUrl();
                         review.setreviewContentUrl(mDownloadUrl.toString());
-                        myRef.push().setValue(review);
+                        myRef.child(locationId).push().setValue(review);
                         // TODO: 2016. 9. 19. 여기서 url 을 받고 서버에 글 써주거나 아니면 글 아이디를 받아서 거기에 url 값을 업데이트해줘야함
 
                     }
@@ -335,7 +339,6 @@ public class WriteReviewActivity extends AppCompatActivity {
                         Log.w(TAG, "uploadFromUri:onFailure", exception);
                         hideProgressDialog();
                         mDownloadUrl = null;
-
                         // [END_EXCLUDE]
                     }
                 });

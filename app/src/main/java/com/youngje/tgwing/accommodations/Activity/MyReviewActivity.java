@@ -15,6 +15,7 @@ import com.youngje.tgwing.accommodations.R;
 public class MyReviewActivity extends AppCompatActivity {
     GridView mGridView;
     MyReviewAdapter myReviewAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +32,7 @@ public class MyReviewActivity extends AppCompatActivity {
         mGridView = (GridView) findViewById(R.id.myReviewGrid);
         myReviewAdapter = new MyReviewAdapter(this,R.layout.gridview_item,null);
 
-
         //아래는 사용법을 적어놓은 샘플코드입니다.
-
         Bitmap temp = BitmapFactory.decodeResource(this.getResources(), R.drawable.test_img_palace);
         myReviewAdapter.addItem("경복궁", "1995.04.21", "What a wonderful place", 3.5f, temp);
         myReviewAdapter.addItem("경복궁", "1995.04.21", "What a wonderful place", 3.5f, temp);

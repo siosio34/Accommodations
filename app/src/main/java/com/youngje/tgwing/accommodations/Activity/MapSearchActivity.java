@@ -7,10 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.location.LocationManager;
-import android.media.Image;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -37,7 +34,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -65,9 +61,6 @@ import com.youngje.tgwing.accommodations.Chat;
 import com.youngje.tgwing.accommodations.ChatManager;
 import com.youngje.tgwing.accommodations.Chatroom;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
 import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.Data.DaumDataProcessor;
 import com.youngje.tgwing.accommodations.Data.NavigationDataProcessor;
@@ -79,8 +72,6 @@ import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
 import com.youngje.tgwing.accommodations.Util.RoundedAvatarDrawable;
-
-import com.youngje.tgwing.accommodations.Util.RoundedImageView;
 
 
 import net.daum.mf.map.api.CalloutBalloonAdapter;
@@ -241,6 +232,8 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         mNavHeader = (RelativeLayout) mNavView.getHeaderView(0);
         userImageView = (ImageView) mNavHeader.findViewById(R.id.userImageView);
         userNameTextView = (TextView)mNavHeader.findViewById(R.id.userName);
+
+
     }
 
     @Override
@@ -274,6 +267,8 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                     }
                     mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);
                     hideSoftKeyboard(); // 키보드 숨김
+
+
                     MapPoint.GeoCoordinate geoCoordinate = mMapView.getMapCenterPoint().getMapPointGeoCoord();
                     double latitude = geoCoordinate.latitude; // 위도
                     double longitude = geoCoordinate.longitude; // 경도
@@ -598,7 +593,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         polyline.setLineColor(Color.argb(128, 255, 51, 0));
 
         //시작점 추가
-        polyline.addPoint(MapPoint.mapPointWithCONGCoord(startPoint.getLat(),startPoint.getLon()));
+        polyline.addPoint(MapPoint.mapPointWithWCONGCoord(startPoint.getLat(),startPoint.getLon()));
 
         //리스트에서 그 어진 포인트로 선그려줌
         for(int i=0;i<pointOnMapList.size();i++){
@@ -620,6 +615,21 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float v) {
+        // TODO: 2016. 11. 3.  단말의현재 위치값을 주기적으로 통보가능 
+        // TODO: 2016. 11. 3.  시발 여기다
+
+        if(LocationUtil.DaumCurlocation == null)
+            LocationUtil.DaumCurlocation = LocationUtil.curlocation;
+        else {
+
+            synchronized (LocationUtil.DaumCurlocation) {
+                LocationUtil.DaumCurlocation.setLatitude(mapPoint.getMapPointGeoCoord().latitude);
+                LocationUtil.DaumCurlocation.setLongitude(mapPoint.getMapPointGeoCoord().longitude);
+                Log.d(TAG,Double.toString(LocationUtil.curlocation.getLatitude()));
+                Log.d(TAG,Double.toString(LocationUtil.curlocation.getLongitude()));
+
+            }
+        }
 
     }
 
@@ -635,6 +645,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onCurrentLocationUpdateCancelled(MapView mapView) {
+
 
     }
 
@@ -812,20 +823,20 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
     public void onNavigation(double endLat,double endLon) throws ExecutionException, InterruptedException, JSONException {
 
-        //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
-       //pointOnMap startPoint = new pointOnMap(517681,1040128);
-       //List<pointOnMap> tempArray = new ArrayList<pointOnMap>();
+     // //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
+     //pointOnMap startPoint = new pointOnMap(517681,1040128);
+     //List<pointOnMap> tempArray = new ArrayList<pointOnMap>();
 
-       //tempArray.add(new pointOnMap(517395,1041211));
-       //tempArray.add(new pointOnMap(516844,1041182));
-       //tempArray.add(new pointOnMap(516768,1041293));
-       //tempArray.add(new pointOnMap(516768,1041526));
-       //tempArray.add(new pointOnMap(515825,1042243));
-       //tempArray.add(new pointOnMap(515864,1042269));
-       //tempArray.add(new pointOnMap(516011,1042460));
+     //tempArray.add(new pointOnMap(517395,1041211));
+     //tempArray.add(new pointOnMap(516844,1041182));
+     //tempArray.add(new pointOnMap(516768,1041293));
+     //tempArray.add(new pointOnMap(516768,1041526));
+     //tempArray.add(new pointOnMap(515825,1042243));
+     //tempArray.add(new pointOnMap(515864,1042269));
+     //tempArray.add(new pointOnMap(516011,1042460));
 
-       //// TODO: 2016. 10. 24. 네비를 구현할수 있을것 같다
-       //drawLineFromStartPoint(startPoint,tempArray);
+     //// TODO: 2016. 10. 24. 네비를 구현할수 있을것 같다
+     //drawLineFromStartPoint(startPoint,tempArray);
         //요기까지
 
         // TODO: 2016. 10. 25. navigation
@@ -872,8 +883,6 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
         // TODO: 2016. 10. 25. 이버튼을 클릭햇을때  onNavigationonNavigation 작동
         // TODO: 2016. 10. 25. 한번 더 클릭시 네비게이션 모드 종료
-
-
 
     }
 

@@ -13,6 +13,7 @@ import java.util.List;
 abstract public class Marker implements Comparable<Marker> {
 
     public static Marker selectedMarker = null;
+    public static List<Marker> markerList;
 
     private String id;
     private double lat;
@@ -22,7 +23,7 @@ abstract public class Marker implements Comparable<Marker> {
     private String markerURL;
     private Double distance;
 
-    public static List<Marker> markerList;
+
 
     public Marker() {
 

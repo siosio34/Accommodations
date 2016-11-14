@@ -147,11 +147,11 @@ public class DataFormat {
 
         if(dataformat.toString().equals("WIFI")) {
             params.add(new BasicNameValuePair("orderBy", "\"INSTL_Y\""));
-            params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lat - 0.0225) + "\""));
-            params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lat + 0.0225) + "\""));
+            params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lat - 0.05) + "\""));
+            params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lat + 0.05) + "\""));
             params.add(new BasicNameValuePair("orderBy", "\"INSTL_X\""));
-            params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lon - 0.0225) + "\""));
-            params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lon + 0.0225) + "\""));
+            params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lon - 0.05) + "\""));
+            params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lon + 0.05) + "\""));
 
             // TODO: 2016. 10. 22. 간격조절
         }
@@ -159,11 +159,11 @@ public class DataFormat {
         else if (dataformat.toString().equals("TOILET")) {
 
             params.add(new BasicNameValuePair("orderBy", "\"Y_WGS84\""));
-            params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lat - 0.0225) + "\""));
-            params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lat + 0.0225) + "\""));
+            params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lat - 0.05) + "\""));
+            params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lat + 0.05) + "\""));
             params.add(new BasicNameValuePair("orderBy", "\"X_WGS84\""));
-            params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lon - 0.0225) + "\""));
-            params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lon + 0.0225) + "\""));
+            params.add(new BasicNameValuePair("startAt", "\"" + String.valueOf(lon - 0.05) + "\""));
+            params.add(new BasicNameValuePair("endAt", "\"" + String.valueOf(lon + 0.05) + "\""));
 
         }
 
