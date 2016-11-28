@@ -55,29 +55,18 @@
 
 
     <RelativeLayout
+        android:id="@+id/relative_layout_size"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="15dp"
-        android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/loadImage"
-            android:visibility="gone"
-            />
 
-        <VideoView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/loadVideo"
-            android:visibility="gone"
-            />
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -148,7 +137,30 @@
 
         </LinearLayout>
 
+    </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/loadImage"
+            android:visibility="gone"
+            />
+
+        <com.youngje.tgwing.accommodations.Util.StretchVideoView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/loadVideo"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:visibility="gone" />
+
+
     </RelativeLayout>
+
+
 
 
     <FrameLayout

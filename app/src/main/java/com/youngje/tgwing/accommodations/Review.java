@@ -14,8 +14,9 @@ public class Review {
     private String userImageUrl; // 유저 이미지 링크.
     private String content; // 리뷰 냉ㅅㅇ
     private String reviewContentUrl; // 리뷰와 연관된 사진 동영상 링크
-   // private Date createDate; // 글 쓴 시간
+    private int likeNUM;
     private int contentType; // 글, 사진,동영상
+    private Date createDate;
     private int star; // 별점
 
     public Review(){}
@@ -29,7 +30,7 @@ public class Review {
         this.userImageUrl = userImageUrl;
         this.content = content;
         this.reviewContentUrl = reviewContentUrl;
-        //this.createDate = createDate;
+       // this.createDate = createDate;
         this.contentType = contentType;
         this.star = star;
     }
@@ -99,11 +100,19 @@ public class Review {
         this.userName = userName;
     }
 
-   // public Date getCreateDate() {
-       // return createDate;
-    //}
+    public int getLikeNUM() {
+        return likeNUM;
+    }
 
-   // public void setCreateDate(Date createDate) {
-    //    this.createDate = createDate;
-  //  }
+    public void setLikeNUM(int likeNUM) {
+        this.likeNUM = likeNUM;
+    }
+
+     public Date getCreateDate() {
+        return createDate;
+    }
+
+   public void setCreateDate(Date createDate) {
+      this.createDate = createDate;
+   }
 }

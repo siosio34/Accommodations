@@ -97,12 +97,7 @@ public class SearchListViewAdapter extends BaseAdapter {
                     isNavi = true;
                     ((MapSearchActivity)activity).navimode(isNavi, position);
                     holder.navigationImageView.setImageResource(R.drawable.cancel_navi);
-
-                    Log.i("POSITION", String.valueOf(position));
                     final Marker marker = markerList.get(position);
-                    Log.i("POSITION1", marker.getId());
-                    Log.i("POSITION2", marker.getTitle());
-                    Log.i("POSITION3", marker.getMarkerType());
 
                     loopThread = new Thread(new Runnable() {
                         @Override
@@ -146,42 +141,57 @@ public class SearchListViewAdapter extends BaseAdapter {
         String endCreateUrl;
         String daumRouteRequestUrl;
 
+
+        // TODO: 2016. 11. 28.  시작 경도와 위도가 안바뀌는거 같은데
         startCreateUrl = DataFormat.changeCoordRequestURL(curlocate.getLatitude(),curlocate.getLongitude(),fromCoord,toCoord,type,apikey);
         endCreateUrl = DataFormat.changeCoordRequestURL(endLat,endLon,fromCoord,toCoord,type,apikey);
 
+        // 주소변환후 데이터 저장
         String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
         String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
         JSONObject startJsonObject = new JSONObject(myLocationResult);
         JSONObject endJsonObject = new JSONObject(DestinationResult);
 
-        Double daumStartLat = startJsonObject.getDouble("y");
-        Double daumStartLon = startJsonObject.getDouble("x");
+        final Double daumStartLat = startJsonObject.getDouble("y");
+        final Double daumStartLon = startJsonObject.getDouble("x");
         Double daumEndLat = endJsonObject.getDouble("y");
         Double daumEndLon = endJsonObject.getDouble("x");
+
+        // 변환된 주소로 다음에 데이터 요청
         daumRouteRequestUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,daumStartLon,daumStartLat,daumEndLon,daumEndLat);
-
         String result = new HttpHandler().execute(daumRouteRequestUrl).get();
-        final Navi navi = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
 
-        //테스트를 위한 코드입니다. 맵 위에 선을 그려줍니다.
+        // 네비 데이터 파싱
+        Navi navi = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
+        final String guideText = navi.getGuideMent();
+
+        // 스탈팅 포인트와 종점 포인트를 정함.
         List<NaviXY> list = navi.getListXY();
         List<pointOnMap> tempArray = new ArrayList<>();
         pointOnMap startPoint = new pointOnMap(list.get(0).getLat(), list.get(0).getLon());
         for(int i=1; i<list.size(); i++)
             tempArray.add(new pointOnMap(list.get(i).getLat(), list.get(i).getLon()));
 
-        //// TODO: 2016. 10. 24. 네비를 구현할수 있을것 같다
+        // TODO: 2016. 11. 28. 이거 네비 처리완료해야된다
+
+        // 그림을 갱신함.
+
+
         ((MapSearchActivity)activity).drawLineFromStartPoint(startPoint,tempArray);
 
-        if(navi == null || navi.getLength() < 30) {
+        if(navi.getLength() < 30) {
+
             // TODO: 2016. 10. 25. 종료 메시지 남겨야된다.
             // TODO: 2016. 10. 25. 길 안내를 할수 없거나
         }
+
         else {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(activity,navi.getGuideMent(),Toast.LENGTH_SHORT).show();
+                    // TODO: 2016. 11. 28. 내위치 바뀌는지 확인해야된다
+                    //Toast.makeText(activity,,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity,daumStartLat + " " + daumStartLon + " " + guideText,Toast.LENGTH_SHORT).show();
                 }
             });
         }

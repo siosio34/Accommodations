@@ -23,8 +23,6 @@ abstract public class Marker implements Comparable<Marker> {
     private String markerURL;
     private Double distance;
 
-
-
     public Marker() {
 
     }
@@ -53,7 +51,6 @@ abstract public class Marker implements Comparable<Marker> {
 
         Marker leftPm = this;
         Marker rightPm = another;
-
         return Double.compare(leftPm.getDistance(), rightPm.getDistance());
 
     }
@@ -99,20 +96,12 @@ abstract public class Marker implements Comparable<Marker> {
         this.title = title;
     }
 
-
-
     public String getMarkerURL() {
         return markerURL;
     }
 
     public void setMarkerURL(String markerURL) {
         this.markerURL = markerURL;
-    }
-
-    public Double calDistance(Location markerLoc) {
-
-        return 0.0;
-
     }
 
     public String getMarkerType() {
@@ -122,4 +111,6 @@ abstract public class Marker implements Comparable<Marker> {
     public void setMarkerType(String markerType) {
         this.markerType = markerType;
     }
+
+
 }

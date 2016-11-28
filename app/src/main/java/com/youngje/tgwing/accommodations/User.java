@@ -44,7 +44,7 @@ public class User {
         this.chatRoomID = chatRoomID;
         this.lat = lat;
         this.lon = lon;
-        this.myChatRoomList =myChatRoomList;
+        this.myChatRoomList = myChatRoomList;
 
     }
 

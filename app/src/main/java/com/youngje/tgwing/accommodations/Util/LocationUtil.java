@@ -20,6 +20,7 @@ import android.widget.Toast;
 public class LocationUtil implements LocationListener {
 
     public static Location curlocation = null;
+
     public static Location hardFIxLocation;
     public static Location DaumCurlocation;
 
@@ -103,17 +104,6 @@ public class LocationUtil implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         curlocation = location;
-        /*
-        Log.i(" 위치 변경",Double.toString(curlocation.getLongitude()));
-        if(activity != null) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(activity, curlocation.toString(), Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-        */
     }
 
     @Override

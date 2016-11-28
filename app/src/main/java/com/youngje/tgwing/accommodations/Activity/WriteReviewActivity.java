@@ -9,12 +9,14 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -31,6 +33,7 @@ import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.Review;
 import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.MyVideoView;
+import com.youngje.tgwing.accommodations.Util.StretchVideoView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -74,7 +77,6 @@ public class WriteReviewActivity extends AppCompatActivity {
     
     private Uri mDownloadUrl = null;
 
-    // TODO: 2016. 10. 16. locationI 가져와야됨 
     private String locationId;
 
 
@@ -100,9 +102,9 @@ public class WriteReviewActivity extends AppCompatActivity {
                 if(inputText.getText().toString().length() == 0 && destination == null) {
                     Toast.makeText(WriteReviewActivity.this, "아무런 텍스트가 입력하지 않습니다", Toast.LENGTH_SHORT).show();
                 }
-                else
+                else {
                     WriteReview(destination);
-                // TODO: 2016. 10. 16. 파이어베이스에 글올리는거 구현하기~ 이미지 받아오거 사진받아오기
+                }
 
             }
         });
@@ -196,8 +198,11 @@ public class WriteReviewActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 System.out.println("asdasd2 " + requestCode);
 
-                VideoView videoView = (VideoView)findViewById(R.id.loadVideo);
+                // TODO: 2016. 11. 28. 이거 개쩔엇음 
+                StretchVideoView videoView = (StretchVideoView)findViewById(R.id.loadVideo);
                 videoView.setVideoPath(destination.getPath());
+                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relative_layout_size);
+                videoView.setVideoSize(relativeLayout.getWidth(),relativeLayout.getHeight());
                 videoView.start();
 
                 videoView.setVisibility(View.VISIBLE);
@@ -214,6 +219,8 @@ public class WriteReviewActivity extends AppCompatActivity {
                     //Get ImageURi and load with help of picasso
                     //Uri selectedImageURI = data.getData();
 
+                // TODO: 2016. 11. 28. 이거좀 불안정
+
                     Picasso.with(this).load(data.getData()).noPlaceholder().centerCrop().fit()
                             .into((ImageView) findViewById(R.id.loadImage));
 
@@ -228,6 +235,7 @@ public class WriteReviewActivity extends AppCompatActivity {
     public void findVieByidwWriteReviewActivity() {
         backButton = (ImageView) findViewById(R.id.backbutton);
         writeButton = (ImageView) findViewById(R.id.writeReview);
+
 
         cameraButton = (ImageButton) findViewById(R.id.cameraButton);
         gallaryButton = (ImageButton) findViewById(R.id.galleryButton);
@@ -293,6 +301,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         Review review = makeReview(locationId);
         review.setContentType(0);
         myRef.child(locationId).push().setValue(review);
+        finish();
 
     }
     
@@ -328,7 +337,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                         mDownloadUrl = taskSnapshot.getMetadata().getDownloadUrl();
                         review.setreviewContentUrl(mDownloadUrl.toString());
                         myRef.child(locationId).push().setValue(review);
-                        // TODO: 2016. 9. 19. 여기서 url 을 받고 서버에 글 써주거나 아니면 글 아이디를 받아서 거기에 url 값을 업데이트해줘야함
+                        finish();
 
                     }
                 })

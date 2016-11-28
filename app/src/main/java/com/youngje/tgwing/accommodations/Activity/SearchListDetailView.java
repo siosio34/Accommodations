@@ -2,6 +2,7 @@ package com.youngje.tgwing.accommodations.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -33,8 +34,7 @@ public class SearchListDetailView extends AppCompatActivity {
     private TextView markerPhone;
 
     private TextView markerExitButtonText;
-    private ImageView writeReviewButton;
-
+    private FloatingActionButton writeReviewButton;
 
     private ListView reviewListView;
 
@@ -68,13 +68,13 @@ public class SearchListDetailView extends AppCompatActivity {
         markerCategory = (TextView) findViewById(R.id.list_detail_main_category);
         markerCategory.setText(selectMarker.getCategory());
         markerDistance = (TextView) findViewById(R.id.list_detail_main_distance);
-        markerDistance.setText(String.valueOf(selectMarker.getDistance()));
+        markerDistance.setText(String.valueOf(selectMarker.getDistance()) + " m" );
         markerLocation = (TextView) findViewById(R.id.list_detail_main_location);
         markerLocation.setText(selectMarker.getNewAddress());
         markerPhone = (TextView) findViewById(R.id.list_detail_main_phone);
         markerPhone.setText(selectMarker.getPhoneNum());
 
-        writeReviewButton = (ImageView) findViewById(R.id.list_detail_view_add_review);
+        writeReviewButton = (FloatingActionButton) findViewById(R.id.list_detail_view_add_review);
         writeReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
