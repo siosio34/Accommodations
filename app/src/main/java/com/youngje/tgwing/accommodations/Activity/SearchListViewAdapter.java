@@ -136,6 +136,8 @@ public class SearchListViewAdapter extends BaseAdapter {
         curlocate = LocationUtil.curlocation;
         String naverRouteRequestUrl = DataFormat.createNaverNavigationgAPIRequestURL(DataFormat.DATATYPE.NAVI,curlocate.getLatitude(),curlocate.getLongitude(),endLat,endLon);
         Log.i("naverurl", naverRouteRequestUrl);
+
+        // TODO: 2016. 12. 4. 영상 실시간 안되면 링크라도 던져주자! 
        // String result = new HttpHandler().execute(naverRouteRequestUrl).get();
 
         // TODO: 2016. 10. 25. navigation

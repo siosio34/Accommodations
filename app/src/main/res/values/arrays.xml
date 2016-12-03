@@ -4,4 +4,50 @@
         <item name="drawer_Settings">설정</item>
         <item name="drawer_Announcement">공지사항</item>
     </string-array>
+
+
+    <string-array name="CountryStrings">
+        <item name="Korea">한국</item>
+        <item name="Japan">일본</item>
+        <item name="China">중국</item>
+        <item name="United_States">미국</item>
+        <item name="France">프랑스</item>
+        <item name="Germany">독일</item>
+        <item name="Spain">스페인</item>
+        <item name="Italy">이탈리아</item>
+        <item name="Russia">러시아</item>
+        <item name="India">인도</item>
+        <item name="Brazil">브라질</item>
+        <item name="Poland">폴란드</item>
+        <item name="Thailand">태국</item>
+        <item name="Vietnam">베트남</item>
+        <item name="Netherlands">네덜란드</item>
+        <item name="Greece">그리스</item>
+        <item name="Sweden">스웨덴</item>
+        <item name="Saudi_Arabia">사우디아라비아</item>
+        <item name="Belgium">벨기아</item>
+        <item name="Turkey">터키</item>
+        <item name="Indonesia">인도네시아</item>
+        <!--//한국 ko-->
+        <!--//일본 ja-->
+        <!--//중국 zh-->
+        <!--//미국 en-->
+        <!--//프랑스 fr-->
+        <!--//독일 de-->
+        <!--//스페인 es-->
+        <!--//이탈리아 it-->
+        <!--//러시아 ru-->
+        <!--//인도 hi-->
+        <!--//브라질 pt-->
+        <!--//폴란드 pl-->
+        <!--//태국 th-->
+        <!--//베트남 vi-->
+        <!--//네덜란드 nl-->
+        <!--//그리스 el-->
+        <!--//스웨덴 sv-->
+        <!--//사우디아라비아 ar-->
+        <!--//벨기에 wa-->
+        <!--//터키 tr-->
+        <!--//인도네시아 id-->
+    </string-array>
 </resources>
