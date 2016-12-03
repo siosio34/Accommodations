@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,35 +24,42 @@ public class NavigationDataProcessor {
     public static Navi load(String rawData, DataFormat.DATATYPE datatype) throws JSONException {
 
         Navi navi = null;
-        JSONObject root = convertToJSON(rawData);
-        JSONObject jsonObject = root.getJSONArray("directions").getJSONObject(0).getJSONArray("sections").getJSONObject(0);
+        Log.i("rawdata", rawData);
+     //   JSONObject root = convertToJSON(rawData);
+     //   JSONObject jsonObject = root.getJSONArray("directions").getJSONObject(0).getJSONArray("sections").getJSONObject(0);
+//
+     //   // 거리랑 시간
+     //   int length = jsonObject.getInt("length");
+     //   int time = jsonObject.getInt("time");
+//
+     //   JSONArray guideListArray = jsonObject.getJSONArray("guideList");
+//
+     //   // 지도에 그릴 x좌표 y좌표 리스트
+     //   List<NaviXY> naviXYList = new ArrayList<>();
+     //   JSONObject guideFirstObject = guideListArray.getJSONObject(0).getJSONObject("link");
+     //   String pointString = guideFirstObject.getString("points");
+     //   String[] pointList = pointString.split("\\|");
+//
+     //   //Log.i("pointList", Arrays.toString(pointList));
+//
+     //   for (String aPointList : pointList) {
+     //       String temp[] = aPointList.split(",");
+     //       naviXYList.add(new NaviXY(Double.parseDouble(temp[0]), Double.parseDouble(temp[1])));
+     //   }
+//
+     //   // 가이드 멘트 추가.
+     //   ArrayList<String> myGuideList = new ArrayList<>();
+     //   for(int i=0; i < guideListArray.length() ; i++) {
+     //       JSONObject naviGuideMent = guideListArray.getJSONObject(i);
+     //       myGuideList.add(naviGuideMent.getString("guideMent"));
+     //   }
+//
+     //   Log.i("guideMentList", Arrays.toString(pointList));
+//
+     //   navi = new Navi(myGuideList,length,time,naviXYList);
+     //   return navi;
 
-        int length = jsonObject.getInt("length");
-        int time = jsonObject.getInt("time");
-
-        JSONArray guideListArray = jsonObject.getJSONArray("guideList");
-        JSONObject guideObject = guideListArray.getJSONObject(0);
-
-        String guideMent = guideObject.getString("guideMent"); // 얼마나 가세요
-        String rotationCode = guideObject.getString("rotationCode"); // 방향은 어디로
-
-        Double x;
-        Double y;
-
-        List<NaviXY> naviXYList = new ArrayList<>();
-        for(int i=0; i < guideListArray.length() ; i++) {
-            JSONObject guide = guideListArray.getJSONObject(i);
-            x = guide.getDouble("x");
-            y = guide.getDouble("y");
-            naviXYList.add(new NaviXY(x,y));
-
-            // TODO: 2016. 10. 24.  여기에 경로 그리는거 넣어야됨
-        }
-
-        navi = new Navi((rotationCode + " " + guideMent),length,time,naviXYList);
-
-
-        return navi;
+        return null;
 
     }
 

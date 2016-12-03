@@ -1,5 +1,7 @@
 package com.youngje.tgwing.accommodations;
 
+import android.net.Uri;
+
 import java.util.Date;
 
 /**
@@ -21,8 +23,8 @@ public class Review {
 
     public Review(){}
 
-    public Review(String markerId,String userId,String userName,String userImageUrl,String content,
-                  String reviewContentUrl,int contentType,int star) {
+    public Review(String markerId, String userId, String userName, String userImageUrl, String content,
+                  String reviewContentUrl, int contentType, int star) {
 
         this.markerId = markerId;
         this.userId = userId;

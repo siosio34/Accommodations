@@ -1,5 +1,7 @@
 package com.youngje.tgwing.accommodations;
 
+import static android.R.attr.category;
+
 /**
  * Created by joyeongje on 2016. 10. 5..
  */
@@ -14,10 +16,10 @@ public class SeoulMarker extends Marker{
         super(id, lat, lon,title, imageUrl, markerType, distance);
         this.seoulDataType = seoulDataType;
 
-       //this.phoneNum = phoneNum;
-       //this.address = address;
-       //this.newAddress = newAddress;
-       //this.category = category;
+      // this.phoneNum = phoneNum;
+      // this.address = address;
+      //  this.newAddress = newAddress;
+      // this.category = category;
     }
 
 

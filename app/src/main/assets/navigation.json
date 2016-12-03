@@ -1,0 +1,374 @@
+{
+  "directions": [
+    {
+      "routeMode": "BROAD_FIRST",
+      "time": 1357,
+      "sections": [
+        {
+          "time": 1357,
+          "guideList": [
+            {
+              "groupId": "-1",
+              "guideCode": "START",
+              "guideMent": "536m 이동 ",
+              "link": {
+                "existCenterLine": false,
+                "time": 482,
+                "length": 536,
+                "points": "517681.0,1040128.0|517650.0,1040126.0|517601.0,1040137.0|517580.0,1040155.0|517573.0,1040166.0|517563.0,1040215.0|517550.0,1040345.0|517537.0,1040379.0|517506.0,1040410.0|517454.0,1040440.0|517438.0,1040457.0|517430.0,1040478.0|517424.0,1040574.0|517419.0,1040651.0|517414.0,1040771.0|517410.0,1040863.0|517405.0,1040978.0|517402.0,1041041.0|517401.0,1041073.0|517397.0,1041171.0|517395.0,1041211.0"
+              },
+              "seq": 1,
+              "rotationCode": "STRAIGHT",
+              "y": 1040128,
+              "x": 517681
+            },
+            {
+              "groupId": "-1",
+              "guideCode": "EXIT_OPS",
+              "guideMent": "경희대학교 밖으로 진출 후 222m 이동 (덕영대로)",
+              "link": {
+                "existCenterLine": true,
+                "time": 200,
+                "length": 222,
+                "points": "517395.0,1041211.0|517322.0,1041210.0|516874.0,1041199.0|516856.0,1041192.0|516844.0,1041182.0",
+                "roadName": "덕영대로"
+              },
+              "seq": 2,
+              "roadView": {
+                "filename": "/2016/06/1015972/2_106103_1015972_19800112034244.jpg",
+                "panoid": 1060263354,
+                "y": 1041207,
+                "x": 517381,
+                "pan": 269
+              },
+              "rotationCode": "STRAIGHT",
+              "y": 1041211,
+              "x": 517395
+            },
+            {
+              "groupId": "-1",
+              "guideCode": "ENTER_DOUBLE_CROSSWALK",
+              "guideMent": "2개의 횡단보도 이용",
+              "link": {
+                "existCenterLine": true,
+                "time": 95,
+                "length": 73,
+                "points": "516844.0,1041182.0|516833.0,1041299.0|516768.0,1041293.0"
+              },
+              "seq": 3,
+              "roadView": {
+                "filename": "/2016/06/1015972/2_106081_1015972_19800112034223.jpg",
+                "panoid": 1060263214,
+                "y": 1041200,
+                "x": 516852,
+                "pan": 354
+              },
+              "rotationCode": "TURN_RIGHT",
+              "y": 1041182,
+              "x": 516844
+            },
+            {
+              "groupId": "-1",
+              "guideCode": "EXIT_CROSSWALK",
+              "guideMent": "93m 이동 (영일로)",
+              "link": {
+                "existCenterLine": true,
+                "time": 84,
+                "length": 93,
+                "points": "516768.0,1041293.0|516772.0,1041307.0|516770.0,1041404.0|516771.0,1041467.0|516771.0,1041517.0|516768.0,1041526.0",
+                "roadName": "영일로"
+              },
+              "seq": 4,
+              "roadView": {
+                "filename": "/2016/06/1015994/2_100034_1015994_19800123132724.jpg",
+                "panoid": 1060250536,
+                "y": 1041287,
+                "x": 516779,
+                "pan": 15
+              },
+              "rotationCode": "STRAIGHT",
+              "y": 1041293,
+              "x": 516768
+            },
+            {
+              "groupId": "-1",
+              "guideCode": "TURN_CROSSROAD",
+              "guideMent": "왼쪽길로 430m 이동 ",
+              "link": {
+                "existCenterLine": true,
+                "time": 387,
+                "length": 430,
+                "points": "516768.0,1041526.0|516756.0,1041540.0|516628.0,1041635.0|516558.0,1041687.0|516536.0,1041703.0|516244.0,1041922.0|516185.0,1041966.0|516014.0,1042096.0|515910.0,1042175.0"
+              },
+              "seq": 5,
+              "roadView": {
+                "filename": "/2016/06/1015994/2_101646_1015994_19800123143545.jpg",
+                "panoid": 1060264560,
+                "y": 1041537,
+                "x": 516780,
+                "pan": 319
+              },
+              "rotationCode": "TURN_LEFT",
+              "y": 1041526,
+              "x": 516768
+            },
+            {
+              "groupId": "-1",
+              "guideCode": "ENTER_SUBWAY",
+              "guideMent": "영통역 3번 출구로 진입하여 역사 내 이동",
+              "link": {
+                "existCenterLine": false,
+                "time": 107,
+                "length": 98,
+                "points": "515910.0,1042175.0|515901.0,1042163.0|515872.0,1042185.0|515837.0,1042211.0|515776.0,1042258.0|515821.0,1042319.0"
+              },
+              "seq": 6,
+              "roadView": {
+                "filename": "/2016/06/1015994/2_101601_1015994_19800123143311.jpg",
+                "panoid": 1060264175,
+                "y": 1042188,
+                "x": 515911,
+                "pan": 216
+              },
+              "rotationCode": "TURN_LEFT",
+              "y": 1042175,
+              "subwayStation": {
+                "exitNo": "3",
+                "subwayStationName": "영통역",
+                "subwayStationId": "SES1868"
+              },
+              "x": 515910
+            },
+            {
+              "groupId": "-1",
+              "guideCode": "END",
+              "guideMent": "[영통역 분당선] 도착",
+              "seq": 7,
+              "y": 1042319,
+              "x": 515821
+            }
+          ],
+          "length": 1454,
+          "resultCode": "ROUTE_RESULT_SUCCESS",
+          "calories": "67",
+          "facilities": {
+            "stair": 1,
+            "bridge": 0,
+            "underground": 1
+          }
+        }
+      ],
+      "length": 1454,
+      "resultCode": "OK",
+      "groupInfoMap": {},
+      "bound": {
+        "bottom": 1040126,
+        "left": 515776,
+        "right": 517681,
+        "top": 1042319
+      }
+    },
+    {
+      "routeMode": "SHORTEST",
+      "time": 1357,
+      "sections": [
+        {
+          "time": 1357,
+          "guideList": [
+            {
+              "groupId": "-1",
+              "guideCode": "START",
+              "guideMent": "536m 이동 ",
+              "link": {
+                "existCenterLine": false,
+                "time": 482,
+                "length": 536,
+                "points": "517681.0,1040128.0|517650.0,1040126.0|517601.0,1040137.0|517580.0,1040155.0|517573.0,1040166.0|517563.0,1040215.0|517550.0,1040345.0|517537.0,1040379.0|517506.0,1040410.0|517454.0,1040440.0|517438.0,1040457.0|517430.0,1040478.0|517424.0,1040574.0|517419.0,1040651.0|517414.0,1040771.0|517410.0,1040863.0|517405.0,1040978.0|517402.0,1041041.0|517401.0,1041073.0|517397.0,1041171.0|517395.0,1041211.0"
+              },
+              "seq": 1,
+              "rotationCode": "STRAIGHT",
+              "y": 1040128,
+              "x": 517681
+            },
+            {
+              "groupId": "-1",
+              "guideCode": "EXIT_OPS",
+              "guideMent": "경희대학교 밖으로 진출 후 222m 이동 (덕영대로)",
+              "link": {
+                "existCenterLine": true,
+                "time": 200,
+                "length": 222,
+                "points": "517395.0,1041211.0|517322.0,1041210.0|516874.0,1041199.0|516856.0,1041192.0|516844.0,1041182.0",
+                "roadName": "덕영대로"
+              },
+              "seq": 2,
+              "roadView": {
+                "filename": "/2016/06/1015972/2_106103_1015972_19800112034244.jpg",
+                "panoid": 1060263354,
+                "y": 1041207,
+                "x": 517381,
+                "pan": 269
+              },
+              "rotationCode": "STRAIGHT",
+              "y": 1041211,
+              "x": 517395
+            },
+            {
+              "groupId": "-1",
+              "guideCode": "ENTER_DOUBLE_CROSSWALK",
+              "guideMent": "2개의 횡단보도 이용",
+              "link": {
+                "existCenterLine": true,
+                "time": 95,
+                "length": 73,
+                "points": "516844.0,1041182.0|516833.0,1041299.0|516768.0,1041293.0"
+              },
+              "seq": 3,
+              "roadView": {
+                "filename": "/2016/06/1015972/2_106081_1015972_19800112034223.jpg",
+                "panoid": 1060263214,
+                "y": 1041200,
+                "x": 516852,
+                "pan": 354
+              },
+              "rotationCode": "TURN_RIGHT",
+              "y": 1041182,
+              "x": 516844
+            },
+            {
+              "groupId": "-1",
+              "guideCode": "EXIT_CROSSWALK",
+              "guideMent": "93m 이동 (영일로)",
+              "link": {
+                "existCenterLine": true,
+                "time": 84,
+                "length": 93,
+                "points": "516768.0,1041293.0|516772.0,1041307.0|516770.0,1041404.0|516771.0,1041467.0|516771.0,1041517.0|516768.0,1041526.0",
+                "roadName": "영일로"
+              },
+              "seq": 4,
+              "roadView": {
+                "filename": "/2016/06/1015994/2_100034_1015994_19800123132724.jpg",
+                "panoid": 1060250536,
+                "y": 1041287,
+                "x": 516779,
+                "pan": 15
+              },
+              "rotationCode": "STRAIGHT",
+              "y": 1041293,
+              "x": 516768
+            },
+            {
+              "groupId": "-1",
+              "guideCode": "TURN_CROSSROAD",
+              "guideMent": "왼쪽길로 430m 이동 ",
+              "link": {
+                "existCenterLine": true,
+                "time": 387,
+                "length": 430,
+                "points": "516768.0,1041526.0|516756.0,1041540.0|516628.0,1041635.0|516558.0,1041687.0|516536.0,1041703.0|516244.0,1041922.0|516185.0,1041966.0|516014.0,1042096.0|515910.0,1042175.0"
+              },
+              "seq": 5,
+              "roadView": {
+                "filename": "/2016/06/1015994/2_101646_1015994_19800123143545.jpg",
+                "panoid": 1060264560,
+                "y": 1041537,
+                "x": 516780,
+                "pan": 319
+              },
+              "rotationCode": "TURN_LEFT",
+              "y": 1041526,
+              "x": 516768
+            },
+            {
+              "groupId": "-1",
+              "guideCode": "ENTER_SUBWAY",
+              "guideMent": "영통역 3번 출구로 진입하여 역사 내 이동",
+              "link": {
+                "existCenterLine": false,
+                "time": 107,
+                "length": 98,
+                "points": "515910.0,1042175.0|515901.0,1042163.0|515872.0,1042185.0|515837.0,1042211.0|515776.0,1042258.0|515821.0,1042319.0"
+              },
+              "seq": 6,
+              "roadView": {
+                "filename": "/2016/06/1015994/2_101601_1015994_19800123143311.jpg",
+                "panoid": 1060264175,
+                "y": 1042188,
+                "x": 515911,
+                "pan": 216
+              },
+              "rotationCode": "TURN_LEFT",
+              "y": 1042175,
+              "subwayStation": {
+                "exitNo": "3",
+                "subwayStationName": "영통역",
+                "subwayStationId": "SES1868"
+              },
+              "x": 515910
+            },
+            {
+              "groupId": "-1",
+              "guideCode": "END",
+              "guideMent": "[영통역 분당선] 도착",
+              "seq": 7,
+              "y": 1042319,
+              "x": 515821
+            }
+          ],
+          "length": 1454,
+          "resultCode": "ROUTE_RESULT_SUCCESS",
+          "calories": "67",
+          "facilities": {
+            "stair": 1,
+            "bridge": 0,
+            "underground": 1
+          }
+        }
+      ],
+      "length": 1454,
+      "resultCode": "OK",
+      "groupInfoMap": {},
+      "bound": {
+        "bottom": 1040126,
+        "left": 515776,
+        "right": 517681,
+        "top": 1042319
+      }
+    },
+    {
+      "routeMode": "ACCESSIBLE",
+      "time": 0,
+      "sections": [
+        {
+          "time": 0,
+          "guideList": [],
+          "length": 0,
+          "resultCode": "TOO_MANY_SEARCH_LINK",
+          "calories": "0",
+          "facilities": {
+            "stair": 0,
+            "bridge": 0,
+            "underground": 0
+          }
+        }
+      ],
+      "length": 0,
+      "resultCode": "TOO_MANY_SEARCH_LINK",
+      "groupInfoMap": {},
+      "bound": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      }
+    }
+  ],
+  "resultCode": "OK",
+  "bound": {
+    "bottom": 1040126,
+    "left": 515776,
+    "right": 517681,
+    "top": 1042319
+  }
+}

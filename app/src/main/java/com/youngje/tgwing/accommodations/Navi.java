@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Navi {
 
-    private String guideMent;
+    private List<String> guideList;
     private int length;
     private int time;
     private List<NaviXY> listXY;
@@ -19,22 +19,14 @@ public class Navi {
 
     Navi(){}
 
-    public Navi(String guideMent,int length,int time,List<NaviXY> listXY) {
+    public Navi(List<String> guideList,int length,int time,List<NaviXY> listXY) {
 
-        this.guideMent = guideMent;
+        this.guideList = guideList;
         this.length = length;
         this.time = time;
         this.listXY = listXY;
     }
 
-
-    public String getGuideMent() {
-        return guideMent;
-    }
-
-    public void setGuideMent(String guideMent) {
-        this.guideMent = guideMent;
-    }
 
     public int getLength() {
         return length;
@@ -58,5 +50,13 @@ public class Navi {
 
     public void setListXY(List<NaviXY> listXY) {
         this.listXY = listXY;
+    }
+
+    public List<String> getGuideList() {
+        return guideList;
+    }
+
+    public void setGuideList(List<String> guideList) {
+        this.guideList = guideList;
     }
 }

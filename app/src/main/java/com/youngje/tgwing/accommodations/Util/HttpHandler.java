@@ -105,6 +105,8 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
         }
 
 
+
+
         try {
 
             url = new URL(urlStr);
@@ -113,8 +115,8 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(10000);
             conn.setRequestMethod("GET");
-
-            //// TODO: 2016. 10. 12. json  
+            conn.setDoInput(true);
+            conn.connect();
 
             int responseCode = conn.getResponseCode();
             Log.i("ResponseCode : ", Integer.toString(responseCode));

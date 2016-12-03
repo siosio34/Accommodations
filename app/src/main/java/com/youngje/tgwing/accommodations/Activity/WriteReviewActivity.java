@@ -75,7 +75,7 @@ public class WriteReviewActivity extends AppCompatActivity {
     // Create a storage reference from our app
     StorageReference storageRef = storage.getReferenceFromUrl("gs://tourseoul-451de.appspot.com");
     
-    private Uri mDownloadUrl = null;
+    private String mDownloadUrl = null;
 
     private String locationId;
 
@@ -219,9 +219,13 @@ public class WriteReviewActivity extends AppCompatActivity {
                     //Get ImageURi and load with help of picasso
                     //Uri selectedImageURI = data.getData();
 
+                Uri selectedImageURI = data.getData();
+                destination = new File(selectedImageURI.getPath());
+
+
                 // TODO: 2016. 11. 28. 이거좀 불안정
 
-                    Picasso.with(this).load(data.getData()).noPlaceholder().centerCrop().fit()
+                Picasso.with(this).load(data.getData()).noPlaceholder().centerCrop().fit()
                             .into((ImageView) findViewById(R.id.loadImage));
 
                 loadImage.setVisibility(View.VISIBLE);
@@ -292,7 +296,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         String content = inputText.getText().toString();
         Date currentDate = new Date();
 
-        Review review = new Review(markerId,userId,userName,userImageUrl,content,"",0,0);
+        Review review = new Review(markerId,userId,userName,userImageUrl,content,null,0,0);
         return review;
     }
 
@@ -334,8 +338,8 @@ public class WriteReviewActivity extends AppCompatActivity {
                         Log.d(TAG, "uploadFromUri:onSuccess");
                         // Get the public download URL
                         hideProgressDialog();
-                        mDownloadUrl = taskSnapshot.getMetadata().getDownloadUrl();
-                        review.setreviewContentUrl(mDownloadUrl.toString());
+                        mDownloadUrl = taskSnapshot.getMetadata().getDownloadUrl().toString();
+                        review.setreviewContentUrl(mDownloadUrl);
                         myRef.child(locationId).push().setValue(review);
                         finish();
 
@@ -351,6 +355,10 @@ public class WriteReviewActivity extends AppCompatActivity {
                         // [END_EXCLUDE]
                     }
                 });
+
+      //  myRef.child(locationId).push().setValue(review);
+
+
 
     }
 

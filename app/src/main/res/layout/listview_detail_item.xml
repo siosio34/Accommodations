@@ -80,23 +80,30 @@
 
             </LinearLayout>
 
-            <ImageView
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
                 android:id="@+id/listview_detail_item_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:src="@drawable/test_img_palace"
                 android:adjustViewBounds="true"
                 android:scaleType="fitStart"/>
 
-            <VideoView
-                android:id="@+id/listview_dettail_item_video"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:visibility="gone"
+                <VideoView
+                    android:id="@+id/listview_dettail_item_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitStart"
 
-                />
+                    />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -112,10 +119,13 @@
                     android:text="2016.10.09"
                     android:textSize="14sp"
                     android:textColor="#000000"/>
+
                 <ImageView
+                    android:id="@+id/liked_image_button"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginRight="4dp"
+                    android:clickable="true"
                     android:src="@drawable/ic_icon_like_checked"/>
                 <TextView
                     android:id="@+id/listview_detail_item_liked"

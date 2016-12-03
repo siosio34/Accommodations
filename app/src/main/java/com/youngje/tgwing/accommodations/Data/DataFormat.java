@@ -216,6 +216,17 @@ public class DataFormat {
 
     }
 
+    public static String createNaverNavigationgAPIRequestURL(DATATYPE dataformat, double startlat, double startLon, double endlat, double endLon) {
+
+        String ret = "http://map.naver.com/findroute2/findWalkRoute.nhn?call=route2&output=json&coord_type=naver&search=0";
+        ret +=  "&start=" + Double.toString(startLon) + "%2C" + Double.toString(startlat)
+                + "&destination=" + Double.toString(endLon) + "%2C" + Double.toString(startlat);
+        Log.d("으에리퀘스트유알엘",ret);
+        return ret;
+
+
+    }
+
     public static String createGetAroungRequestURL(double lat, double lon) {
 
         String requestUrl = "";

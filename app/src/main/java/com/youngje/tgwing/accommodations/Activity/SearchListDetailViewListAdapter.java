@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,18 +81,34 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
 
         ImageView profileView;
         TextView userName;
-        ImageView nationalityView;
+        
         ImageView reviewPictureView;
-        VideoView reviewVideoView;
-        TextView dateView;
+        final VideoView reviewVideoView;
+        
         TextView reviewTextView;
+
+
+        // TODO: 2016. 12. 2.  아래것들 처리해야됨 
+        // 국적
+        ImageView nationalityView; 
+        
+        // 좋아요 갯수
+        ImageView likeImage;
         TextView likeNumView;
+        
+        // 작성일
+        TextView dateView;
+        
+        // 별점
         RatingBar ratingBar;
         TextView ratingScore;
 
         profileView = (ImageView) view.findViewById(R.id.listview_detail_item_profile);
+        
+        // 래이팅바 ~
         ratingBar = (RatingBar) view.findViewById(R.id.listview_detail_item_ratingbar);
         ratingScore = (TextView) view.findViewById(R.id.listview_detail_item_score);
+        
         userName = (TextView) view.findViewById(R.id.listview_detail_item_username);
         //nationalityView = (ImageView) view.findViewById(R.id.listview_detail_item_nationality);
 
@@ -99,8 +117,9 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
 
         dateView = (TextView) view.findViewById(R.id.listview_detail_item_date);
         reviewTextView = (TextView) view.findViewById(R.id.listview_detail_item_review);
+        
         likeNumView = (TextView) view.findViewById(R.id.listview_detail_item_liked);
-
+        likeImage = (ImageView) view.findViewById(R.id.liked_image_button);
         Review item = reviews.get(pos);
 
         switch (item.getContentType()) {
@@ -113,8 +132,38 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
                 reviewPictureView.setVisibility(View.VISIBLE);
                 reviewVideoView.setVisibility(View.GONE);
                 break;
+            // TODO: 2016. 12. 2. 비디오뷰안됨 존나... 
             case 2:
+                Log.i("urlurlvideo", item.getreviewContentUrl().toString());
+                try {
+                    // Start the MediaController
+                    MediaController mediacontroller = new MediaController(
+                            view.getContext());
+                    mediacontroller.setAnchorView(reviewVideoView);
+                    // Get the URL from String VideoURL
+                    String video = item.getreviewContentUrl();
+                    reviewVideoView.setMediaController(mediacontroller);
+                    reviewVideoView.setVideoURI(Uri.parse(video));
+
+                } catch (Exception e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
+                }
+
+                reviewVideoView.requestFocus();
+                reviewVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    // Close the progress bar and play the video
+                    public void onPrepared(MediaPlayer mp) {
+                        reviewVideoView.start();
+                    }
+                });
+
+
                 reviewVideoView.setVideoURI(Uri.parse(item.getreviewContentUrl()));
+                MediaController mediaController = new MediaController(view.getContext());
+                mediaController.setAnchorView(reviewVideoView);
+                reviewVideoView.setMediaController(mediaController);
+
                 reviewPictureView.setVisibility(View.GONE);
                 reviewVideoView.setVisibility(View.VISIBLE);
                 break;

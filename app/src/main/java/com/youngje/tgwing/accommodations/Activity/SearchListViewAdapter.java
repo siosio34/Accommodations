@@ -2,6 +2,7 @@ package com.youngje.tgwing.accommodations.Activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Handler;
@@ -29,6 +30,9 @@ import org.json.JSONObject;
 
 import static com.youngje.tgwing.accommodations.Marker.markerList;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -99,102 +103,119 @@ public class SearchListViewAdapter extends BaseAdapter {
                     holder.navigationImageView.setImageResource(R.drawable.cancel_navi);
                     final Marker marker = markerList.get(position);
 
-                    loopThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                while (!Thread.currentThread().isInterrupted()) {
-                                    onNavigation(marker.getLat(), marker.getLon());
-                                    Thread.sleep(5000);
-                                }
-                            } catch(Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    loopThread.start();
+                    try {
+                        //// TODO: 2016. 12. 1. navigation 함수 작동
+                        onNavigation(context,marker.getLat(), marker.getLon());
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
                 else {
                     isNavi = false;
                     ((MapSearchActivity)activity).navimode(isNavi, position);
                     holder.navigationImageView.setImageResource(R.drawable.ic_icon_route);
-                    loopThread.interrupt();
+
                 }
             }
         });
         return convertView;
     }
 
-    public void onNavigation(double endLat,double endLon) throws ExecutionException, InterruptedException, JSONException {
+    // TODO: 2016. 12. 3. 일단 번역부터하자...! 
+    // TODO: 2016. 12. 3. 네이버 정보받아오는건됨...!
+    public void onNavigation(Context context,double endLat,double endLon) throws ExecutionException, InterruptedException, JSONException, IOException {
         //요기까지
 
-        // TODO: 2016. 10. 25. navigation
-        String fromCoord = "WGS84";
-        String toCoord = "WCONGNAMUL";
-        String type = "json";
-        String apikey = activity.getString(R.string.daum_api_key);
-
-        LocationUtil.setActivity(activity);
         curlocate = LocationUtil.curlocation;
+        String naverRouteRequestUrl = DataFormat.createNaverNavigationgAPIRequestURL(DataFormat.DATATYPE.NAVI,curlocate.getLatitude(),curlocate.getLongitude(),endLat,endLon);
+        Log.i("naverurl", naverRouteRequestUrl);
+       // String result = new HttpHandler().execute(naverRouteRequestUrl).get();
 
-        String startCreateUrl;
-        String endCreateUrl;
-        String daumRouteRequestUrl;
+        // TODO: 2016. 10. 25. navigation
+ // String fromCoord = "WGS84";
+ // String toCoord = "WCONGNAMUL";
+ // String type = "json";
+ // String apikey = activity.getString(R.string.daum_api_key);
+//
+ // LocationUtil.setActivity(activity);
+ // curlocate = LocationUtil.curlocation;
+//
+ // String startCreateUrl;
+ // String endCreateUrl;
+ // String daumRouteRequestUrl;
 
 
-        // TODO: 2016. 11. 28.  시작 경도와 위도가 안바뀌는거 같은데
-        startCreateUrl = DataFormat.changeCoordRequestURL(curlocate.getLatitude(),curlocate.getLongitude(),fromCoord,toCoord,type,apikey);
-        endCreateUrl = DataFormat.changeCoordRequestURL(endLat,endLon,fromCoord,toCoord,type,apikey);
+ // // TODO: 2016. 11. 28.  시작 경도와 위도가 안바뀌는거 같은데
+ // startCreateUrl = DataFormat.changeCoordRequestURL(curlocate.getLatitude(),curlocate.getLongitude(),fromCoord,toCoord,type,apikey);
+ // endCreateUrl = DataFormat.changeCoordRequestURL(endLat,endLon,fromCoord,toCoord,type,apikey);
+//
+ // // 주소변환후 데이터 저장
+ // String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
+ // String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
+ // JSONObject startJsonObject = new JSONObject(myLocationResult);
+ // JSONObject endJsonObject = new JSONObject(DestinationResult);
+//
+ // final Double daumStartLat = startJsonObject.getDouble("y");
+ // final Double daumStartLon = startJsonObject.getDouble("x");
+ // Double daumEndLat = endJsonObject.getDouble("y");
+ // Double daumEndLon = endJsonObject.getDouble("x");
 
-        // 주소변환후 데이터 저장
-        String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
-        String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
-        JSONObject startJsonObject = new JSONObject(myLocationResult);
-        JSONObject endJsonObject = new JSONObject(DestinationResult);
-
-        final Double daumStartLat = startJsonObject.getDouble("y");
-        final Double daumStartLon = startJsonObject.getDouble("x");
-        Double daumEndLat = endJsonObject.getDouble("y");
-        Double daumEndLon = endJsonObject.getDouble("x");
-
-        // 변환된 주소로 다음에 데이터 요청
-        daumRouteRequestUrl = DataFormat.createNavigationAPIRequestURL(DataFormat.DATATYPE.NAVI,daumStartLon,daumStartLat,daumEndLon,daumEndLat);
-        String result = new HttpHandler().execute(daumRouteRequestUrl).get();
+  // 변환된 주소로 다음에 데이터 요청
+  //daumRouteRequestUrl =
 
         // 네비 데이터 파싱
-        Navi navi = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
-        final String guideText = navi.getGuideMent();
 
-        // 스탈팅 포인트와 종점 포인트를 정함.
-        List<NaviXY> list = navi.getListXY();
-        List<pointOnMap> tempArray = new ArrayList<>();
-        pointOnMap startPoint = new pointOnMap(list.get(0).getLat(), list.get(0).getLon());
-        for(int i=1; i<list.size(); i++)
-            tempArray.add(new pointOnMap(list.get(i).getLat(), list.get(i).getLon()));
+        // 일단 파일로하자
 
-        // TODO: 2016. 11. 28. 이거 네비 처리완료해야된다
+      //  AssetManager assetManager = context.getResources().getAssets();
+//
+      //  AssetManager.AssetInputStream assetInputStream = (AssetManager.AssetInputStream)assetManager.open("navigation.json");
+//
+      //  BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(assetInputStream));
+//
+      //  StringBuilder sb = new StringBuilder();
+//
+      //  int bufferSize = 1024 * 1024;
+      //  char readBuf[] = new char[bufferSize];
+      //  int resultSize = 0;
+//
+      //  while((resultSize = bufferedReader.read(readBuf)) != -1) {
+      //      if(resultSize == bufferSize)
+      //          sb.append(readBuf);
+      //      else {
+      //          for(int i = 0; i<resultSize ; i++) {
+      //              sb.append(readBuf[i]);
+      //          }
+      //      }
+//
+      //  }
 
-        // 그림을 갱신함.
+      //  String result = sb.toString();
+    //   Log.i("resultStringNavi", result);
+
+    //   Navi navi = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
+    //   //final String guideText = navi.getGuideMent();
+
+    //   // 스탈팅 포인트와 종점 포인트를 정함.
+    //   List<NaviXY> list = navi.getListXY();
+    //   List<pointOnMap> tempArray = new ArrayList<>();
+    //   pointOnMap startPoint = new pointOnMap(list.get(0).getLat(), list.get(0).getLon());
+    //   for(int i=1; i<list.size(); i++)
+    //       tempArray.add(new pointOnMap(list.get(i).getLat(), list.get(i).getLon()));
+
+    //   // TODO: 2016. 11. 28. 이거 네비 처리완료해야된다
+    //   // 그림을 갱신함.
+
+    //   ((MapSearchActivity)activity).drawLineFromStartPoint(startPoint,tempArray);
 
 
-        ((MapSearchActivity)activity).drawLineFromStartPoint(startPoint,tempArray);
-
-        if(navi.getLength() < 30) {
-
-            // TODO: 2016. 10. 25. 종료 메시지 남겨야된다.
-            // TODO: 2016. 10. 25. 길 안내를 할수 없거나
-        }
-
-        else {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    // TODO: 2016. 11. 28. 내위치 바뀌는지 확인해야된다
-                    //Toast.makeText(activity,,Toast.LENGTH_SHORT).show();
-                    Toast.makeText(activity,daumStartLat + " " + daumStartLon + " " + guideText,Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
     }
 
     private RatingBar.OnRatingBarChangeListener onRatingChangedListener(final ViewHolder holder, final int position) {
