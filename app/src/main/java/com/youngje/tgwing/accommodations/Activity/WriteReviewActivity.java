@@ -1,11 +1,17 @@
 package com.youngje.tgwing.accommodations.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +44,11 @@ import com.youngje.tgwing.accommodations.Util.StretchVideoView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.util.Date;
 
 import static android.widget.RatingBar.*;
@@ -114,11 +125,11 @@ public class WriteReviewActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/testImage/");
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/TourSeoul/");
                 if (!file.exists())
                     file.mkdir();
 
-                destination = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/testImage/" + System.currentTimeMillis() + ".jpg");
+                destination = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/TourSeoul/" + System.currentTimeMillis() + ".jpg");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
                 startActivityForResult(intent, REQUEST_IMAGE);
 
@@ -131,9 +142,15 @@ public class WriteReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/TourSeoul/");
+                if (!file.exists())
+                    file.mkdir();
+
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
+                //destination = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/TourSeoul/" + System.currentTimeMillis() + ".jpg");
+               // intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(destination));
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GALLREY);
 
                 // TODO: 2016. 10. 16.  갤러리거 불러오기
@@ -146,10 +163,10 @@ public class WriteReviewActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/testCamera/");
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/TourSeoul/");
                 if (!file.exists())
                     file.mkdir();
-                destination = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/testCamera/" + System.currentTimeMillis() + ".mp4");
+                destination = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/TourSeoul/" + System.currentTimeMillis() + ".mp4");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
                 intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
                 startActivityForResult(intent, REQUEST_VIDEO);
@@ -198,7 +215,6 @@ public class WriteReviewActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 System.out.println("asdasd2 " + requestCode);
 
-                // TODO: 2016. 11. 28. 이거 개쩔엇음 
                 StretchVideoView videoView = (StretchVideoView)findViewById(R.id.loadVideo);
                 videoView.setVideoPath(destination.getPath());
                 RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relative_layout_size);
@@ -216,17 +232,22 @@ public class WriteReviewActivity extends AppCompatActivity {
         } else if (requestCode == REQUEST_GALLREY) {
 
             if (resultCode == RESULT_OK) {
-                    //Get ImageURi and load with help of picasso
-                    //Uri selectedImageURI = data.getData();
 
-                Uri selectedImageURI = data.getData();
-                destination = new File(selectedImageURI.getPath());
+                Uri selectedImage = data.getData();
+                String filePath = null;
 
+                try {
+                    filePath = getFilePath(getApplicationContext(),selectedImage);
+                    Log.i("filepath",filePath);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
 
-                // TODO: 2016. 11. 28. 이거좀 불안정
+                destination = new File(filePath);
 
                 Picasso.with(this).load(data.getData()).noPlaceholder().centerCrop().fit()
-                            .into((ImageView) findViewById(R.id.loadImage));
+                        .into((ImageView)findViewById(R.id.loadImage));
+
 
                 loadImage.setVisibility(View.VISIBLE);
                 }
@@ -377,5 +398,71 @@ public class WriteReviewActivity extends AppCompatActivity {
             mProgressDialog.dismiss();
         }
     }
+
+    @SuppressLint("NewApi")
+    public static String getFilePath(Context context, Uri uri) throws URISyntaxException {
+        String selection = null;
+        String[] selectionArgs = null;
+        // Uri is different in versions after KITKAT (Android 4.4), we need to
+        if (Build.VERSION.SDK_INT >= 19 && DocumentsContract.isDocumentUri(context.getApplicationContext(), uri)) {
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                return Environment.getExternalStorageDirectory() + "/" + split[1];
+            } else if (isDownloadsDocument(uri)) {
+                final String id = DocumentsContract.getDocumentId(uri);
+                uri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+            } else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                if ("image".equals(type)) {
+                    uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+                selection = "_id=?";
+                selectionArgs = new String[]{
+                        split[1]
+                };
+            }
+        }
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+            String[] projection = {
+                    MediaStore.Images.Media.DATA
+            };
+            Cursor cursor = null;
+            try {
+                cursor = context.getContentResolver()
+                        .query(uri, projection, selection, selectionArgs, null);
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
+            } catch (Exception e) {
+            }
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
+
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+
+
 
 }
