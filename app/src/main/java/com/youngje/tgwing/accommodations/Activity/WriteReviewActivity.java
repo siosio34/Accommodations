@@ -317,7 +317,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         String content = inputText.getText().toString();
         Date currentDate = new Date();
 
-        Review review = new Review(markerId,userId,userName,userImageUrl,content,null,0,0);
+        Review review = new Review(markerId,userId,userName,userImageUrl,content,null,0,0,userCountry,currentDate);
         return review;
     }
 

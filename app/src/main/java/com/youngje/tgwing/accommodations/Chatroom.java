@@ -6,8 +6,9 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
- * Created by Mansu on 2016-10-08.
+ * Created by joyeongje on 2016. 11. 28..
  */
+
 public class Chatroom {
     private String chatroomTitle;
     private String chatroomWriterProfilePic;

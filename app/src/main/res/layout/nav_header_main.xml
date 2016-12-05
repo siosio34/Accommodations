@@ -24,7 +24,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:layout_below="@+id/userImageView"
         android:weightSum="1">
 
@@ -32,20 +33,18 @@
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:gravity="right"
             android:text="userName" />
 
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_marginLeft="5dp"
+        <TextView
+            android:id="@+id/userLocale"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:gravity="left"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_light_focused" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:text="userLocale" />
+
 
     </LinearLayout>
 

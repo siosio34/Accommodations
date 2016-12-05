@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.media.Image;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
@@ -31,6 +32,7 @@ import android.widget.AdapterView;
 
 import android.widget.ArrayAdapter;
 
+import android.widget.Button;
 import android.widget.CompoundButton;
 
 import android.widget.EditText;
@@ -119,8 +121,10 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
     private NavigationView mNavView;
     private Menu mDrawerMenu;
     private RelativeLayout mNavHeader;
+
     private ImageView userImageView;
     private TextView userNameTextView;
+    private TextView userLocaleText;
 
 
     //community chatroom activity
@@ -211,7 +215,6 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
           }
       });
-        userNameTextView.setText(curUser.getUserName());
 
 
     }
@@ -232,7 +235,9 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         mNavHeader = (RelativeLayout) mNavView.getHeaderView(0);
         userImageView = (ImageView) mNavHeader.findViewById(R.id.userImageView);
         userNameTextView = (TextView)mNavHeader.findViewById(R.id.userName);
-
+        userNameTextView.setText(curUser.getUserName());
+        userLocaleText = (TextView) mNavHeader.findViewById(R.id.userLocale);
+        userLocaleText.setText("국적 : " + curUser.getCountry());
 
     }
 

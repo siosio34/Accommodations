@@ -1,8 +1,9 @@
 package com.youngje.tgwing.accommodations;
 import java.util.Date;
 /**
- * Created by Mansu on 2016-10-08.
+ * Created by joyeongje on 2016. 11. 28..
  */
+
 public class Chat {
     private String userId;
     private String chatWriterProfilePic;

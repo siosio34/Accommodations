@@ -137,85 +137,87 @@ public class SearchListViewAdapter extends BaseAdapter {
         String naverRouteRequestUrl = DataFormat.createNaverNavigationgAPIRequestURL(DataFormat.DATATYPE.NAVI,curlocate.getLatitude(),curlocate.getLongitude(),endLat,endLon);
         Log.i("naverurl", naverRouteRequestUrl);
 
+        // TODO: 2016. 12. 6. 네이버 네이버 
+
         // TODO: 2016. 12. 4. 영상 실시간 안되면 링크라도 던져주자! 
        // String result = new HttpHandler().execute(naverRouteRequestUrl).get();
 
         // TODO: 2016. 10. 25. navigation
- // String fromCoord = "WGS84";
- // String toCoord = "WCONGNAMUL";
- // String type = "json";
- // String apikey = activity.getString(R.string.daum_api_key);
-//
- // LocationUtil.setActivity(activity);
- // curlocate = LocationUtil.curlocation;
-//
- // String startCreateUrl;
- // String endCreateUrl;
- // String daumRouteRequestUrl;
+         // String fromCoord = "WGS84";
+         // String toCoord = "WCONGNAMUL";
+         // String type = "json";
+         // String apikey = activity.getString(R.string.daum_api_key);
+        //
+         // LocationUtil.setActivity(activity);
+         // curlocate = LocationUtil.curlocation;
+        //
+         // String startCreateUrl;
+         // String endCreateUrl;
+         // String daumRouteRequestUrl;
 
 
- // // TODO: 2016. 11. 28.  시작 경도와 위도가 안바뀌는거 같은데
- // startCreateUrl = DataFormat.changeCoordRequestURL(curlocate.getLatitude(),curlocate.getLongitude(),fromCoord,toCoord,type,apikey);
- // endCreateUrl = DataFormat.changeCoordRequestURL(endLat,endLon,fromCoord,toCoord,type,apikey);
-//
- // // 주소변환후 데이터 저장
- // String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
- // String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
- // JSONObject startJsonObject = new JSONObject(myLocationResult);
- // JSONObject endJsonObject = new JSONObject(DestinationResult);
-//
- // final Double daumStartLat = startJsonObject.getDouble("y");
- // final Double daumStartLon = startJsonObject.getDouble("x");
- // Double daumEndLat = endJsonObject.getDouble("y");
- // Double daumEndLon = endJsonObject.getDouble("x");
+         // // TODO: 2016. 11. 28.  시작 경도와 위도가 안바뀌는거 같은데
+         // startCreateUrl = DataFormat.changeCoordRequestURL(curlocate.getLatitude(),curlocate.getLongitude(),fromCoord,toCoord,type,apikey);
+         // endCreateUrl = DataFormat.changeCoordRequestURL(endLat,endLon,fromCoord,toCoord,type,apikey);
+        //
+         // // 주소변환후 데이터 저장
+         // String myLocationResult = new HttpHandler().execute(startCreateUrl).get();
+         // String DestinationResult = new HttpHandler().execute(endCreateUrl).get();
+         // JSONObject startJsonObject = new JSONObject(myLocationResult);
+         // JSONObject endJsonObject = new JSONObject(DestinationResult);
+        //
+         // final Double daumStartLat = startJsonObject.getDouble("y");
+         // final Double daumStartLon = startJsonObject.getDouble("x");
+         // Double daumEndLat = endJsonObject.getDouble("y");
+         // Double daumEndLon = endJsonObject.getDouble("x");
 
-  // 변환된 주소로 다음에 데이터 요청
-  //daumRouteRequestUrl =
+          // 변환된 주소로 다음에 데이터 요청
+          //daumRouteRequestUrl =
 
-        // 네비 데이터 파싱
+                // 네비 데이터 파싱
 
-        // 일단 파일로하자
+                // 일단 파일로하자
 
-      //  AssetManager assetManager = context.getResources().getAssets();
-//
-      //  AssetManager.AssetInputStream assetInputStream = (AssetManager.AssetInputStream)assetManager.open("navigation.json");
-//
-      //  BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(assetInputStream));
-//
-      //  StringBuilder sb = new StringBuilder();
-//
-      //  int bufferSize = 1024 * 1024;
-      //  char readBuf[] = new char[bufferSize];
-      //  int resultSize = 0;
-//
-      //  while((resultSize = bufferedReader.read(readBuf)) != -1) {
-      //      if(resultSize == bufferSize)
-      //          sb.append(readBuf);
-      //      else {
-      //          for(int i = 0; i<resultSize ; i++) {
-      //              sb.append(readBuf[i]);
-      //          }
-      //      }
-//
-      //  }
+              //  AssetManager assetManager = context.getResources().getAssets();
+        //
+              //  AssetManager.AssetInputStream assetInputStream = (AssetManager.AssetInputStream)assetManager.open("navigation.json");
+        //
+              //  BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(assetInputStream));
+        //
+              //  StringBuilder sb = new StringBuilder();
+        //
+              //  int bufferSize = 1024 * 1024;
+              //  char readBuf[] = new char[bufferSize];
+              //  int resultSize = 0;
+        //
+              //  while((resultSize = bufferedReader.read(readBuf)) != -1) {
+              //      if(resultSize == bufferSize)
+              //          sb.append(readBuf);
+              //      else {
+              //          for(int i = 0; i<resultSize ; i++) {
+              //              sb.append(readBuf[i]);
+              //          }
+              //      }
+        //
+              //  }
 
-      //  String result = sb.toString();
-    //   Log.i("resultStringNavi", result);
+              //  String result = sb.toString();
+            //   Log.i("resultStringNavi", result);
 
-    //   Navi navi = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
-    //   //final String guideText = navi.getGuideMent();
+            //   Navi navi = NavigationDataProcessor.load(result,DataFormat.DATATYPE.NAVI);
+            //   //final String guideText = navi.getGuideMent();
 
-    //   // 스탈팅 포인트와 종점 포인트를 정함.
-    //   List<NaviXY> list = navi.getListXY();
-    //   List<pointOnMap> tempArray = new ArrayList<>();
-    //   pointOnMap startPoint = new pointOnMap(list.get(0).getLat(), list.get(0).getLon());
-    //   for(int i=1; i<list.size(); i++)
-    //       tempArray.add(new pointOnMap(list.get(i).getLat(), list.get(i).getLon()));
+            //   // 스탈팅 포인트와 종점 포인트를 정함.
+            //   List<NaviXY> list = navi.getListXY();
+            //   List<pointOnMap> tempArray = new ArrayList<>();
+            //   pointOnMap startPoint = new pointOnMap(list.get(0).getLat(), list.get(0).getLon());
+            //   for(int i=1; i<list.size(); i++)
+            //       tempArray.add(new pointOnMap(list.get(i).getLat(), list.get(i).getLon()));
 
-    //   // TODO: 2016. 11. 28. 이거 네비 처리완료해야된다
-    //   // 그림을 갱신함.
+            //   // TODO: 2016. 11. 28. 이거 네비 처리완료해야된다
+            //   // 그림을 갱신함.
 
-    //   ((MapSearchActivity)activity).drawLineFromStartPoint(startPoint,tempArray);
+            //   ((MapSearchActivity)activity).drawLineFromStartPoint(startPoint,tempArray);
 
 
     }

@@ -15,24 +15,27 @@ public class Review {
     private String userName; // 유저이름
     private String userImageUrl; // 유저 이미지 링크.
     private String content; // 리뷰 냉ㅅㅇ
+
     private String reviewContentUrl; // 리뷰와 연관된 사진 동영상 링크
     private int likeNUM;
     private int contentType; // 글, 사진,동영상
     private Date createDate;
     private int star; // 별점
+    private String writeUserLocale; // 쓴사람 지역명
 
     public Review(){}
 
     public Review(String markerId, String userId, String userName, String userImageUrl, String content,
-                  String reviewContentUrl, int contentType, int star) {
+                  String reviewContentUrl, int contentType, int star,String writeUserLocale,Date createDate) {
 
         this.markerId = markerId;
         this.userId = userId;
         this.userName = userName;
         this.userImageUrl = userImageUrl;
         this.content = content;
+        this.writeUserLocale = writeUserLocale;
         this.reviewContentUrl = reviewContentUrl;
-       // this.createDate = createDate;
+        this.createDate = createDate;
         this.contentType = contentType;
         this.star = star;
     }
@@ -117,4 +120,12 @@ public class Review {
    public void setCreateDate(Date createDate) {
       this.createDate = createDate;
    }
+
+    public String getWriteUserLocale() {
+        return writeUserLocale;
+    }
+
+    public void setWriteUserLocale(String writeUserLocale) {
+        this.writeUserLocale = writeUserLocale;
+    }
 }

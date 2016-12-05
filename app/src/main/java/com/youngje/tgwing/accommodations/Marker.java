@@ -8,8 +8,9 @@ import java.util.List;
 
 
 /**
- * Created by joyeongje on 2016. 9. 26..
+ * Created by joyeongje on 2016. 11. 28..
  */
+
 abstract public class Marker implements Comparable<Marker> {
 
     public static Marker selectedMarker = null;

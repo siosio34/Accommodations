@@ -97,8 +97,6 @@ public class CountryActivity extends AppCompatActivity {
         //코드로 때려 박았기 때문에 추가하려면 array.xml 에서 수정하고 그 순서에 맞게 코드에 넣어주며
         //drawable에 국기를 추가시켜주어야 합니다.
 
-
-
         countryListView.setAdapter(countryAdapter);
 
         selCountryButton = (Button) findViewById(R.id.selCountryButton);

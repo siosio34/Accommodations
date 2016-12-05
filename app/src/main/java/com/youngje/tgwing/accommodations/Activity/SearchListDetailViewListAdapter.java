@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RatingBar;
@@ -27,6 +28,8 @@ import com.youngje.tgwing.accommodations.Navi;
 import com.youngje.tgwing.accommodations.NaviXY;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.Review;
+import com.youngje.tgwing.accommodations.Translate;
+import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
 
@@ -50,7 +53,6 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
 
     public SearchListDetailViewListAdapter() {
         selectMarker = Marker.getSelectedMarker();
-
     }
 
     @Override
@@ -80,7 +82,7 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
         }
 
         ImageView profileView;
-        TextView userName;
+        final TextView userName;
         
         ImageView reviewPictureView;
         final VideoView reviewVideoView;
@@ -120,6 +122,36 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
         
         likeNumView = (TextView) view.findViewById(R.id.listview_detail_item_liked);
         likeImage = (ImageView) view.findViewById(R.id.liked_image_button);
+
+        Button translateButton = (Button)view.findViewById(R.id.listview_detail_item_translateButton);
+        translateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Review item = reviews.get(pos);
+
+                String apiKey = "AIzaSyAqRgOzgNxcKZfJK_Pcc0k0yvZ7FkztxrA";
+                //String curUserLocale = User.getMyInstance().getCountry();
+                String curUserLocale = User.getMyInstance().getCountry();
+                String reviewContent = item.getContent();
+                String reviewLocale = "ko";
+
+                Translate translate = new Translate(apiKey,reviewLocale,curUserLocale);
+                try {
+                    String translatehttpUrl = translate.genRequest(reviewContent);
+
+                    Log.i("translatehttpUrl",translatehttpUrl);
+                    String transtedString = new HttpHandler().execute(translatehttpUrl).get();
+                    Log.i("transtedString",transtedString);
+
+                    Toast.makeText(context,transtedString,Toast.LENGTH_LONG).show();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
         Review item = reviews.get(pos);
 
         switch (item.getContentType()) {

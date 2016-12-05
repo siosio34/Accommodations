@@ -1,4 +1,6 @@
 package com.youngje.tgwing.accommodations;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,23 +18,25 @@ public class Translate {
     private String source;
     private String target;
 
-    Translate(String key, String source, String target) {
+    public Translate(String key, String source, String target) {
         this.key = key;
         this.source = source;
         this.target = target;
     }
 
-    private String genRequest(String msg) throws Exception {
+    public String genRequest(String msg) throws Exception {
         msg = URLEncoder.encode(msg, "UTF-8");
         String req = "https://www.googleapis.com/language/translate/v2?"
                 + "key=" + key
                 + "&q=" + msg
                 + "&source=" + source
                 + "&target=" + target;
+
+        Log.i("req",req);
         return req;
     }
 
-    private String getTranslatedText(String json) throws Exception {
+    public String getTranslatedText(String json) throws Exception {
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject)jsonParser.parse(json);
         JSONObject data_obj = (JSONObject)jsonObject.get("data");
@@ -42,7 +46,7 @@ public class Translate {
     }
 
 
-    private String request(String msg) throws Exception {
+    public String request(String msg) throws Exception {
         String req = genRequest(msg);
         URL url = new URL(req);
         StringBuffer buf = new StringBuffer("");
@@ -56,14 +60,5 @@ public class Translate {
         return getTranslatedText(buf.toString());
     }
 
-    public static void main(String[] args) throws IOException {
 
-        Translate trans = new Translate("AIzaSyB0YKPDLKJYNvnYuTPFJjHgDwTCHoXLvGY", "ko", "zh-CN");
-        try {
-            String res = trans.request("나");
-            System.out.println(res);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }

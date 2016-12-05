@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Mansu on 2016-10-12.
+ * Created by joyeongje on 2016. 11. 28..
  */
+
 
 public class ChatManager {
     Chatroom chatroom;
