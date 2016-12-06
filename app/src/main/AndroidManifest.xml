@@ -3,10 +3,12 @@
     package="com.youngje.tgwing.accommodations">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +17,67 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+
+        <!-- mixare -->
+        <activity
+            android:name="com.youngje.tgwing.accommodations.ARSearch.mixare.MixListView"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name="com.youngje.tgwing.accommodations.ARSearch.mixare.MixView"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:mimeType="application/mixare-json"
+                    android:scheme="http" />
+                <data
+                    android:mimeType="application/mixare-json"
+                    android:scheme="content" />
+                <data
+                    android:mimeType="application/mixare-json"
+                    android:scheme="file" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".MixView" />
+        </activity>
+        <activity android:name="com.youngje.tgwing.accommodations.ARSearch.mixare.MixareActivity" />
+
+        <activity
+            android:name="com.youngje.tgwing.accommodations.ARSearch.WriteDocumentActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name="com.youngje.tgwing.accommodations.ARSearch.ReadDocumentActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyDialogTheme" />
+        <activity android:name="com.youngje.tgwing.accommodations.ARSearch.DocumentListActivity"></activity>
+
+
+        <!-- accomadations Activity -->
+
+
         <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

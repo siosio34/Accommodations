@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "com.youngje.tgwing.accommodations"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -20,6 +20,13 @@ android {
         }
 
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 dependencies {
@@ -29,11 +36,9 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:cardview-v7:24.2.1'
     // Firebase Authentication
-
     compile 'com.google.firebase:firebase-database:9.6.1'
     compile 'com.google.firebase:firebase-storage:9.6.1'
     compile 'com.google.firebase:firebase-auth:9.6.1'
-
     // Google Sign In SDK (only required for Google Sign In)
     compile 'com.google.android.gms:play-services-auth:9.6.1'
     compile 'com.google.firebase:firebase-core:9.2.1'
@@ -41,10 +46,9 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     provided 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
-
     compile 'com.googlecode.json-simple:json-simple:1.1'
     compile files('libs/libDaumMapAndroid.jar')
-    //compile 'com.android.support:recyclerview-v7:25.0.0'
+    compile files('libs/mixarelib.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'
