@@ -45,9 +45,6 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 
-import com.ar.siosi.Hackfair.mixare.data.DataSource;
-import com.ar.siosi.Hackfair.mixare.data.DataSource.DATASOURCE;
-import com.ar.siosi.Hackfair.mixare.render.Matrix;
 
 import android.app.Dialog;
 import android.content.ContentResolver;
@@ -66,6 +63,9 @@ import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+
+import ARAccomdation.mixare.data.DataSource;
+import ARAccomdation.mixare.render.Matrix;
 
 // 컨텍스트랩퍼를 확장하는 컨텍스트 클래스
 public class MixContext extends ContextWrapper {
@@ -116,7 +116,7 @@ public class MixContext extends ContextWrapper {
         // (위키피디아는 기본 데이터 소스로 한다)
 
         if (!atLeastOneDatasourceSelected)
-            setDataSource(DATASOURCE.CAFE, true);
+            setDataSource(DataSource.DATASOURCE.CAFE, true);
 
         // 가장 기본
 
@@ -522,5 +522,6 @@ public class MixContext extends ContextWrapper {
     public void setLocationAtLastDownload(Location locationAtLastDownload) {
         this.locationAtLastDownload = locationAtLastDownload;
     }
+
 
 }

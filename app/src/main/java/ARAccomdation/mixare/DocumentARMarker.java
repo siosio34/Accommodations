@@ -1,29 +1,26 @@
 package ARAccomdation.mixare;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
-import android.util.Log;
 
-import com.ar.siosi.Hackfair.Comment;
-import com.ar.siosi.Hackfair.Document;
-import com.ar.siosi.Hackfair.ReadDocumentActivity;
-import com.ar.siosi.Hackfair.mixare.data.DataSource;
-import com.ar.siosi.Hackfair.mixare.gui.PaintScreen;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ARAccomdation.Comment;
+import ARAccomdation.mixare.data.DataSource;
+import ARAccomdation.mixare.gui.PaintScreen;
+
 /**
  * Created by joyeongje on 2016. 9. 20..
  */
-public class DocumentMarker extends Marker implements Serializable {
+public class DocumentARMarker extends ARMarker implements Serializable {
 
 
-    public static DocumentMarker selectedMarker = new DocumentMarker();
-    public static DocumentMarker getInstance() {
+    public static DocumentARMarker selectedMarker = new DocumentARMarker();
+    public static DocumentARMarker getInstance() {
         return selectedMarker;
     }
 
@@ -42,13 +39,13 @@ public class DocumentMarker extends Marker implements Serializable {
     private Date documentUpdateDate;
     private List<Comment> commentList = new ArrayList<Comment>();
 
-    public DocumentMarker() {
+    public DocumentARMarker() {
         super();
     };
 
-    public DocumentMarker(String title, double latitude, double longitude, double altitude, String link, DataSource.DATASOURCE datasource,int documentId,String userId,int documentType,int documentPopularity,
-                          int documentResponseWithme, int documentResponseSeeyou, int documentResponseNotgood, int documentCommentNum, int documentReadNum,
-                          Date documentCreateDate,Date documentUpdateDate,List<Comment> commentList)
+    public DocumentARMarker(String title, double latitude, double longitude, double altitude, String link, DataSource.DATASOURCE datasource, int documentId, String userId, int documentType, int documentPopularity,
+                            int documentResponseWithme, int documentResponseSeeyou, int documentResponseNotgood, int documentCommentNum, int documentReadNum,
+                            Date documentCreateDate, Date documentUpdateDate, List<Comment> commentList)
 
     {
         super(title, latitude, longitude, altitude, link, datasource);

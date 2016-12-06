@@ -28,14 +28,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.ar.siosi.Hackfair.mixare.data.Json;
-import com.ar.siosi.Hackfair.mixare.data.XMLHandler;
-import com.ar.siosi.Hackfair.mixare.data.DataSource.DATAFORMAT;
-import com.ar.siosi.Hackfair.mixare.data.DataSource.DATASOURCE;
+
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import android.util.Log;
+
+import ARAccomdation.mixare.data.DataSource;
+import ARAccomdation.mixare.data.Json;
+import ARAccomdation.mixare.data.XMLHandler;
 
 // 다운로드 관리자 클래스. 스레드로 관리
 public class DownloadManager implements Runnable {
@@ -177,8 +178,8 @@ public class DownloadManager implements Runnable {
 					Log.i("ㅗㅗㅗㅗㅗ5",request.format.toString());
 
 					// JSON 객체와 포맷으로 마커를 생성한다
-					List<Marker> markers = layer.load(root,request.format);
-					result.setMarkers(markers);	// 다운로드 결과에 마커를 할당
+					List<ARMarker> ARMarkers = layer.load(root,request.format);
+					result.setARMarkers(ARMarkers);	// 다운로드 결과에 마커를 할당
 
 					// 인자로 받은 리퀘스트로부터 포맷과 소스를 할당한다
 					result.format = request.format;
@@ -206,8 +207,8 @@ public class DownloadManager implements Runnable {
 						Log.i(MixView.TAG, "loading XML data");	
 						
 						// 도큐먼트로부터 파싱된 XML을 읽어 마커를 생성한다
-						List<Marker> markers = xml.load(doc);
-						result.setMarkers(markers);	// 다운로드 결과에 마커를 할당
+						List<ARMarker> ARMarkers = xml.load(doc);
+						result.setARMarkers(ARMarkers);	// 다운로드 결과에 마커를 할당
 
 						// 인자로 받은 리퀘스트로부터 포맷과 소스를 할당한다
 						result.format = request.format;
@@ -310,8 +311,8 @@ public class DownloadManager implements Runnable {
 // 다운로드 요청 클래스
 class DownloadRequest {
 	// 데이터 포맷과 소스, 연결될 url, 그리고 파라메터 값들을 지닌다
-	public DATAFORMAT format;
-	public DATASOURCE source;
+	public DataSource.DATAFORMAT format;
+	public DataSource.DATASOURCE source;
 	String url;
 	String params;
 }
@@ -319,10 +320,10 @@ class DownloadRequest {
 // 다운로드 결과 클래스
 class DownloadResult {
 	// 포맷과 소스
-	public DATAFORMAT format;
-	public DATASOURCE source;
+	public DataSource.DATAFORMAT format;
+	public DataSource.DATASOURCE source;
 	
-	List<Marker> markers;	// 결과로부터 생성된 마커	
+	List<ARMarker> ARMarkers;	// 결과로부터 생성된 마커
 
 	// 에러 처리시 사용될 변수들
 	boolean error;
@@ -330,13 +331,13 @@ class DownloadResult {
 	DownloadRequest errorRequest;
 	
 	// 마커를 리턴
-	public List<Marker> getMarkers() {
-		return markers;
+	public List<ARMarker> getARMarkers() {
+		return ARMarkers;
 	}
 	
 	// 마커를 할당
-	public void setMarkers(List<Marker> markers) {
-		this.markers = markers;
+	public void setARMarkers(List<ARMarker> ARMarkers) {
+		this.ARMarkers = ARMarkers;
 	}
 	
 }

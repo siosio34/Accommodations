@@ -1,11 +1,7 @@
 package ARAccomdation;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,16 +9,10 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Shader;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -39,17 +29,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.ar.siosi.Hackfair.mixare.DocumentMarker;
-import com.ar.siosi.Hackfair.mixare.data.DataHandler;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.youngje.tgwing.accommodations.R;
+import com.youngje.tgwing.accommodations.User;
 
 import java.util.Date;
 import java.util.List;
+
+import ARAccomdation.mixare.DocumentARMarker;
+import ARAccomdation.mixare.data.DataHandler;
 
 /**
  * Created by Mansu on 2016-09-18.
@@ -79,15 +72,15 @@ public class ReadDocumentActivity extends Activity {
     private int commentTimeMarginRight = 10;
     private int commentTimeMarginTop = 10;
 
-    DocumentMarker documentMarker = null;
+    DocumentARMarker documentMarker = null;
     EditText editText;
     User user = null;
 
     Point displaySize;
     LinearLayout commentLayout;
     public void initialize() {
-        user = User.getInstance();
-        documentMarker = DocumentMarker.getInstance();
+        user = User.getMyInstance();
+        documentMarker = DocumentARMarker.getInstance();
         Log.i("선택된 마커",documentMarker.getUid());
 
         editText = (EditText)findViewById(R.id.comment);

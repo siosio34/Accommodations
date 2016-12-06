@@ -31,6 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.youngje.tgwing.accommodations.R;
+import com.youngje.tgwing.accommodations.User;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -65,7 +67,7 @@ public class WriteDocumentActivity extends Activity {
 
     String currentUid;
 
-    User currentUser = User.getInstance();
+    User currentUser = User.getMyInstance();
 
     private Uri mDownloadUrl = null;
 

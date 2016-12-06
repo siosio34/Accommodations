@@ -26,37 +26,37 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
-import com.ar.siosi.Hackfair.mixare.Marker;
-import com.ar.siosi.Hackfair.mixare.MixContext;
-import com.ar.siosi.Hackfair.mixare.MixView;
-
 import android.location.Location;
 import android.util.Log;
 
+import ARAccomdation.mixare.ARMarker;
+import ARAccomdation.mixare.MixContext;
+import ARAccomdation.mixare.MixView;
+
 /**
- * DataHandler is the model which provides the Marker Objects.
+ * DataHandler is the model which provides the ARMarker Objects.
  * 
- * DataHandler is also the Factory for new Marker objects.
+ * DataHandler is also the Factory for new ARMarker objects.
  */
 // 데이터 핸들러 클래스. 마커 오브젝트와 연동된다
 public class DataHandler implements Serializable{
 	
 	// 완전한 정보를 가진 마커 리스트
-	private List<Marker> markerList = new ArrayList<Marker>();
+	private List<ARMarker> markerList = new ArrayList<ARMarker>();
 	
 	// 마커들을 리스트에 추가
-	public void addMarkers(List<Marker> markers) {
+	public void addMarkers(List<ARMarker> markers) {
 		// 추가 이전 리스트의 사이즈 로그 생성 
-		Log.v(MixView.TAG, "Marker before: "+markerList.size());
+		Log.v(MixView.TAG, "ARMarker before: "+markerList.size());
 		
 		// 인자로 받은 마커들을 리스트에 추가한다(중복은 방지)
-		for(Marker ma:markers) {
+		for(ARMarker ma:markers) {
 			if(!markerList.contains(ma))
 				markerList.add(ma);
 		}
 		
 		// 추가 이후 리스트의 사이즈 로그 생성
-		Log.d(MixView.TAG, "Marker count: "+markerList.size());
+		Log.d(MixView.TAG, "ARMarker count: "+markerList.size());
 	}
 	
 	// 마커 정렬. 기본 소트를 이용
@@ -67,7 +67,7 @@ public class DataHandler implements Serializable{
 	// 각 마커 위치의 거리 갱신
 	public void updateDistances(Location location) {
 		// 리스트에 있는 모든 마커를 갱신한다
-		for(Marker ma: markerList) {
+		for(ARMarker ma: markerList) {
 			float[] dist=new float[3];
 			// 인자로 받은 곳과의 거리 계산
 			Location.distanceBetween(ma.getLatitude(), ma.getLongitude(), location.getLatitude(), location.getLongitude(), dist);
@@ -81,7 +81,7 @@ public class DataHandler implements Serializable{
 		Hashtable<Class, Integer> map = new Hashtable<Class, Integer>();
 		
 		// 모든 마커에 적용
-		for(Marker ma: markerList) {
+		for(ARMarker ma: markerList) {
 
 			Class mClass = ma.getClass();
 			// 맵의 클래스가 null 이 아닐 경우에 클래스를 대입. null 일 경우엔 1
@@ -105,7 +105,7 @@ public class DataHandler implements Serializable{
 		updateDistances(location);	// 거리를 갱신하고
 		sortMarkerList();			// 마커 리스트를 정렬
 
-		for(Marker ma: markerList) {
+		for(ARMarker ma: markerList) {
 			ma.update(location);	// 위치를 업데이트 해 준다
 			// 나중엔 소셜 마커까지도!
 		}
@@ -131,7 +131,7 @@ public class DataHandler implements Serializable{
 	}
 	
 	// 리스트내의 인덱스에 인취하는 마커를 리턴
-	public Marker getMarker(int index) {
+	public ARMarker getMarker(int index) {
 		return markerList.get(index);
 	}
 

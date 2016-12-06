@@ -26,9 +26,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-/**
- * Created by Mansu on 2016-09-20.
- */
+import com.youngje.tgwing.accommodations.R;
+
+
 public class DocumentListActivity extends AppCompatActivity {
     private RelativeLayout topLayout = null;
 

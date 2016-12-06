@@ -27,12 +27,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.ar.siosi.Hackfair.mixare.DocumentMarker;
-import com.ar.siosi.Hackfair.mixare.Marker;
-import com.ar.siosi.Hackfair.mixare.data.DataHandler;
+
 import com.squareup.picasso.Picasso;
+import com.youngje.tgwing.accommodations.R;
+import com.youngje.tgwing.accommodations.User;
 
 import java.io.IOException;
+
+import ARAccomdation.mixare.ARMarker;
+import ARAccomdation.mixare.DocumentARMarker;
 
 public class UserProfileActivity extends Activity {
     private ImageView profileImage;
@@ -71,7 +74,7 @@ public class UserProfileActivity extends Activity {
 
     public void initialize() {
 
-        user = User.getInstance();
+        user = User.getMyInstance();
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -193,28 +196,6 @@ public class UserProfileActivity extends Activity {
         followLayout.setLayoutParams(followParams);
         userProfileTopLayout.addView(followLayout);
 
-        TextView followingView = new TextView(this);
-        followingView.setBackgroundResource(R.drawable.circleyellow);
-        followingView.setText(Integer.toString(user.getFolloingNumber()));
-        followingView.setTextSize(followingTextSize);
-        followingView.setGravity(Gravity.CENTER);
-        followingView.setTextColor(Color.parseColor("#FFFFFF"));
-        FrameLayout.LayoutParams followingViewParams = new FrameLayout.LayoutParams(followingCircleSize, followingCircleSize);
-        followingViewParams.setMargins(followerCircleSize/2, followerCircleSize/2, 0, 0);
-        followingViewParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
-        followingView.setLayoutParams(followingViewParams);
-        followLayout.addView(followingView);
-
-        TextView followerView = new TextView(this);
-        followerView.setBackgroundResource(R.drawable.circleblue);
-        followerView.setText(new Integer(user.getFollowerNumber()).toString());
-        followerView.setTextSize(followerTextSize);
-        followerView.setGravity(Gravity.CENTER);
-        followerView.setTextColor(Color.parseColor("#FFFFFF"));
-        FrameLayout.LayoutParams followerViewParams = new FrameLayout.LayoutParams(followerCircleSize, followerCircleSize);
-        followerViewParams.gravity = Gravity.TOP | Gravity.LEFT;
-        followerView.setLayoutParams(followerViewParams);
-        followLayout.addView(followerView);
 
         TextView followerText = new TextView(this);
         followerText.setText("팔로워");
@@ -248,8 +229,8 @@ public class UserProfileActivity extends Activity {
         documentListScroll.addView(documentListLayout);
 
 
-        for(int i=0 ; i< Marker.markersList.size() ; i++) {
-            DocumentMarker documentMarker = (DocumentMarker)Marker.markersList.get(i);
+        for(int i = 0; i< ARMarker.markersList.size() ; i++) {
+            DocumentARMarker documentMarker = (DocumentARMarker)ARMarker.markersList.get(i);
             Log.i("정보정보",i +":" + documentMarker.getUid());
             if(user.getUserId().equals(documentMarker.getUid())) {
                documentListLayout.addView(makeDocumentLayout(documentMarker));
@@ -258,7 +239,7 @@ public class UserProfileActivity extends Activity {
 
     }
 
-    public RelativeLayout makeDocumentLayout(DocumentMarker documentMarker) {
+    public RelativeLayout makeDocumentLayout(DocumentARMarker documentMarker) {
         RelativeLayout documentLayout = new RelativeLayout(this);
         documentLayout.setPadding(commentLayoutPadding, commentLayoutPadding, commentLayoutPadding, commentLayoutPadding);
         RelativeLayout.LayoutParams documentLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);

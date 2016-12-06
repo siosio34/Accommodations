@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import com.ar.siosi.Hackfair.mixare.data.DataHandler;
-import com.ar.siosi.Hackfair.mixare.data.DataSource.DATASOURCE;
 
 import android.app.ListActivity;
 import android.app.SearchManager;
@@ -51,7 +49,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ar.siosi.Hackfair.R;
+import com.youngje.tgwing.accommodations.R;
+
+import ARAccomdation.mixare.data.DataHandler;
+import ARAccomdation.mixare.data.DataSource;
+
 
 // 리스트 액티비티를 확장하는 리스트 뷰 클래스
 public class MixListView extends ListActivity {
@@ -78,8 +80,8 @@ public class MixListView extends ListActivity {
 	private static Context ctx;	// 컨텍스트
 	private static String searchQuery = "";	// 검색 쿼리
 	private static SpannableString underlinedTitle;	// 밑줄 쳐진 타이틀
-	public static List<Marker> searchResultMarkers;	// 검색 결과 마커 리스트
-	public static List<Marker> originalMarkerList;	// 오리지널 마커 리스트
+	public static List<ARMarker> searchResultARMarkers;	// 검색 결과 마커 리스트
+	public static List<ARMarker> originalARMarkerList;	// 오리지널 마커 리스트
 
 	// 데이터 소스 메뉴를 리턴
 	public Vector<String> getDataSourceMenu() {
@@ -118,8 +120,8 @@ public class MixListView extends ListActivity {
 				dataSourceChecked = new Vector<Boolean>();
 
 				//dataSourceChecked.add(mixContext.isDataSourceSelected(DATASOURCE.BUSSTOP));
-				dataSourceChecked.add(mixContext.isDataSourceSelected(DATASOURCE.CAFE));
-				dataSourceChecked.add(mixContext.isDataSourceSelected(DATASOURCE.DOCUMENT));
+				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.CAFE));
+				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.DOCUMENT));
 
 				// 리스트 어댑터를 생성하고 설정
 				adapter = new ListItemAdapter(this);
@@ -142,15 +144,15 @@ public class MixListView extends ListActivity {
 
 			/*모든 마커 항목들을 타이틀과 URL 벡터에 추가한다*/
 				for (int i = 0; i < jLayer.getMarkerCount(); i++) {
-					Marker ma = jLayer.getMarker(i);	// 데이터 핸들러로부터 마커를 읽는다
+					ARMarker ma = jLayer.getMarker(i);	// 데이터 핸들러로부터 마커를 읽는다
 					// 마커가 활성화 상태일 때
 					if(ma.isActive()) {
 
 							String tagName= "";
 
-							DATASOURCE tempDataSource = ma.getDatasource();
+							DataSource.DATASOURCE tempDataSource = ma.getDatasource();
 							Log.i("뿌우우우우우우",tempDataSource.toString());
-							if(tempDataSource == DATASOURCE.CAFE)
+							if(tempDataSource == DataSource.DATASOURCE.CAFE)
 								tagName ="[카페] ";
 
 							underlinedTitle = new SpannableString("  "+String.valueOf((int) ma.getDistance()) + "m"  + "   |   " + tagName + ma.getTitle());
@@ -216,10 +218,10 @@ public class MixListView extends ListActivity {
 		DataHandler jLayer = dataView.getDataHandler();
 		// 데이터 뷰가 얼어있지 않을 때, 마커 리스트를 읽어옴
 		if (!dataView.isFrozen()) {
-			originalMarkerList = jLayer.getMarkerList();
+			originalARMarkerList = jLayer.getMarkerList();
 		}
-		originalMarkerList = jLayer.getMarkerList();
-		searchResultMarkers = new ArrayList<Marker>();	// 검색 결과를 저장할 리스트
+		originalARMarkerList = jLayer.getMarkerList();
+		searchResultARMarkers = new ArrayList<ARMarker>();	// 검색 결과를 저장할 리스트
 		setSearchQuery(query);	// 검색 쿼리를 지정
 
 		selectedItemURL = new Vector<String>();	// 선택된 항목의 URL
@@ -227,11 +229,11 @@ public class MixListView extends ListActivity {
 
 		// 데이터 핸들러의 마커로부터 검색 결과가 일치하는 것을 찾는다  
 		for(int i = 0; i < jLayer.getMarkerCount();i++){
-			Marker ma = jLayer.getMarker(i);
+			ARMarker ma = jLayer.getMarker(i);
 
 			// 조건에 맞는 마커를 찾으면
 			if (ma.getTitle().toLowerCase().indexOf(searchQuery.toLowerCase()) != -1) {
-				searchResultMarkers.add(ma);	// 검색 결과에 추가
+				searchResultARMarkers.add(ma);	// 검색 결과에 추가
 				listViewMenu.add(new SpannableString(ma.getTitle()));	// 메뉴에도 추가
 				/*타이틀이 일치하는 웹사이트를 등록*/
 				if (ma.getURL() != null)
@@ -246,7 +248,7 @@ public class MixListView extends ListActivity {
 			Toast.makeText( this, getString(DataView.SEARCH_FAILED_NOTIFICATION), Toast.LENGTH_LONG ).show();
 		}
 		else {	// 등록된 항목이 있다면 
-			jLayer.setMarkerList(searchResultMarkers);	// 결과 리스트를 등록
+			jLayer.setMarkerList(searchResultARMarkers);	// 결과 리스트를 등록
 			dataView.setFrozen(true);	// 데이터뷰를 얼리고 리스트를 세팅 후 출력
 			setList(2);
 			finish();
@@ -285,7 +287,7 @@ public class MixListView extends ListActivity {
 			Toast.makeText( this, getString(DataView.NO_WEBINFO_AVAILABLE), Toast.LENGTH_LONG ).show();
 		else if("search".equals(selectedURL)){
 			dataView.setFrozen(false);	// 데11이터 뷰를 얼리고 핸들러로부터 오리지널 마커 리스트를 읽어옴
-			dataView.getDataHandler().setMarkerList(originalMarkerList);
+			dataView.getDataHandler().setMarkerList(originalARMarkerList);
 			setList(2);	// 리스트에 결과를 할당하고 액티비티를 호출한다
 			finish();
 			Intent intent1 = new Intent(this, MixListView.class);
@@ -350,10 +352,10 @@ public class MixListView extends ListActivity {
 		switch(position){
 
 			case 0:
-				mixContext.toogleDataSource(DATASOURCE.CAFE);
+				mixContext.toogleDataSource(DataSource.DATASOURCE.CAFE);
 				break;
 			case 1:
-				mixContext.toogleDataSource(DATASOURCE.DOCUMENT);
+				mixContext.toogleDataSource(DataSource.DATASOURCE.DOCUMENT);
 				break;
 
 

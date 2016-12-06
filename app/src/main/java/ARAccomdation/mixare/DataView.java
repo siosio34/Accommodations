@@ -28,21 +28,20 @@ import static android.view.KeyEvent.KEYCODE_DPAD_CENTER;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import com.ar.siosi.Hackfair.R;
-import com.ar.siosi.Hackfair.mixare.data.DataHandler;
-import com.ar.siosi.Hackfair.mixare.data.DataSource;
-import com.ar.siosi.Hackfair.mixare.data.DataSource.DATAFORMAT;
-import com.ar.siosi.Hackfair.mixare.data.DataSource.DATASOURCE;
-import com.ar.siosi.Hackfair.mixare.gui.PaintScreen;
-import com.ar.siosi.Hackfair.mixare.gui.RadarPoints;
-import com.ar.siosi.Hackfair.mixare.gui.ScreenLine;
-import com.ar.siosi.Hackfair.mixare.render.Camera;
 
 import android.graphics.Color;
 import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.youngje.tgwing.accommodations.R;
+
+import ARAccomdation.mixare.data.DataHandler;
+import ARAccomdation.mixare.data.DataSource;
+import ARAccomdation.mixare.gui.PaintScreen;
+import ARAccomdation.mixare.gui.RadarPoints;
+import ARAccomdation.mixare.gui.ScreenLine;
+import ARAccomdation.mixare.render.Camera;
 
 
 /**
@@ -239,7 +238,7 @@ public class DataView {
     }
 
     // 데이터 요청
-    public void requestData(String url, DATAFORMAT dataformat, DATASOURCE datasource) {
+    public void requestData(String url, DataSource.DATAFORMAT dataformat, DataSource.DATASOURCE datasource) {
         DownloadRequest request = new DownloadRequest();    // 다운로드 요청 객체
         // 데이터 포맷과 소스, url 등을 할당한다
         request.format = dataformat;
@@ -319,7 +318,7 @@ public class DataView {
 
                     // 데이터 핸들러에 마커를 추가 한다
                     Log.i(MixView.TAG, "Adding Markers");
-                    dataHandler.addMarkers(dRes.getMarkers());
+                    dataHandler.addMarkers(dRes.getARMarkers());
                     dataHandler.onLocationChanged(curFix);    // 위치를 재설정
 
                     // 특정 데이터 소스로부터 다운로드 받았음을 알림
@@ -339,7 +338,7 @@ public class DataView {
         // 각각의 마커에 적용
         Log.i("마커들 갯수",Integer.toString(dataHandler.getMarkerCount()));
         for (int i = dataHandler.getMarkerCount() - 1; i >= 0; i--) {
-            Marker ma = dataHandler.getMarker(i);
+            ARMarker ma = dataHandler.getMarker(i);
 
             //  && (ma.getDistance() / 1000f < radius) 아래거에넣어야됨
             if (ma.isActive()) {
@@ -347,7 +346,7 @@ public class DataView {
                 // 대신, 위치가 바뀌었을 경우와 새로운 마커를 다운로드 한 이후에
                 // 각 마커의 위치를 재계산 하도록 한다
 
-                // Marker navigationMarker = new NavigationMarker(ma.getTitle(), ma.getLatitude(), ma.getLongitude(), ma.getAltitude(), ma.getURL(), ma.getDatasource());
+                // ARMarker navigationMarker = new NavigationMarker(ma.getTitle(), ma.getLatitude(), ma.getLongitude(), ma.getAltitude(), ma.getURL(), ma.getDatasource());
 
                 //if (!frozen)
                 //	ma.update(curFix);
@@ -453,10 +452,10 @@ public class DataView {
 
             // 일치하는 첫 번째 마커가 이벤트를 작동할 것이다
             for (int i = 0; i < dataHandler.getMarkerCount() && !evtHandled; i++) {
-                Marker pm = dataHandler.getMarker(i);
+                ARMarker pm = dataHandler.getMarker(i);
 
                 // TODO: 2016. 9. 9. 마커에 대한 클리이벤트 처리한거 화면에 버튼띄울거면 이런식으로 이벤트처리를 해줘야될듯 
-                // 클릭 이벤트 처리를 시도한다. Marker, MixState 를 참고
+                // 클릭 이벤트 처리를 시도한다. ARMarker, MixState 를 참고
                 evtHandled = pm.fClick(evt.x, evt.y, mixContext, state);
 
             }

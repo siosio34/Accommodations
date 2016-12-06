@@ -22,9 +22,7 @@ package ARAccomdation.mixare.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ar.siosi.Hackfair.mixare.Marker;
-import com.ar.siosi.Hackfair.mixare.MixView;
-import com.ar.siosi.Hackfair.mixare.reality.PhysicalPlace;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -32,6 +30,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import android.util.Log;
+
+import ARAccomdation.mixare.ARMarker;
+import ARAccomdation.mixare.MixView;
+import ARAccomdation.mixare.reality.PhysicalPlace;
 
 /**
  * @author hannes
@@ -41,10 +43,10 @@ import android.util.Log;
 public class XMLHandler extends DataHandler {
 
 	// OSM(OpenStreetMap) 처리
-	private List<Marker> processOSM(Element root) {
+	private List<ARMarker> processOSM(Element root) {
 
 		// 마커들과 노드들
-    	List<Marker> markers = new ArrayList<Marker>();
+    	List<ARMarker> markers = new ArrayList<ARMarker>();
         NodeList nodes = root.getElementsByTagName("node");
         
         // 각 노드들에 대한 처리
@@ -105,7 +107,7 @@ public class XMLHandler extends DataHandler {
 	}
 	
 	// 도큐먼트를 읽음. OSM데이터를 읽기 위함
-	public List<Marker> load(Document doc) {
+	public List<ARMarker> load(Document doc) {
         Element root = doc.getDocumentElement();
         
         // If the root tag is called "osm" we got an 

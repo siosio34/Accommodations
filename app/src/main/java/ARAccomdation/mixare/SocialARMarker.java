@@ -19,22 +19,22 @@
 
 package ARAccomdation.mixare;
 
-import com.ar.siosi.Hackfair.mixare.data.DataSource;
-import com.ar.siosi.Hackfair.mixare.data.DataSource.DATASOURCE;
-import com.ar.siosi.Hackfair.mixare.gui.PaintScreen;
 
 import android.graphics.Bitmap;
 import android.location.Location;
 
+import ARAccomdation.mixare.data.DataSource;
+import ARAccomdation.mixare.gui.PaintScreen;
+
 
 // 소셜 마커 클래스. 마커에서 확장(상속)
-public class SocialMarker extends Marker {
+public class SocialARMarker extends ARMarker {
 	
 	public static final int MAX_OBJECTS=20;	// 최대 객체 수
 	public String getFlag;
 	// 생성자. 타이틀과 위도, 경도, 고도, 그리고 URL과 데이터 소스를 인자로 받는다
-	public SocialMarker(String title, double latitude, double longitude,
-			double altitude, String URL, DATASOURCE datasource,String flag) {
+	public SocialARMarker(String title, double latitude, double longitude,
+						  double altitude, String URL, DataSource.DATASOURCE datasource, String flag) {
 		super(title, latitude, longitude, altitude, URL, datasource);
 		getFlag = flag;
 	}

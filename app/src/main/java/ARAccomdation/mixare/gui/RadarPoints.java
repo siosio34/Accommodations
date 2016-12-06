@@ -18,12 +18,14 @@
  */
 package ARAccomdation.mixare.gui;
 
-import com.ar.siosi.Hackfair.mixare.DataView;
-import com.ar.siosi.Hackfair.mixare.Marker;
-import com.ar.siosi.Hackfair.mixare.data.DataHandler;
-import com.ar.siosi.Hackfair.mixare.data.DataSource;
 
 import android.graphics.Color;
+
+import ARAccomdation.mixare.ARMarker;
+import ARAccomdation.mixare.DataView;
+import ARAccomdation.mixare.data.DataHandler;
+import ARAccomdation.mixare.data.DataHandler;
+import ARAccomdation.mixare.data.DataSource;
 
 /** Takes care of the small radar in the top left corner and of its points
  * @author daniele
@@ -57,7 +59,7 @@ public class RadarPoints implements ScreenObj {
 		// 마커들을 삽입
 		for (int i = 0; i < jLayer.getMarkerCount(); i++) {
 			// 마커를 하나씩 받아온 후,
-			Marker pm = jLayer.getMarker(i);
+			ARMarker pm = jLayer.getMarker(i);
 			// x, y 값을 설정한다. 확대배율에 반비례한다.
 			float x = pm.getLocationVector().x / scale;
 			float y = pm.getLocationVector().z / scale;

@@ -20,23 +20,22 @@ package ARAccomdation.mixare;
 
 import android.location.Location;
 
-import com.ar.siosi.Hackfair.mixare.data.DataSource;
-import com.ar.siosi.Hackfair.mixare.gui.PaintScreen;
-import com.ar.siosi.Hackfair.mixare.gui.ScreenLine;
-import com.ar.siosi.Hackfair.mixare.gui.ScreenObj;
-import com.ar.siosi.Hackfair.mixare.gui.TextObj;
-import com.ar.siosi.Hackfair.mixare.reality.PhysicalPlace;
-import com.ar.siosi.Hackfair.mixare.render.Camera;
-import com.ar.siosi.Hackfair.mixare.render.MixVector;
 
-import java.io.Serializable;
-import java.net.URLDecoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import ARAccomdation.mixare.data.DataSource;
+import ARAccomdation.mixare.gui.PaintScreen;
+import ARAccomdation.mixare.gui.ScreenLine;
+import ARAccomdation.mixare.gui.ScreenObj;
+import ARAccomdation.mixare.gui.TextObj;
+import ARAccomdation.mixare.reality.PhysicalPlace;
+import ARAccomdation.mixare.render.Camera;
+import ARAccomdation.mixare.render.MixVector;
+
 // 화면에 찍힐 마커를 담당할 클래스. Comparable 구현
-abstract public class Marker implements Comparable<Marker> {
+abstract public class ARMarker implements Comparable<ARMarker> {
 
 	private String ID;    // ID값
 	protected String title;    // 타이틀
@@ -68,13 +67,13 @@ abstract public class Marker implements Comparable<Marker> {
 	protected Label txtLab = new Label();    // Label 클래스는 하단에서 정의한다
 	protected TextObj textBlock;
 
-	public static List<Marker> markersList= new ArrayList<>();
+	public static List<ARMarker> markersList= new ArrayList<>();
 
 	//TODO : NAVER MARKER용 설명
 	private String description = "";
 
 	// 생성자. 타이틀과 위도, 경고, 고도값, 링크될 주소와 데이터 소스를 인자로 받는다 
-	public Marker(String title, double latitude, double longitude, double altitude, String link, DataSource.DATASOURCE datasource) {
+	public ARMarker(String title, double latitude, double longitude, double altitude, String link, DataSource.DATASOURCE datasource) {
 		super();
 
 		this.active = true;    // 일단 비활성화 상태로
@@ -89,9 +88,10 @@ abstract public class Marker implements Comparable<Marker> {
 		this.ID = datasource + "##" + title; //mGeoLoc.toString();
 	}
 
-	public Marker() {
+	public ARMarker() {
 
 	}
+
 
 	// 타이틀을 리턴
 	public String getTitle() {
@@ -361,10 +361,10 @@ abstract public class Marker implements Comparable<Marker> {
 
 	// 두 마커를 비교한다. 정확하게는 두 마커의 거리를 비교하여 동일한지 판단한다
 	@Override
-	public int compareTo(Marker another) {
+	public int compareTo(ARMarker another) {
 
-		Marker leftPm = this;
-		Marker rightPm = another;
+		ARMarker leftPm = this;
+		ARMarker rightPm = another;
 
 		return Double.compare(leftPm.getDistance(), rightPm.getDistance());
 
@@ -373,7 +373,7 @@ abstract public class Marker implements Comparable<Marker> {
 	// 두 마커가 동일한지 ID로 판단한다
 	@Override
 	public boolean equals(Object marker) {
-		return this.ID.equals(((Marker) marker).getID());
+		return this.ID.equals(((ARMarker) marker).getID());
 	}
 
 	// 활성화 상태를 리턴

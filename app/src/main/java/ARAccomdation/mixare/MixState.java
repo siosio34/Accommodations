@@ -21,13 +21,13 @@ package ARAccomdation.mixare;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.ar.siosi.Hackfair.ReadDocumentActivity;
-import com.ar.siosi.Hackfair.mixare.reality.PhysicalPlace;
-import com.ar.siosi.Hackfair.mixare.render.Matrix;
-import com.ar.siosi.Hackfair.mixare.render.MixVector;
+import ARAccomdation.ReadDocumentActivity;
+import ARAccomdation.mixare.reality.PhysicalPlace;
+import ARAccomdation.mixare.render.Matrix;
+import ARAccomdation.mixare.render.MixVector;
+
 
 // 현재의 상태에 관한 클래스
 public class MixState {
@@ -57,14 +57,14 @@ public class MixState {
     }
 
     // 이벤트 처리
-    public boolean handleEvent2(MixContext ctx, DocumentMarker documentMarker) {
+    public boolean handleEvent2(MixContext ctx, DocumentARMarker documentMarker) {
 
         // TODO: 2016. 9. 9. 여기에 진행할 이벤트 만들면 될듯함 현재는 다이얼로그 클릭이벤트 받는거 확인하기 위해서 다이얼로그 그대로 띄울고 나중에 삭제 예정
 
 
         boolean evtHandled= false;
         Intent readDocumentIntent = new Intent(ctx, ReadDocumentActivity.class);
-        DocumentMarker.selectedMarker = documentMarker;
+        DocumentARMarker.selectedMarker = documentMarker;
         ctx.startActivity(readDocumentIntent);
 
         evtHandled = true;

@@ -24,12 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ar.siosi.Hackfair.Comment;
-import com.ar.siosi.Hackfair.mixare.DocumentMarker;
-import com.ar.siosi.Hackfair.mixare.Marker;
-import com.ar.siosi.Hackfair.mixare.MixView;
-import com.ar.siosi.Hackfair.mixare.SocialMarker;
-import com.ar.siosi.Hackfair.mixare.data.DataSource.DATAFORMAT;
+
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,18 +32,24 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import ARAccomdation.Comment;
+import ARAccomdation.mixare.ARMarker;
+import ARAccomdation.mixare.DocumentARMarker;
+import ARAccomdation.mixare.MixView;
+import ARAccomdation.mixare.SocialARMarker;
+
 // JSON 파일을 다루는 클래스
 public class Json extends DataHandler {
 
     public static final int MAX_JSON_OBJECTS = 100;    // JSON 객체의 최대 수
 
     // 각종 데이터를 로드
-    public List<Marker> load(JSONObject root, DATAFORMAT dataformat) {
+    public List<ARMarker> load(JSONObject root, DataSource.DATAFORMAT dataformat) {
         // 데이터를 읽는데 사용할 JSON 객체와 데이터행렬, 마커들
         JSONObject jo = null;
         JSONArray dataArray = null;
-        List<Marker> markers = new ArrayList<Marker>();
-        Marker.markersList.clear();
+        List<ARMarker> markers = new ArrayList<ARMarker>();
+        ARMarker.markersList.clear();
 
         try {
             if (root.has("result") && root.getJSONObject("result").has("site")) // d연결 가능한 링크를 가졌을시
@@ -85,7 +86,7 @@ public class Json extends DataHandler {
                     jo = dataArray.getJSONObject(i);
                     Log.i("JSON값", jo.toString());
 
-                    Marker ma = null;
+                    ARMarker ma = null;
                     // 데이터 포맷에 따른 처리
                     switch (dataformat) {
 
@@ -103,7 +104,7 @@ public class Json extends DataHandler {
                     // 마커 추가
                     if (ma != null) {
                         markers.add(ma);
-                        Marker.markersList.add(ma);
+                        ARMarker.markersList.add(ma);
                     }
                 }
             }
@@ -115,9 +116,9 @@ public class Json extends DataHandler {
     }
 
 
-    private Marker processDocumentObject(JSONObject jo) throws JSONException {
+    private ARMarker processDocumentObject(JSONObject jo) throws JSONException {
 
-        Marker ma = null;
+        ARMarker ma = null;
         int contentType = jo.getInt("contentType");
         DataSource.DATASOURCE thisDatasource = DataSource.DATASOURCE.DOCUMENT;
 
@@ -161,7 +162,7 @@ public class Json extends DataHandler {
         // contenturl 걍 글인 경우
         // 댓글이 있는 경우 없는경우
 
-        ma = new DocumentMarker(jo.getString("content"),jo.getDouble("lat"),jo.getDouble("lon"),0,contentUrl,thisDatasource,jo.getInt("documentId"),jo.getString("userId"),contentType,
+        ma = new DocumentARMarker(jo.getString("content"),jo.getDouble("lat"),jo.getDouble("lon"),0,contentUrl,thisDatasource,jo.getInt("documentId"),jo.getString("userId"),contentType,
                 jo.getInt("popularity"),jo.getInt("responseWithme"),jo.getInt("responseSeeyou"),jo.getInt("responseNotgood"),jo.getInt("commentNum"),jo.getInt("readNum"),createdate,
                 editDdate,comments);
 
@@ -175,8 +176,8 @@ public class Json extends DataHandler {
     }
 
 
-    public Marker processCAFEJSONObject(JSONObject jo)  throws JSONException {
-       Marker ma = null;
+    public ARMarker processCAFEJSONObject(JSONObject jo)  throws JSONException {
+        ARMarker ma = null;
 
        // 형식에 맞는지 검사. 타이틀과 위도, 경도, 고도 태그를 찾는다
        if (jo.has("x") && jo.has("y") && jo.has("name")) {
@@ -187,7 +188,8 @@ public class Json extends DataHandler {
 
            // 할당된 값들로 마커 생성, // 일단은 경도, 위도, 이름만.
            // 맨뒤에값은 플래그 일단 Flag 0 는 카페정보
-           ma = new SocialMarker(
+           // link 이거 url
+           ma = new SocialARMarker(
                    jo.getString("name"),
                    jo.getDouble("y"),
                    jo.getDouble("x"),

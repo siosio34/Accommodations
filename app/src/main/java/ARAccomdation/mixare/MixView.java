@@ -57,28 +57,25 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.ar.siosi.Hackfair.DaumMapActivity;
-import com.ar.siosi.Hackfair.R;
-import com.ar.siosi.Hackfair.UserProfileActivity;
-import com.ar.siosi.Hackfair.WriteDocumentActivity;
-import com.ar.siosi.Hackfair.mixare.data.DataHandler;
-import com.ar.siosi.Hackfair.mixare.data.DataSource;
-import com.ar.siosi.Hackfair.mixare.gui.PaintScreen;
-import com.ar.siosi.Hackfair.mixare.reality.PhysicalPlace;
-import com.ar.siosi.Hackfair.mixare.render.Matrix;
+import com.youngje.tgwing.accommodations.R;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
+
+import ARAccomdation.UserProfileActivity;
+import ARAccomdation.WriteDocumentActivity;
+import ARAccomdation.mixare.data.DataHandler;
+import ARAccomdation.mixare.data.DataSource;
+import ARAccomdation.mixare.gui.PaintScreen;
+import ARAccomdation.mixare.render.Matrix;
 
 import static android.hardware.SensorManager.SENSOR_DELAY_GAME;
 
@@ -326,7 +323,7 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
                 @Override
                 public void onClick(View v) {
 
-                    Intent myProfileIntent = new Intent(MixView.this,UserProfileActivity.class);
+                    Intent myProfileIntent = new Intent(MixView.this, UserProfileActivity.class);
                     startActivityForResult(myProfileIntent,50);
 
                 }
@@ -339,7 +336,7 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
 
                     Location currentGPS = mixContext.getCurrentGPSInfo();
 
-                    Intent myWriteDocument = new Intent(MixView.this,WriteDocumentActivity.class);
+                    Intent myWriteDocument = new Intent(MixView.this, WriteDocumentActivity.class);
                     myWriteDocument.putExtra("lat",currentGPS.getLatitude());
                     myWriteDocument.putExtra("lon",currentGPS.getLongitude());
                     startActivityForResult(myWriteDocument,52);
@@ -356,17 +353,6 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
                 }
             });
 
-            Button mapBtn = (Button)findViewById(R.id.mapBtn);
-            mapBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Intent myProfileIntent = new Intent(MixView.this,DaumMapActivity.class);
-                    startActivityForResult(myProfileIntent,54);
-                    Log.i("클릭","맵버튼 클릭");
-
-                }
-            });
 
             // 초기 세팅된 상태가 아니라면
             if (!isInited) {
@@ -436,20 +422,20 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
 
         // 데이터 뷰가 얼어있지 않다면 리스트뷰와 맵으로부터 마커 리스트를 읽는다
         if(!dataView.isFrozen()){
-            MixListView.originalMarkerList = jLayer.getMarkerList();
+            MixListView.originalARMarkerList = jLayer.getMarkerList();
 
         }
 
 
         // 검색 결과를 저장 할 리스트
-        ArrayList<Marker> searchResults = new ArrayList<Marker>();
+        ArrayList<ARMarker> searchResults = new ArrayList<ARMarker>();
 
 
         // 검색된 항목이 1개 이상 있을 경우
         if (jLayer.getMarkerCount() > 0) {
             // 검색된 항목들을 결과 리스트에 추가
             for(int i = 0; i < jLayer.getMarkerCount(); i++) {
-                Marker ma = jLayer.getMarker(i);
+                ARMarker ma = jLayer.getMarker(i);
                 if(ma.getTitle().toLowerCase().indexOf(query.toLowerCase()) != -1){
                     searchResults.add(ma);
 					/*타이틀에 상응하는 웹사이트들*/

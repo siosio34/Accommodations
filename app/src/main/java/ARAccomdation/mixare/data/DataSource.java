@@ -24,7 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 
-import com.ar.siosi.Hackfair.R;
+import com.youngje.tgwing.accommodations.R;
 
 
 // 데이터 소스를 실질적으로 다루는 클래스
@@ -61,7 +61,7 @@ public class DataSource {
     public static void createIcons(Resources res) {
 
         cafeIcon = BitmapFactory.decodeResource(res, R.drawable.icon_cafe);
-        documentIcon = BitmapFactory.decodeResource(res,R.drawable.icon_conveni);
+        documentIcon = BitmapFactory.decodeResource(res, R.drawable.icon_conveni);
         imageIcon = BitmapFactory.decodeResource(res,R.drawable.icon_conveni);
         videoIcon = BitmapFactory.decodeResource(res,R.drawable.icon_conveni);
         // TODO: 2016. 9. 20. 이거 채워넣어야됨

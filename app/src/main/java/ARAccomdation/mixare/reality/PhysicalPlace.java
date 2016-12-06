@@ -18,11 +18,13 @@
  */
 package ARAccomdation.mixare.reality;
 
-import com.ar.siosi.Hackfair.mixare.render.MixVector;
+
 
 import android.location.Location;
 
 import java.io.Serializable;
+
+import ARAccomdation.mixare.render.MixVector;
 
 // 물리적 공간 클래스
 public class PhysicalPlace implements Serializable{
