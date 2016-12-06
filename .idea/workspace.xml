@@ -11,44 +11,166 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26552e98-ae5b-408f-aee8-4db9e328fb1f" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/DaumMapActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/GoogleSignInActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/User.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/Person.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/DocumentMarker.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/DocumentARMarker.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/Marker.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/ARMarker.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/SocialMarker.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/SocialARMarker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/mockable-android-24.jar" afterPath="$PROJECT_DIR$/build/generated/mockable-android-24.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v21/ic_power_settings_new_black_24dp.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v21/ic_power_settings_new_black_24dp.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v21/ic_search_black_24dp.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v21/ic_search_black_24dp.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v21/ic_star_rate_black_18dp.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v21/ic_star_rate_black_18dp.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v21/star_empty.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v21/star_empty.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v21/star_full.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v21/star_full.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v21/star_progress.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v21/star_progress.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/custom_callout_balloon.9.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/custom_callout_balloon.9.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/custom_marker_red.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/custom_marker_red.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/custom_marker_star.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/custom_marker_star.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/face1.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/face1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_launcher.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/map_pin_blue.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/map_pin_blue.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/map_pin_red.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/map_pin_red.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/map_pin_yellow.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/map_pin_yellow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/addbutton.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/addbutton.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/america.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/america.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/applogo.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/applogo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/back.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/back.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/backbutton.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/backbutton.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/background.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/belgium.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/belgium.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/brazil.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/brazil.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/busicon.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/busicon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/buzz.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/buzz.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/cancel_navi.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cancel_navi.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/china.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/china.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/coffee2.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/coffee2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/contacticon.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/contacticon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/custom_callout_balloon_left_side_button.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/custom_callout_balloon_left_side_button.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/custom_callout_balloon_right_side_button.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/custom_callout_balloon_right_side_button.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/custom_map_present.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/custom_map_present.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/custom_map_present_direction.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/custom_map_present_direction.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/custom_map_present_tracking.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/custom_map_present_tracking.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/custom_poi_marker.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/custom_poi_marker.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/custom_poi_marker_end.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/custom_poi_marker_end.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/custom_poi_marker_selected.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/custom_poi_marker_selected.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/custom_poi_marker_start.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/custom_poi_marker_start.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/downarrow.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/downarrow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/end.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/end.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/exit.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/exit.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/firebase_lockup_400.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/firebase_lockup_400.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/france.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/france.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/germany.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/germany.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/googlelogo.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/googlelogo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/greece.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/greece.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_background_splash.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_background_splash.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_add_review.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_add_review.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_button_back.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_button_back.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_button_save.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_button_save.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_camcoder.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_camcoder.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_camera.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_camera.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_flag_china.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_flag_china.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_flag_japan.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_flag_japan.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_flag_korea.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_flag_korea.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_flag_us.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_flag_us.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_gallery.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_gallery.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_google.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_google.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_like_checked.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_like_checked.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_menu.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_menu.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_more.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_more.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_route.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_route.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_stat_ic_notification.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_stat_ic_notification.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_addmovie.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_addmovie.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_addphoto.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_addphoto.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_addpin_gry.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_addpin_gry.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_addpin_wht.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_addpin_wht.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_bank.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_bank.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_cafe.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_cafe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_comment.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_comment.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_comment2.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_comment2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_conveni.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_conveni.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_datasource.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_datasource.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_edit.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_edit.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_emotion_bewithme.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_emotion_bewithme.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_emotion_bewithme2.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_emotion_bewithme2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_emotion_notnice.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_emotion_notnice.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_emotion_notnice2.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_emotion_notnice2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_emotion_seeya.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_emotion_seeya.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_emotion_seeya2.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_emotion_seeya2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_hospital.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_hospital.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_hotel.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_hotel.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_list_gry.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_list_gry.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_map.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_map.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_map_gry.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_map_gry.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_metro.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_metro.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_movie.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_movie.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_store.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_store.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_white.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_white.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon_white1.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/icon_white1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/india.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/india.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/indonesia.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/indonesia.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/italy.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/italy.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/japan.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/japan.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/loc_icon.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/loc_icon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/logo.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/logo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/logo_square.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/logo_square.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/makeroom.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/makeroom.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/menu.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/menu.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/message_icon.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/message_icon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/myinformaion.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/myinformaion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/netherlands.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/netherlands.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/number.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/number.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/participate_icon.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/participate_icon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/participate_icon2.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/participate_icon2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/poland.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/poland.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/profile.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/profile.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/restraunticon.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/restraunticon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/russia.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/russia.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/saudi_arabia.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/saudi_arabia.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_artdesign.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_artdesign.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_default.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_default.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_dorm.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_dorm.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_dorm2.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_dorm2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_elecinfo.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_elecinfo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_engine.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_engine.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_forlang.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_forlang.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_gate.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_gate.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_library.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_library.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_lifesci.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_lifesci.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_manageint.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_manageint.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_multi.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_multi.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_panpacific.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_panpacific.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_physical.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_physical.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_student.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_student.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/school_village.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/school_village.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/selected_image.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/selected_image.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/sns_0.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sns_0.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/sns_1.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sns_1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/sns_2.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sns_2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/sns_add.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sns_add.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/south_korea.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/south_korea.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/spain.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/spain.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/sweden.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sweden.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/thailand.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/thailand.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/turkey.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/turkey.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/twitter.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/twitter.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/united_states.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/united_states.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/unselected_image.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/unselected_image.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/uparrow.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/uparrow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/vietnam.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/vietnam.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_bank.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_bank.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_cafe.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_cafe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_cvs.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_cvs.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_hotel.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_hotel.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_landmark.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_landmark.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_pharmacy.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_pharmacy.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_restaurant.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_restaurant.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_restroom.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_restroom.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_train.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_train.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_wifizone.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_menu_wifizone.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_mic.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_mic.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_more.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_icon_more.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_people_black_48dp.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_people_black_48dp.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/BaseActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/BaseActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/Document.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/Document.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/DocumentListActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/DocumentListActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/ReadDocumentActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/ReadDocumentActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/UserProfileActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/UserProfileActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/WriteDocumentActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/WriteDocumentActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/DataView.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/DataView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/DownloadManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/DownloadManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/MixContext.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/MixContext.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/MixListView.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/MixListView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/MixState.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/MixState.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/MixView.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/MixView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/MixareActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/MixareActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/data/DataHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/data/DataHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/data/DataSource.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/data/DataSource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/data/Json.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/data/Json.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/data/XMLHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/data/XMLHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/gui/RadarPoints.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/gui/RadarPoints.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/reality/PhysicalPlace.java" afterPath="$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/reality/PhysicalPlace.java" />
     </list>
     <ignored path="Accommodations.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -153,8 +275,8 @@
       <file leaf-file-name="MixListView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/MixListView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="42" column="35" selection-start-line="42" selection-start-column="35" selection-end-line="42" selection-end-column="35" />
+            <state relative-caret-position="405">
+              <caret line="44" column="18" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -2277,6 +2399,56 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Accommodations" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawable" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Accommodations" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Accommodations" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="search" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -2306,7 +2478,7 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ARAccomdation" />
+              <option name="myItemId" value="accommodations" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2326,62 +2498,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="ARAccomdation" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mixare" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Accommodations" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ARAccomdation" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mixare" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DownloadManager.java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Accommodations" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ARAccomdation" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mixare" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2791,7 +2907,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="986" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2811,7 +2927,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32988507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32988507" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40344828" sideWeight="0.4924812" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40344828" sideWeight="0.4924812" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1971917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -3274,8 +3390,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ARAccomdation/mixare/MixListView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="42" column="35" selection-start-line="42" selection-start-column="35" selection-end-line="42" selection-end-column="35" />
+        <state relative-caret-position="405">
+          <caret line="44" column="18" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
           <folding />
         </state>
       </provider>
