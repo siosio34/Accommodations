@@ -1,5 +1,6 @@
 package com.youngje.tgwing.accommodations.Activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -140,6 +141,8 @@ public class UserInformationActivity extends AppCompatActivity {
                         Country item = countryAdapter.getItem(which);
                         Toast.makeText(UserInformationActivity.this, "국가코드: "+item.getCodeOfCountry()+"\n국가이름: "+item.getNameOfCountry(), Toast.LENGTH_SHORT).show();
                         languageChoice = item.getCodeOfCountry();
+                        currrentUser.setCountry(languageChoice);
+
                         //국기그림: item.getImageOfCountry()
                     }
                 });
@@ -164,11 +167,12 @@ public class UserInformationActivity extends AppCompatActivity {
                 DB에 넘겨야 할 데이터 :
                 languageChoice, userMessage
                  */
+
                 currrentUser.setUserName(userName.getText().toString());
-                currrentUser.setCountry(languageChoice);
                 currrentUser.setUserDescription(userMessage.getText().toString());
                 User.setMyInstance(currrentUser);
                 databaseReference.child("users").child(User.getMyInstance().getUserId()).setValue(currrentUser);
+
                 finish();
             }
         });

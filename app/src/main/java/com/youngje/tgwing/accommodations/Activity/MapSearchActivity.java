@@ -59,6 +59,9 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+import com.youngje.tgwing.accommodations.ARAccomdation.*;
+import com.youngje.tgwing.accommodations.ARAccomdation.MainActivity;
+import com.youngje.tgwing.accommodations.ARAccomdation.mixare.MixView;
 import com.youngje.tgwing.accommodations.Chat;
 import com.youngje.tgwing.accommodations.ChatManager;
 import com.youngje.tgwing.accommodations.Chatroom;
@@ -168,7 +171,6 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                 }
                 else {
                     changeCommunityToMapSearch(true);
-
                 }
             }
         });
@@ -180,9 +182,9 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         mMapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());
 
         addSearch();
+
+
         ///////////////////////////////////drawer 부분입니다.
-
-
 
         ImageView communityBtn = (ImageView)findViewById(R.id.activity_main_btn_community);
         communityBtn.setOnClickListener(new View.OnClickListener() {
@@ -196,25 +198,18 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
             }
         });
+
+        ImageView arImageBtn = (ImageView)findViewById(R.id.ar_button);
+        arImageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent arIntent = new Intent(MapSearchActivity.this, MixView.class);
+                startActivity(arIntent);
+
+            }
+        });
+
         initDrawer();
-
-      Picasso.with(this).load(curUser.getImageUri()).into(new Target() {
-
-          @Override
-          public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-              userImageView.setImageDrawable(new RoundedAvatarDrawable(bitmap, bitmap.getWidth(), bitmap.getWidth()));
-          }
-
-          @Override
-          public void onBitmapFailed(Drawable errorDrawable) {
-
-          }
-
-          @Override
-          public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-          }
-      });
 
 
     }
@@ -233,9 +228,31 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
         mNavView.setNavigationItemSelectedListener(this);
         mNavHeader = (RelativeLayout) mNavView.getHeaderView(0);
+
+        // 유저 이미지
         userImageView = (ImageView) mNavHeader.findViewById(R.id.userImageView);
+        Picasso.with(this).load(curUser.getImageUri()).into(new Target() {
+
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                userImageView.setImageDrawable(new RoundedAvatarDrawable(bitmap, bitmap.getWidth(), bitmap.getWidth()));
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
+        // 유저 이름
         userNameTextView = (TextView)mNavHeader.findViewById(R.id.userName);
         userNameTextView.setText(curUser.getUserName());
+
+        // 유저의 국적
         userLocaleText = (TextView) mNavHeader.findViewById(R.id.userLocale);
         userLocaleText.setText("국적 : " + curUser.getCountry());
 
@@ -252,6 +269,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
     void onDrawer(View view){
         mDrawer.openDrawer(mNavView);
+        initDrawer();
         hideSoftKeyboard();
     }
     public void addSearch(){
@@ -1398,25 +1416,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                 else
                     chatroomWriterName.setText(chatroom.getChatroomWriterName());
 
-                //set chatroom writer nationality
-                ImageView chatroomNationality = (ImageView)chatroomView.findViewById(R.id.community_main_chatroom_nationality);
-                //chatroom.getChatroomWriterNationality()
 
-                if(chatroom.getChatroomWriterNationality() == null)
-                    chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_us);
-                else if(chatroom.getChatroomWriterNationality().equals("en"))
-                    chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_us);
-                else if(chatroom.getChatroomWriterNationality().equals("ja"))
-                    chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_japan);
-                else if(chatroom.getChatroomWriterNationality().equals("zh-CN"))
-                    chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_china);
-                else if(chatroom.getChatroomWriterNationality().equals("ko"))
-                    chatroomNationality.setBackgroundResource(R.drawable.ic_icon_flag_korea);
-
-                //Picasso.with(CommunityMainActivity.this).load("googlelogo.png").into(chatroomNationality);
-
-
-                chatroomNationality.setBackgroundResource(R.drawable.america);
 
                 //set chatroom number
                 TextView chatroomNumber = (TextView)chatroomView.findViewById(R.id.community_main_chatroom_number);

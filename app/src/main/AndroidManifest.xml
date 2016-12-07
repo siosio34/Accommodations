@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:allowBackup="true"
@@ -20,7 +21,7 @@
 
         <!-- mixare -->
         <activity
-            android:name="com.youngje.tgwing.accommodations.ARSearch.mixare.MixListView"
+            android:name="com.youngje.tgwing.accommodations.ARAccomdation.mixare.MixListView"
             android:launchMode="singleTop"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -32,7 +33,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name="com.youngje.tgwing.accommodations.ARSearch.mixare.MixView"
+            android:name="com.youngje.tgwing.accommodations.ARAccomdation.mixare.MixView"
             android:launchMode="singleTop"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -62,18 +63,26 @@
                 android:name="android.app.default_searchable"
                 android:value=".MixView" />
         </activity>
-        <activity android:name="com.youngje.tgwing.accommodations.ARSearch.mixare.MixareActivity" />
+        <activity android:name="com.youngje.tgwing.accommodations.ARAccomdation.mixare.MixareActivity" />
 
         <activity
-            android:name="com.youngje.tgwing.accommodations.ARSearch.WriteDocumentActivity"
+            android:name="com.youngje.tgwing.accommodations.ARAccomdation.WriteDocumentActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
-            android:name="com.youngje.tgwing.accommodations.ARSearch.ReadDocumentActivity"
+            android:name="com.youngje.tgwing.accommodations.ARAccomdation.ReadDocumentActivity"
             android:screenOrientation="landscape"
             android:theme="@style/MyDialogTheme" />
-        <activity android:name="com.youngje.tgwing.accommodations.ARSearch.DocumentListActivity"></activity>
+        <activity android:name="com.youngje.tgwing.accommodations.ARAccomdation.DocumentListActivity"></activity>
 
+
+        <activity
+            android:name="com.youngje.tgwing.accommodations.ARAccomdation.UserProfileActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name="com.youngje.tgwing.accommodations.ARAccomdation.MainActivity"
+            android:screenOrientation="landscape" />
 
         <!-- accomadations Activity -->
 

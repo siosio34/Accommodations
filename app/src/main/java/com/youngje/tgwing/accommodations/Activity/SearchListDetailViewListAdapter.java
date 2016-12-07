@@ -1,12 +1,8 @@
 package com.youngje.tgwing.accommodations.Activity;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,31 +12,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.sprylab.android.widget.TextureVideoView;
 import com.squareup.picasso.Picasso;
-import com.youngje.tgwing.accommodations.Data.DataFormat;
-import com.youngje.tgwing.accommodations.Data.NavigationDataProcessor;
 import com.youngje.tgwing.accommodations.Marker;
-import com.youngje.tgwing.accommodations.Navi;
-import com.youngje.tgwing.accommodations.NaviXY;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.Review;
 import com.youngje.tgwing.accommodations.Translate;
 import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
-import com.youngje.tgwing.accommodations.Util.LocationUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import static com.youngje.tgwing.accommodations.Marker.markerList;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by aswoo on 2016-10-15.
@@ -70,6 +59,10 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
         return i;
     }
 
+    private TextureVideoView reviewVideoView;
+
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         final int pos = position;
@@ -81,11 +74,14 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.listview_detail_item, viewGroup, false);
         }
 
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReferenceFromUrl("gs://tourseoul-451de.appspot.com");
+
         ImageView profileView;
         final TextView userName;
         
         ImageView reviewPictureView;
-        final VideoView reviewVideoView;
+
         
         TextView reviewTextView;
 
@@ -115,7 +111,7 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
         //nationalityView = (ImageView) view.findViewById(R.id.listview_detail_item_nationality);
 
         reviewPictureView = (ImageView) view.findViewById(R.id.listview_detail_item_img);
-        reviewVideoView = (VideoView) view.findViewById(R.id.listview_dettail_item_video);
+        reviewVideoView = (TextureVideoView) view.findViewById(R.id.listview_detail_item_video);
 
         dateView = (TextView) view.findViewById(R.id.listview_detail_item_date);
         reviewTextView = (TextView) view.findViewById(R.id.listview_detail_item_review);
@@ -148,11 +144,11 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
             }
         });
         Review item = reviews.get(pos);
+
+        //RelativeLayout relativeLayoutTemp = (RelativeLayout)view.findViewById(R.id.reviewContentLayout);
 
         switch (item.getContentType()) {
             case 0:
@@ -166,38 +162,50 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
                 break;
             // TODO: 2016. 12. 2. 비디오뷰안됨 존나... 
             case 2:
-                Log.i("urlurlvideo", item.getreviewContentUrl().toString());
-                try {
-                    // Start the MediaController
-                    MediaController mediacontroller = new MediaController(
-                            view.getContext());
-                    mediacontroller.setAnchorView(reviewVideoView);
-                    // Get the URL from String VideoURL
-                    String video = item.getreviewContentUrl();
-                    reviewVideoView.setMediaController(mediacontroller);
-                    reviewVideoView.setVideoURI(Uri.parse(video));
 
-                } catch (Exception e) {
-                    Log.e("Error", e.getMessage());
-                    e.printStackTrace();
-                }
-
-                reviewVideoView.requestFocus();
-                reviewVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    // Close the progress bar and play the video
-                    public void onPrepared(MediaPlayer mp) {
-                        reviewVideoView.start();
-                    }
-                });
+               // reviewPictureView.setVisibility(View.GONE);
+               // reviewVideoView.setVisibility(View.VISIBLE);
+               // StorageReference temp = storageRef.child(item.getMarkerId()).child("1481112050481.mp4");
+               // temp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+               //     @Override
+               //     public void onSuccess(Uri uri) {
+               //         Log.i("tjrtptm","tjrtptm");
+               //         reviewVideoView.setVideoURI(uri);
+//
+               //     }
+               // });
 
 
-                reviewVideoView.setVideoURI(Uri.parse(item.getreviewContentUrl()));
-                MediaController mediaController = new MediaController(view.getContext());
-                mediaController.setAnchorView(reviewVideoView);
-                reviewVideoView.setMediaController(mediaController);
+              //  Log.i("비디오뷰뷰뷰",item.getreviewContentUrl());
+//
+              //  reviewPictureView.setVisibility(View.GONE);
+              //  reviewVideoView.setVisibility(View.VISIBLE);
+              //  reviewVideoView.bringToFront();
+              //  reviewVideoView.setVideoPath(item.getreviewContentUrl());
+              //  reviewVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+              //      @Override
+              //      public void onPrepared(MediaPlayer mp) {
+              //          reviewVideoView.start();
+              //          reviewVideoView.bringToFront();
+              //      }
+              //  });
 
-                reviewPictureView.setVisibility(View.GONE);
-                reviewVideoView.setVisibility(View.VISIBLE);
+
+              //  Log.i("비디오뷰뷰뷰",item.getreviewContentUrl());
+              //  final VideoView temp = new VideoView(context);
+              //  temp.setVideoURI(Uri.parse(item.getreviewContentUrl()));
+              //  temp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+              //      @Override
+              //      public void onPrepared(MediaPlayer mp) {
+              //          MediaController mc = new MediaController(context);
+              //          temp.setMediaController(mc);
+              //          mc.setAnchorView(temp);
+              //          temp.start();
+              //      }
+              //  });
+//
+              //  relativeLayoutTemp.addView(temp);
+
                 break;
         }
 

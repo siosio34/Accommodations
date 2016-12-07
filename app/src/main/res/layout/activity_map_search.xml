@@ -210,11 +210,11 @@
                     <ToggleButton
                         android:layout_width="54dp"
                         android:layout_height="54dp"
-                        android:layout_marginBottom="16dp"
                         android:id="@+id/myLocationToggle"
                         android:textOn=""
                         android:textOff=""
                         android:background="@drawable/toggle_button" />
+
 
                     <ImageView
                         android:layout_width="54dp"
@@ -228,6 +228,15 @@
                         android:id="@+id/community_main_createChatroom"
                         android:src="@drawable/ic_icon_add_review"
                         android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/ar_button"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:src="@drawable/ar_button"
+                        />
+
+
                 </LinearLayout>
             </RelativeLayout>
         </FrameLayout>
