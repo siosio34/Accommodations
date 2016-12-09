@@ -185,6 +185,7 @@ public class ReadDocumentActivity extends Activity {
             //documentPic.setBackground(new Drawable(bitmap));
             documentLeft.addView(documentPic);
         }
+
         else if(documentMarker.getDocumentType() == 2) {
             //camera
             Log.i("urlurlvideo", documentMarker.getURL());

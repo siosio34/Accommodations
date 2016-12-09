@@ -18,7 +18,6 @@ import com.youngje.tgwing.accommodations.ARAccomdation.mixare.gui.PaintScreen;
  */
 public class DocumentARMarker extends ARMarker implements Serializable {
 
-
     public static DocumentARMarker selectedMarker = new DocumentARMarker();
     public static DocumentARMarker getInstance() {
         return selectedMarker;

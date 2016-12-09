@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <HorizontalScrollView
+        android:id="@+id/activity_main_btn_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:animateLayoutChanges="true"
+        android:scrollbars="none"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/cafe"
+                style="@style/scrollingARView"
+                android:src="@mipmap/ic_icon_menu_cafe" />
+
+            <ImageView
+                android:id="@+id/train"
+                style="@style/scrollingARView"
+                android:src="@mipmap/ic_icon_menu_train" />
+
+            <ImageView
+                android:id="@+id/market"
+                style="@style/scrollingARView"
+                android:src="@mipmap/ic_icon_menu_cvs" />
+
+            <ImageView
+                android:id="@+id/restaurant"
+                style="@style/scrollingARView"
+                android:src="@mipmap/ic_icon_menu_restaurant" />
+
+            <ImageView
+                android:id="@+id/restroom"
+                style="@style/scrollingARView"
+                android:src="@mipmap/ic_icon_menu_restroom" />
+
+            <ImageView
+                android:id="@+id/wifizone"
+                style="@style/scrollingARView"
+                android:src="@mipmap/ic_icon_menu_wifizone" />
+
+            <ImageView
+                android:id="@+id/bank"
+                style="@style/scrollingARView"
+                android:src="@mipmap/ic_icon_menu_bank" />
+
+            <ImageView
+                android:id="@+id/hotel"
+                style="@style/scrollingARView"
+                android:src="@mipmap/ic_icon_menu_hotel" />
+
+            <ImageView
+                android:id="@+id/landmark"
+                style="@style/scrollingARView"
+                android:src="@mipmap/ic_icon_menu_landmark" />
+
+
+            <ImageView
+                android:id="@+id/pharmacy"
+                style="@style/scrollingARView"
+                android:src="@mipmap/ic_icon_menu_pharmacy" />
+
+
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <RelativeLayout
+        android:id="@+id/ar_down_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        
+        <ImageView
+            android:id="@+id/navi_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="8dp"
+            android:background="@drawable/ic_container_circle"
+            android:scaleType="centerInside"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            />
+
+        <ImageView
+            android:id="@+id/write_location_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/sns_add"
+            />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

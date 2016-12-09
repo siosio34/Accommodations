@@ -58,9 +58,10 @@ public class WriteDocumentActivity extends Activity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("posts");
 
+    // 이미지, 동영상 데이터 베이스.
     FirebaseStorage storage = FirebaseStorage.getInstance();
-    // Create a storage reference from our app
-    StorageReference storageRef = storage.getReferenceFromUrl("gs://hackfair-c7518.appspot.com");
+    StorageReference storageRef = storage.getReferenceFromUrl("gs://tourseoul-451de.appspot.com");
+
 
     String currentUid;
 
@@ -70,7 +71,6 @@ public class WriteDocumentActivity extends Activity {
 
     Double curlat = 0.0;
     Double curlon = 0.0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,9 +196,7 @@ public class WriteDocumentActivity extends Activity {
 
     public Document makeDocument(String uid) {
 
-        Log.i("ㅇㅇㅇ","아마이게없어서 터지는거같은데");
         String content = editText.getText().toString();
-        Log.i("ㅇㅇㅇ2","아마이게없어서 터지는거같은데");
         Date currentDate = new Date();
 
         // TODO: 2016. 9. 20. 경도 위도도 저장해야함 
@@ -220,7 +218,7 @@ public class WriteDocumentActivity extends Activity {
         document.setContentType(contentType);
 
         // Create a storage reference from our app
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://hackfair-c7518.appspot.com/");
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://tourseoul-451de.appspot.com/");
         String fileRef="";
 
         if(contentType == 1) {
