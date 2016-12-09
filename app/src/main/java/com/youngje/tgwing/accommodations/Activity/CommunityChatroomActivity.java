@@ -62,7 +62,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Mansu on 2016-10-08.
+ * Created by joyeongje on 2016. 12. 10..
  */
 public class CommunityChatroomActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();

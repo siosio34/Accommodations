@@ -118,7 +118,7 @@ public class DocumentARMarker extends ARMarker implements Serializable {
         if (isClickValid(x, y)) {    // 클릭 가능한 지점인 경우(클릭된 걸로 파악된 경우)
 
              // 클릭 가능한 지점인 경우(클릭된 걸로 파악된 경우)
-                evtHandled = state.handleEvent2(ctx,this);	// 마커의 URL 을 넘겨 이벤트 처리
+              //  evtHandled = state.handleEvent2(ctx,this);	// 마커의 URL 을 넘겨 이벤트 처리
             // TODO: 2016. 9. 21. 여기서 도큐먼트 객체를 생성해주어야하나 ?
         }
         return evtHandled;    // 성공했을 경우 true 를 리턴할 것이다

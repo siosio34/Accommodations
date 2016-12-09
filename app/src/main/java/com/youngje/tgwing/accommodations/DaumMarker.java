@@ -1,7 +1,7 @@
 package com.youngje.tgwing.accommodations;
 
 /**
- * Created by joyeongje on 2016. 10. 5..
+ * Created by joyeongje on 2016. 12. 10..
  */
 
 public class DaumMarker extends Marker {

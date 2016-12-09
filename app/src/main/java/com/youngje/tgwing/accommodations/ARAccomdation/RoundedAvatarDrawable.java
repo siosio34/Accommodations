@@ -12,7 +12,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 
 /**
- * Created by Mansu on 2016-09-21.
+ * Created by joyeongje on 2016. 12. 10..
  */
 public class RoundedAvatarDrawable extends Drawable {
     private final Bitmap mBitmap;

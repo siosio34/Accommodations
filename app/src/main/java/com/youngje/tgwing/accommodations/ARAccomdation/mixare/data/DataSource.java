@@ -26,6 +26,8 @@ import android.graphics.Color;
 
 import com.youngje.tgwing.accommodations.R;
 
+import static com.youngje.tgwing.accommodations.Data.DataFormat.DATATYPE.BANK;
+
 
 // 데이터 소스를 실질적으로 다루는 클래스
 public class DataSource {
@@ -33,11 +35,11 @@ public class DataSource {
 
     // 데이터 소스와 데이터 포맷의 열거형 변수
     public enum DATASOURCE {
-        CAFE,BUSSTOP,Convenience,Restaurant, DOCUMENT, IMAGE, VIDEO
+        CAFE,BUSSTOP,Convenience,Restaurant,BANK,HOSPITAL,SPORT,ACCOMMODATION,DOCUMENT, IMAGE, VIDEO
     };
 
     public enum DATAFORMAT {
-        CAFE,BUSSTOP,Convenience,Restaurant,DOCUMENT, IMAGE, VIDEO
+        CAFE,BUSSTOP,Convenience,Restaurant,BANK,HOSPITAL,SPORT,ACCOMMODATION,DOCUMENT, IMAGE, VIDEO
     };
 
     // 주의할것! 방대한 양의 데이터(MB단위 이상)을 산출할 때에는, 작은 반경이나 특정한 쿼리만을 사용해야한다
@@ -47,11 +49,17 @@ public class DataSource {
 
     // 아이콘들. 트위터와 버즈
 
-    public static Bitmap cafeIcon;
-    public static Bitmap busIcon;
-    public static Bitmap restraurantIcon;
-    public static Bitmap bankIcon;
-    public static Bitmap convenienceIcon;
+    public static Bitmap cafeIcon; //카페
+    public static Bitmap busIcon; // 버스
+    public static Bitmap restraurantIcon; // 레스토랑
+    public static Bitmap convenienceIcon; // 편의점
+
+    public static Bitmap bankIcon; // 은행
+    public static Bitmap hospitalIcon; //병원
+    public static Bitmap accommodationIcon; // 숙박
+    public static Bitmap sportIcon; //스포츠
+
+
     public static Bitmap documentIcon;
     public static Bitmap imageIcon;
     public static Bitmap videoIcon;
@@ -69,7 +77,6 @@ public class DataSource {
         restraurantIcon = BitmapFactory.decodeResource(res,R.drawable.icon_store);
         convenienceIcon = BitmapFactory.decodeResource(res,R.drawable.icon_conveni);
 
-
         documentIcon = BitmapFactory.decodeResource(res, R.drawable.icon_conveni);
         imageIcon = BitmapFactory.decodeResource(res,R.drawable.icon_conveni);
         videoIcon = BitmapFactory.decodeResource(res,R.drawable.icon_conveni);
@@ -83,7 +90,6 @@ public class DataSource {
     public static Bitmap getBitmap(String ds) {
         Bitmap bitmap = null;
         switch (ds) {
-
             case "CAFE":
                 bitmap = cafeIcon;
                 break;
@@ -92,12 +98,28 @@ public class DataSource {
                 bitmap = busIcon;
                 break;
 
-            case "CONVENICE":
+            case "CONVENIENCE":
                 bitmap = convenienceIcon;
                 break;
 
             case "RESTRAUNT":
                 bitmap = restraurantIcon;
+                break;
+
+
+            case "BANK":
+                break;
+
+            case "ACCOMMODATION":
+                break;
+
+            case "SPORT":
+                break;
+
+            case "HOSPITAL":
+                break;
+
+            case "STORE":
                 break;
 
             case "DOCUMENT":
@@ -117,10 +139,9 @@ public class DataSource {
 
     // 데이터 소스로부터 데이터 포맷을 추출
     public static DATAFORMAT dataFormatFromDataSource(DATASOURCE ds) {
-        DATAFORMAT ret;
+        DATAFORMAT ret = DATAFORMAT.CAFE;
         // 소스 형식에 따라 포맷을 할당한다
         switch (ds) {
-
 
             // 주위 편의시설
             case CAFE:
@@ -137,6 +158,18 @@ public class DataSource {
 
             case Restaurant:
                 ret = DATAFORMAT.Restaurant;
+                break;
+
+            case BANK:
+                break;
+
+            case ACCOMMODATION:
+                break;
+
+            case HOSPITAL:
+                break;
+
+            case SPORT:
                 break;
 
             //  파이어베이스 ...?
@@ -163,7 +196,7 @@ public class DataSource {
 
 
     // 각 정보들로 완성된 URL 리퀘스트를 생성
-    public static String createRequestURL(DATASOURCE source, double lat, double lon, double alt, float radius, String locale) {
+    public static String createRequestURL(DATASOURCE source, double lat, double lon, double alt, float radius) {
         String ret = "";    // 결과 스트링
 
         // https://dinosaur-facts.firebaseio.com/
@@ -201,6 +234,30 @@ public class DataSource {
                     break;
 
 
+                case BANK: //은행
+                    ret =  "http://map.naver.com/search2/interestSpot.nhn?type=BANK&boundary=" + Double.toString(lon - 0.02) + "%3B" +
+                            Double.toString(lat - 0.01) + "%3B" + Double.toString(lon + 0.02) +
+                            "%3B" + Double.toString(lat + 0.01) + "&pageSize=100";
+                    break;
+
+                case SPORT:
+                    ret =  "http://map.naver.com/search2/interestSpot.nhn?type=SPORT&boundary=" + Double.toString(lon - 0.02) + "%3B" +
+                            Double.toString(lat - 0.01) + "%3B" + Double.toString(lon + 0.02) +
+                            "%3B" + Double.toString(lat + 0.01) + "&pageSize=100";
+                    break;
+
+                case ACCOMMODATION:
+                    ret =  "http://map.naver.com/search2/interestSpot.nhn?type=ACCOMMDATION&boundary=" + Double.toString(lon - 0.02) + "%3B" +
+                            Double.toString(lat - 0.01) + "%3B" + Double.toString(lon + 0.02) +
+                            "%3B" + Double.toString(lat + 0.01) + "&pageSize=100";
+                    break;
+
+
+                case HOSPITAL:
+                    ret =  "http://map.naver.com/search2/interestSpot.nhn?type=HOSPITAL&boundary=" + Double.toString(lon - 0.02) + "%3B" +
+                            Double.toString(lat - 0.01) + "%3B" + Double.toString(lon + 0.02) +
+                            "%3B" + Double.toString(lat + 0.01) + "&pageSize=100";
+                    break;
 
 
                 case DOCUMENT:

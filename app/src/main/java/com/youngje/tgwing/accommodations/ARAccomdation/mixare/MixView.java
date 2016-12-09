@@ -40,9 +40,11 @@ package com.youngje.tgwing.accommodations.ARAccomdation.mixare;
         import android.app.Activity;
         import android.app.AlertDialog;
         import android.app.SearchManager;
+        import android.content.BroadcastReceiver;
         import android.content.Context;
         import android.content.DialogInterface;
         import android.content.Intent;
+        import android.content.IntentFilter;
         import android.content.SharedPreferences;
         import android.graphics.Canvas;
         import android.graphics.Color;
@@ -64,6 +66,7 @@ package com.youngje.tgwing.accommodations.ARAccomdation.mixare;
         import android.util.Log;
         import android.view.Gravity;
         import android.view.KeyEvent;
+        import android.view.LayoutInflater;
         import android.view.Menu;
         import android.view.MenuItem;
         import android.view.MotionEvent;
@@ -74,6 +77,7 @@ package com.youngje.tgwing.accommodations.ARAccomdation.mixare;
         import android.view.ViewGroup.LayoutParams;
         import android.view.Window;
         import android.widget.FrameLayout;
+        import android.widget.RelativeLayout;
         import android.widget.SeekBar;
         import android.widget.TextView;
         import android.widget.Toast;
@@ -83,13 +87,16 @@ package com.youngje.tgwing.accommodations.ARAccomdation.mixare;
         import com.youngje.tgwing.accommodations.ARAccomdation.mixare.gui.PaintScreen;
         import com.youngje.tgwing.accommodations.ARAccomdation.mixare.reality.PhysicalPlace;
         import com.youngje.tgwing.accommodations.ARAccomdation.mixare.render.Matrix;
+        import com.youngje.tgwing.accommodations.Data.DataFormat;
         import com.youngje.tgwing.accommodations.Marker;
+        import com.youngje.tgwing.accommodations.R;
 
         import java.util.ArrayList;
         import java.util.Date;
         import java.util.Iterator;
         import java.util.List;
         import java.util.Locale;
+        import java.util.concurrent.ExecutionException;
 
         import static android.hardware.SensorManager.SENSOR_DELAY_GAME;
 
@@ -101,6 +108,8 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
     private SensorManager sensorMgr_ori;
     private TextView oriTV = null;
     private TextView accTV =null;
+
+    public static boolean arr[] = new boolean[12];
 
     public double mapLat=0;
     public double  mapLog=0;
@@ -258,15 +267,73 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
         alert.show();	// 얼럿 다이얼로그 호출
     }
 
+    public void navercategoryClicked(View v) throws ExecutionException, InterruptedException {
+
+        if(dataView.isFrozen())
+            dataView.setFrozen(false);
+
+        DataSource.DATASOURCE datasource = null;
+
+        int temp = 0;
+
+        switch (v.getId()) {
+            case R.id.cafe:
+                datasource = DataSource.DATASOURCE.CAFE;
+                temp = 0;
+                Log.i("클릭됨","클릭됨1");
+                break;
+            case R.id.train: //
+                datasource = DataSource.DATASOURCE.BUSSTOP;
+                temp = 1;
+                Log.i("클릭됨","클릭됨2");
+                break;
+            case R.id.restaurant:
+                datasource= DataSource.DATASOURCE.Restaurant;
+                temp = 2;
+                break;
+            case R.id.market:
+                datasource= DataSource.DATASOURCE.Convenience;
+                temp = 3;
+                break;
+            default:
+                datasource = null;
+                break;
+        }
+
+        arr[temp] = !arr[temp];
+
+        if(datasource == null)
+            Toast.makeText(mixContext,"지원하는 데이터소스없음",Toast.LENGTH_SHORT).show();
+        else {
+
+            mixContext.toogleDataSource(datasource);
+            //mixContext.setDataSource(datasource,true);
+        }
+    }
+
+    private BroadcastReceiver naviRecevicer = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals("NAVI")) {
+                String guide = intent.getStringExtra("GUIDE");
+                Log.i("에러의심구역1","에러의심구역1");
+                Toast.makeText(getApplicationContext(), guide,Toast.LENGTH_SHORT).show();
+                Log.i("에러의심구역2","에러의심구역2");
+            }
+        }
+    };
+
+
     // 뷰 생성시
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
+
+
         // 데이터 소스로부터 아이콘 생성
         DataSource.createIcons(getResources());
-
 
         try {
 
@@ -320,11 +387,20 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
             addContentView(augScreen, new LayoutParams(
                     LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
+
             // 최종적으로 더해지는 것은 위에서 설정한 프레임 레이아웃.
             // 레이아웃 파라메터를 통해 표면의 가장 위이자 공간의 가장 아래에 추가 된다
             addContentView(frameLayout, new FrameLayout.LayoutParams(
                     LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
                     Gravity.BOTTOM));
+
+            LayoutInflater inflater = getLayoutInflater();
+            View upMenu = inflater.inflate(R.layout.layout_ar_top_menu, null);
+
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            addContentView(upMenu, params);
+
 
             // 초기 세팅된 상태가 아니라면
             if (!isInited) {
@@ -370,6 +446,11 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
         } catch (Exception ex) {
             doError(ex);	// 예외 발생시 에러 처리
         }
+
+        IntentFilter naviBraodFilter = new IntentFilter();
+        naviBraodFilter.addAction("NAVI");
+        registerReceiver(naviRecevicer,naviBraodFilter);
+
     }
 
     // 인텐트 제어
@@ -398,10 +479,8 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
 
         }
 
-
         // 검색 결과를 저장 할 리스트
         ArrayList<ARMarker> searchResults = new ArrayList<ARMarker>();
-
 
         // 검색된 항목이 1개 이상 있을 경우
         if (jLayer.getMarkerCount() > 0) {
@@ -473,8 +552,6 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
     @Override
     protected void onResume() {
         super.onResume();
-
-
 
         try {
             this.mWakeLock.acquire();	// 웨이크 록
@@ -563,8 +640,6 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
 
                 //				hardFix.setLatitude(0);
                 //				hardFix.setLongitude(0);
-
-
 
                 try {
                     // 위치 관리자로부터 gps, 네트워크의 마지막으로 알려진 장소를 얻어 옮
@@ -702,32 +777,6 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
                 else {
                     Toast.makeText(this, DataView.EMPTY_LIST_STRING_ID, Toast.LENGTH_LONG).show();
                 }
-                break;
-		/*zoom level*/
-            case 3:
-                Location currentGPSInfo2 = mixContext.getCurrentGPSInfo();
-                PhysicalPlace physicalPlace = new PhysicalPlace();
-                physicalPlace.setLongitude(currentGPSInfo2.getLongitude());
-                physicalPlace.setLatitude(currentGPSInfo2.getLatitude());
-              //  Intent intent3 = new Intent(MixView.this,HttpPostSNS.class);
-            //    intent3.putExtra("currentGPSInfo2",physicalPlace);
-             //   startActivityForResult(intent3, 50);
-                break;
-
-            case 4: // 포켓몬 ㄱㄱ하는게 떠야됨.
-                if(dataView.isFrozen())
-                    dataView.setFrozen(false);
-
-                //  if(!mixContext.isDataSourceSelected(DataSource.DATASOURCE.POCKETMON))
-                //    mixContext.toogleDataSource(DataSource.DATASOURCE.POCKETMON);
-                Location curLocate = mixContext.getCurrentLocation();
-
-                double lat = curLocate.getLatitude(), lon = curLocate.getLongitude(), alt = curLocate.getAltitude();
-                Log.i("내 경도",Double.toString(lat));
-                Log.i("내 위도",Double.toString(lon));
-               // dataView.requestData(DataSource.createRequestURL(DataSource.DATASOURCE.POCKETMON, lat, lon, alt, 20, Locale.getDefault().getLanguage()), DataSource.dataFormatFromDataSource(DataSource.DATASOURCE.POCKETMON), DataSource.DATASOURCE.POCKETMON);
-
-                Toast.makeText(getApplicationContext(),"주변 포켓몬 탐색/생성 시작",Toast.LENGTH_LONG).show();
                 break;
 
 		/*Search*/
@@ -983,8 +1032,6 @@ public class MixView extends Activity implements SensorEventListener,LocationLis
     // 위치가 변경되었을 경우
     public void onLocationChanged(Location location) {
 
-        //여기에 내 주위를 반경으로 포켓몬 위치 변경하는것을 추가해야된다.
-        // 유저
 
         try {
             killOnError();	// 에러 여부 체크

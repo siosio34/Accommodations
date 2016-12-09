@@ -18,10 +18,13 @@
  */
 package com.youngje.tgwing.accommodations.ARAccomdation.mixare;
 
+import android.util.Log;
+
 // 유틸 클래스
 class MixUtils {
 	// JSON 데이터의 파싱 작업을 수행
 	public static String parseAction(String action) {
+		Log.i("parseaction",action);
 		return (action.substring(action.indexOf(':') + 1, action.length()))
 				.trim();
 	}

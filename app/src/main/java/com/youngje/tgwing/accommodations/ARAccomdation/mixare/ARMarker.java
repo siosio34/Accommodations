@@ -283,23 +283,13 @@ abstract public class ARMarker implements Comparable<ARMarker> {
 		double d = distance;    // 거리. 미터 단위
 		DecimalFormat df = new DecimalFormat("@#");    // 숫자 포맷은 @숫자
 
-		if(datasource != DataSource.DATASOURCE.CAFE) {
-			// 위치에 따른 자신과의 거리 출력. 1000m 이상은 km로 대체한다
-			if (d < 1000.0) {
-				textStr = title + " \n" + df.format(d) + "m";
-			} else {
-				d = d / 1000.0;
-				textStr = title + " \n" + df.format(d) + "km";
-			}
-		}
 
-		else {
-			if (d < 1000.0) {
-				textStr =  df.format(d) + "m";
-			} else {
-				d = d / 1000.0;
-				textStr =  df.format(d) + "km";
-			}
+		// 위치에 따른 자신과의 거리 출력. 1000m 이상은 km로 대체한다
+		if (d < 1000.0) {
+			textStr = title + " \n" + df.format(d) + "m";
+		} else {
+			d = d / 1000.0;
+			textStr = title + " \n" + df.format(d) + "km";
 		}
 
 		// 텍스트 블록(텍스트 오브젝트) 생성
@@ -329,7 +319,6 @@ abstract public class ARMarker implements Comparable<ARMarker> {
 	}
 
 	// 데이터 뷰에서 터치시의 이벤트 처리 여부를 리턴
-	
 	public boolean fClick(float x, float y, MixContext ctx, MixState state) {
 		boolean evtHandled = false;
 

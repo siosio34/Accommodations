@@ -105,9 +105,13 @@ public class MixContext extends ContextWrapper {
         boolean atLeastOneDatasourceSelected = false;    // 최소 하나 이상의 데이터 소스가 선택되었는지 여부
 
         // 데이터 소스 전체를 돌며 적용
+        // 여기서 토글된 데이터 소스 다 뒤져가면서 찾는다 !
         for (DataSource.DATASOURCE source : DataSource.DATASOURCE.values()) {
             // 선택된 데이터소스의 해쉬맵을 프레퍼런스 세팅값에 따라 설정
-            selectedDataSources.put(source, settings.getBoolean(source.toString(), false));
+           selectedDataSources.put(source, settings.getBoolean(source.toString(), false));
+            // 쉐어드 프리퍼런스에 해당키에 데이터가있으면 값넣어주고 아니면 false 리턴
+
+
             // 한개라도 선택된 것이 있다면 플래그를 true
             if (selectedDataSources.get(source))
                 atLeastOneDatasourceSelected = true;
@@ -119,7 +123,6 @@ public class MixContext extends ContextWrapper {
             setDataSource(DataSource.DATASOURCE.CAFE, true);
 
         // 가장 기본
-
 
         // 회전행렬을 일단 단위행렬로 세팅
         rotationM.toIdentity();
@@ -408,7 +411,7 @@ public class MixContext extends ContextWrapper {
     }
 
     // 웹페이지를 로드
-            public void loadMixViewWebPage(String url) throws Exception {
+    public void loadMixViewWebPage(String url) throws Exception {
 
                 WebView webview = new WebView(mixView);    // 웹 뷰
                 webview.getSettings().setJavaScriptEnabled(true);    // 자바스크립트 허용
@@ -418,9 +421,9 @@ public class MixContext extends ContextWrapper {
                     public boolean shouldOverrideUrlLoading(WebView view, String url) {
                         view.loadUrl(url);
                         return true;
-            }
+                     }
 
-        });
+                 });
 
         // 다이얼로그를 생성
         Dialog d = new Dialog(mixView) {
@@ -482,8 +485,11 @@ public class MixContext extends ContextWrapper {
         // 변경된 사항을 프레퍼런스에 세팅하고 적용한다
         SharedPreferences settings = getSharedPreferences(MixView.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
+        // 선택된거 넣고 이게 트룬지 펄슨지 체크한다.
         editor.putBoolean(source.toString(), selection);
         editor.commit();
+
+        // setDataSource(source, !selectedDataSources.get(source));
     }
 
     // 특정 데이터 소스가 선택된 상태인지 리턴
@@ -493,7 +499,9 @@ public class MixContext extends ContextWrapper {
 
     // 데이터 소스의 선택 여부를 토글
     public void toogleDataSource(DataSource.DATASOURCE source) {
+
         setDataSource(source, !selectedDataSources.get(source));
+
     }
 
     // 선택된 데이터 소스 리스트를 스트링 형태로 리턴

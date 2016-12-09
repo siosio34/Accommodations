@@ -94,6 +94,18 @@ public class Json extends DataHandler {
                             ma = processCAFEJSONObject(jo);
                             break;
 
+                        case BUSSTOP:
+                            ma = processBusJSONObject(jo);
+                            break;
+
+                        case Restaurant:
+                            ma = processRestaurantJSONObject(jo);
+                            break;
+
+                        case Convenience:
+                            ma = processConvenienceJSONObject(jo);
+                            break;
+
                         case DOCUMENT:
                         case VIDEO:
                         case IMAGE:
@@ -114,6 +126,91 @@ public class Json extends DataHandler {
         // 모든 마커가 추가된 리스트를 리턴
         return markers;
     }
+
+    public ARMarker processBusJSONObject(JSONObject jo) throws JSONException {
+
+        ARMarker ma = null;
+
+        if (jo.has("x") && jo.has("y") && jo.has("stationDisplayID") && jo.has("stationDisplayName")) {// 버스정류장 정보일 경우
+
+            String link = jo.getString("stationDisplayID");
+            String[] sTemp = link.split("-");
+            link = "";
+            String tempLink;
+
+            for(int i =0 ; i<sTemp.length; i++) {
+                link += sTemp[i];
+            }
+            tempLink = ("http://lab.khlug.org/manapie/bus_arrival.php?station=" + link);
+
+            ma = new SocialARMarker(
+                    jo.getString("stationDisplayName"),
+                    jo.getDouble("y"),
+                    jo.getDouble("x"),
+                    0,
+                    tempLink,
+                    DataSource.DATASOURCE.BUSSTOP,"BUSSTOP");
+            // TODO: 2016-05-31 이 부분은 나중에 웹페이지에 연결을 하던지 하자
+
+        }
+        return ma;
+    }
+
+    public ARMarker processConvenienceJSONObject(JSONObject jo)  throws JSONException {
+        ARMarker ma = null;
+
+
+        // 형식에 맞는지 검사. 타이틀과 위도, 경도, 고도 태그를 찾는다
+        if (jo.has("x") && jo.has("y") && jo.has("name")) {
+            Log.v(MixView.TAG, "processing Mixare JSON object");    // 로그 출력
+
+            String linkTemp = null;
+            linkTemp = jo.getString("id");
+
+            String linkbasic = "http://map.naver.com/local/siteview.nhn?code=" + linkTemp.substring(1);
+            Log.i("linkbasic",linkbasic);
+
+            // 할당된 값들로 마커 생성, // 일단은 경도, 위도, 이름만.
+            // 맨뒤에값은 플래그 일단 Flag 0 는 카페정보
+            ma = new SocialARMarker(
+                    jo.getString("name"),
+                    jo.getDouble("y"),
+                    jo.getDouble("x"),
+                    0,
+                    linkbasic,
+                    DataSource.DATASOURCE.Convenience,"CONVENICE");
+        }
+        return ma;    // 마커 리턴
+    }
+
+    public ARMarker processRestaurantJSONObject(JSONObject jo) throws JSONException {
+        ARMarker ma = null;
+
+        // 형식에 맞는지 검사. 타이틀과 위도, 경도, 고도 태그를 찾는다
+        if (jo.has("x") && jo.has("y") && jo.has("name")) {
+
+            String linkTemp = null;
+            linkTemp = jo.getString("id");
+
+            String linkbasic = "http://map.naver.com/local/siteview.nhn?code=" + linkTemp.substring(1);
+            Log.i("linkbasic",linkbasic);
+
+
+            // 할당된 값들로 마커 생성, // 일단은 경도, 위도, 이름만.
+            // 맨뒤에값은 플래그 일단 Flag 0 는 카페정보
+            ma = new SocialARMarker(
+                    jo.getString("name"),
+                    jo.getDouble("y"),
+                    jo.getDouble("x"),
+                    0,
+                    linkbasic,
+                    DataSource.DATASOURCE.Restaurant, "RESTRAUNT");
+        }
+        return ma;    // 마커 리턴
+    }
+
+
+
 
 
     private ARMarker processDocumentObject(JSONObject jo) throws JSONException {
@@ -184,7 +281,8 @@ public class Json extends DataHandler {
 
            String linkTemp = null;
            linkTemp = jo.getString("id");
-           String link = ("http://lab.khlug.org/manapie/javap/getRes.php?id=") + (linkTemp.substring(1));
+           String linkbasic = "http://map.naver.com/local/siteview.nhn?code=" + linkTemp.substring(1);
+           Log.i("linkbasic",linkbasic);
 
            // 할당된 값들로 마커 생성, // 일단은 경도, 위도, 이름만.
            // 맨뒤에값은 플래그 일단 Flag 0 는 카페정보
@@ -194,7 +292,7 @@ public class Json extends DataHandler {
                    jo.getDouble("y"),
                    jo.getDouble("x"),
                    0,
-                   link,
+                   linkbasic,
                    DataSource.DATASOURCE.CAFE, "CAFE");
        }
        return ma;    // 마커 리턴

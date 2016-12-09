@@ -45,7 +45,7 @@ import com.youngje.tgwing.accommodations.ARAccomdation.mixare.DocumentARMarker;
 import com.youngje.tgwing.accommodations.ARAccomdation.mixare.data.DataHandler;
 
 /**
- * Created by Mansu on 2016-09-18.
+ * Created by joyeongje on 2016. 12. 10..
  */
 public class ReadDocumentActivity extends Activity {
     private LinearLayout document = null;

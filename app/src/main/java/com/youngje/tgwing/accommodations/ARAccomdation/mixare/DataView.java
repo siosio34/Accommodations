@@ -248,7 +248,6 @@ public class DataView {
         mixContext.getDownloader().submitJob(request);
         state.nextLStatus = MixState.PROCESSING;    // 다음 상태는 처리중으로
 
-
     }
 
     // 실제로 스크린에 그려주는 메소드
@@ -266,23 +265,27 @@ public class DataView {
         // 아직 시작되지 않은 상태이고, 데이터 뷰가 얼어있지 않은 경우
         if (state.nextLStatus == MixState.NOT_STARTED && !frozen) {
             // 컨텍스트의 시작 URL 이 할당 되었을 경우
-            if (mixContext.getStartUrl().length() > 0) {//여기로 들억가ㅔ 해놨다
+            if (mixContext.getStartUrl().length() > 0) {
 
+                //여기로 들어가게 해놨다
             }
+
             // URL 이 할당되지 않았을 경우에는
             else {
                 // 현재의 위치로부터 위도, 경도, 고도 값을 읽고
                 double lat = curFix.getLatitude(), lon = curFix.getLongitude(), alt = curFix.getAltitude();
 
+                int i = 0;
+
                 // 각각의 데이터 소스들 모두에 적용
                 for (DataSource.DATASOURCE source : DataSource.DATASOURCE.values()) {
                     // 선택된 데이터 소스로 데이터 요청을 한다
-                    if (mixContext.isDataSourceSelected(source)) {
-                        requestData(DataSource.createRequestURL(source, lat, lon, alt, radius, Locale.getDefault().getLanguage()), DataSource.dataFormatFromDataSource(source), source);
-                        Log.i("데이터소스",source.toString());
-
-                        Toast.makeText(mixContext, "... 데이터 받는 중 ...", Toast.LENGTH_SHORT).show();
+                    if (mixContext.isDataSourceSelected(source))  { // 선택된것 ~
+                            requestData(DataSource.createRequestURL(source, lat, lon, alt, radius), DataSource.dataFormatFromDataSource(source), source);
+                            Log.i("데이터소스", source.toString());
+                            Toast.makeText(mixContext, "... 데이터 받는 중 ...", Toast.LENGTH_SHORT).show();
                     }
+                    i++;
                 }
 
             }
@@ -336,7 +339,7 @@ public class DataView {
 		/* 마커 업데이트 */
         dataHandler.updateActivationStatus(mixContext);    // 활성화 상태를 갱신
         // 각각의 마커에 적용
-        Log.i("마커들 갯수",Integer.toString(dataHandler.getMarkerCount()));
+       // Log.i("마커들 갯수",Integer.toString(dataHandler.getMarkerCount()));
         for (int i = dataHandler.getMarkerCount() - 1; i >= 0; i--) {
             ARMarker ma = dataHandler.getMarker(i);
 
@@ -352,9 +355,6 @@ public class DataView {
                 //	ma.update(curFix);
                 if (!frozen) {
                     float addTemp = 450;
-
-                    //  Log.i("addY값 0_<", String.valueOf(addY));
-
                     ma.calcPaint(cam, addX, addY+addTemp, ma.datasource);
                 }
                 ma.draw(dw);

@@ -49,6 +49,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.R;
 
 import com.youngje.tgwing.accommodations.ARAccomdation.mixare.data.DataHandler;
@@ -114,6 +115,9 @@ public class MixListView extends ListActivity {
 
 				//dataSourceMenu.add("버스 정류장");
 				dataSourceMenu.add("카페");
+				dataSourceMenu.add("정류장/역");
+				dataSourceMenu.add("음식점");
+				dataSourceMenu.add("편의점");
 				dataSourceMenu.add("도큐먼트");
 
 				// 각 항목의 체크여부를 등록
@@ -121,6 +125,9 @@ public class MixListView extends ListActivity {
 
 				//dataSourceChecked.add(mixContext.isDataSourceSelected(DATASOURCE.BUSSTOP));
 				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.CAFE));
+				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.BUSSTOP));
+				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.Restaurant));
+				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.Convenience));
 				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.DOCUMENT));
 
 				// 리스트 어댑터를 생성하고 설정
@@ -265,6 +272,7 @@ public class MixListView extends ListActivity {
 		/*Data Sources*/
 			case 1:	// 데이터 소스는 체크박스로 사용여부를 관리한다
 				//clickOnDataSource(position);
+				// 토글 말고 다른걸로 관리를해야겟다.
 				CheckBox cb = (CheckBox) v.findViewById(R.id.list_checkbox);
 				cb.toggle();	// 누를시 마다 토글
 				break;
@@ -278,8 +286,6 @@ public class MixListView extends ListActivity {
 	}
 
 	// 리스트 뷰를 클릭 했을 경우
-
-
 	public void clickOnListView(int position){
 		String selectedURL = position < selectedItemURL.size() ? selectedItemURL.get(position) : null;
 		/*이 항목에 가능한 웹사이트가 없을 경우*/
@@ -331,11 +337,6 @@ public class MixListView extends ListActivity {
 						break;
 					case 6:
 						break;
-
-
-
-
-
 				}
 			}
 		});
@@ -355,9 +356,19 @@ public class MixListView extends ListActivity {
 				mixContext.toogleDataSource(DataSource.DATASOURCE.CAFE);
 				break;
 			case 1:
-				mixContext.toogleDataSource(DataSource.DATASOURCE.DOCUMENT);
+				mixContext.toogleDataSource(DataSource.DATASOURCE.BUSSTOP);
 				break;
 
+			case 2:
+				mixContext.toogleDataSource(DataSource.DATASOURCE.Restaurant);
+				break;
+			case 3:
+				mixContext.toogleDataSource(DataSource.DATASOURCE.Convenience);
+				break;
+
+			case 4:
+				mixContext.toogleDataSource(DataSource.DATASOURCE.DOCUMENT);
+				break;
 
 
 		}
