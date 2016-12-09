@@ -18,15 +18,31 @@
  */
 package com.youngje.tgwing.accommodations.ARAccomdation.mixare;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Looper;
+import android.os.Message;
+import android.support.design.widget.Snackbar;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.youngje.tgwing.accommodations.ARAccomdation.ReadDocumentActivity;
+import com.youngje.tgwing.accommodations.ARAccomdation.mixare.data.DataSource;
 import com.youngje.tgwing.accommodations.ARAccomdation.mixare.reality.PhysicalPlace;
 import com.youngje.tgwing.accommodations.ARAccomdation.mixare.render.Matrix;
 import com.youngje.tgwing.accommodations.ARAccomdation.mixare.render.MixVector;
+import com.youngje.tgwing.accommodations.Util.HttpHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 
 // 현재의 상태에 관한 클래스
@@ -37,6 +53,11 @@ public class MixState {
     public static int PROCESSING = 1;
     public static int READY = 2;
     public static int DONE = 3;
+
+    public static Toast myToast;
+    private static final int MSG_TOAST_THREAD = 1;
+
+    private Thread loopThread;
 
     int nextLStatus = MixState.NOT_STARTED;    // 다음 상태
     String downloadId;    // 다운로드할 ID
@@ -52,32 +73,29 @@ public class MixState {
         // TODO: 2016. 9. 9. 여기에 진행할 이벤트 만들면 될듯함 현재는 다이얼로그 클릭이벤트 받는거 확인하기 위해서 다이얼로그 그대로 띄울고 나중에 삭제 예정
 
 
+        DialogSelectOption(ctx, title, log, onPress);
+
         //DialogSelectOption(ctx, title, log, onPress);
         return true;
     }
 
     // 이벤트 처리
-    public boolean handleEvent2(MixContext ctx, DocumentARMarker documentMarker) {
-
-        // TODO: 2016. 9. 9. 여기에 진행할 이벤트 만들면 될듯함 현재는 다이얼로그 클릭이벤트 받는거 확인하기 위해서 다이얼로그 그대로 띄울고 나중에 삭제 예정
-
-
-        boolean evtHandled= false;
-        Intent readDocumentIntent = new Intent(ctx, ReadDocumentActivity.class);
-        DocumentARMarker.selectedMarker = documentMarker;
-        ctx.startActivity(readDocumentIntent);
-
-        evtHandled = true;
-
-        //DialogSelectOption(ctx, title, log, onPress);
-        return evtHandled;
-    }
-
-
+   // public boolean handleEvent2(MixContext ctx, DocumentARMarker documentMarker) {
+   //
+//
+   //     boolean evtHandled= false;
+   //     Intent readDocumentIntent = new Intent(ctx, ReadDocumentActivity.class);
+   //     DocumentARMarker.selectedMarker = documentMarker;
+   //     ctx.startActivity(readDocumentIntent);
+//
+   //     evtHandled = true;
+//
+   //     //DialogSelectOption(ctx, title, log, onPress);
+   //     return evtHandled;
+   // }
 
     public void DialogSelectOption(final MixContext ctx, final String markerTitle, final PhysicalPlace log, final String onPress) {
-        // TODO: 2016. 9. 9. 마커를 클릭했을대 이벤트를 정의해야된다
-        final String items[] = {"1번 기능", "2번기능"};
+        final String items[] = {"상세 정보 보기", "네비게이션" };
         AlertDialog.Builder ab = new AlertDialog.Builder(ctx);
         ab.setTitle(markerTitle);
         ab.setItems(items,
@@ -90,25 +108,96 @@ public class MixState {
                         dialog.dismiss();
 
                         if (id == 0) {
-                            // TODO: 2016. 9. 9. 1번 기능을 눌렀을대 정의해야하는것
                             try {
-                                String webpage = MixUtils.parseAction(onPress);
-                                //this.detailsView = true;
-                                ctx.loadMixViewWebPage(webpage);
-                            } catch (Exception e) {
-                            }
+                                ctx.loadMixViewWebPage(onPress);
 
+                            } catch (Exception e) {
+
+                            }
                         } else if (id == 1) {
-                            // TODO: 2016. 9. 9. 2번 기능을 눌렀을때 정의해야되는것
+                            // 네비게이션
+                            final Intent naviBroadReceiver = new Intent();
+                            naviBroadReceiver.setAction("NAVI");
+
+                            loopThread = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    while (!Thread.currentThread().isInterrupted())
+                                    try {
+                                        String url = DataSource.createNaverMapRequestURL(ctx.getCurrentLocation().getLongitude(), ctx.getCurrentLocation().getLatitude(), log.getLongitude(), log.getLatitude());
+                                        String result = "";
+                                        String guide = "";
+
+                                        result = new HttpHandler().execute(url).get();
+                                        Log.i("result!!", result);
+
+                                        guide = parsingNaverNaviJson(result);
+                                        Log.i("guide!!", guide);
+
+                                        if(!guide.equals("end")) {
+                                            // 브로드 캐스트 리시버로 전달하는 부분
+                                            naviBroadReceiver.putExtra("GUIDE", guide);
+                                            ctx.sendBroadcast(naviBroadReceiver);
+                                        }
+                                        else {
+                                            guide = "목적지에 가까워져 네비게이션이 자동종료됩니다.";
+                                            naviBroadReceiver.putExtra("GUIDE", guide);
+                                            ctx.sendBroadcast(naviBroadReceiver);
+                                            loopThread.interrupt();
+                                        }
+                                        Thread.sleep(5000);
+
+                                    } catch (ExecutionException e) {
+                                        e.printStackTrace();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+
+                            });
+                            loopThread.start();
+                          }
 
                         }
-                    }
-                }
-        );
+                    });
         // 다이얼로그 생성
         AlertDialog alertDialog = ab.create();
         // 다이얼로그 보여주기
         alertDialog.show();
+    }
+
+    public String parsingNaverNaviJson(String naviStirng) throws JSONException {
+        String temp;
+        JSONObject jObject = new JSONObject(naviStirng);
+        int distance = jObject.getJSONObject("result").getJSONObject("summary").getInt("totalDistance");
+
+        if(distance < 40) {
+            temp = "end";
+            return temp;
+        }
+
+        JSONArray jArray = jObject.getJSONObject("result").getJSONArray("route").getJSONObject(0).getJSONArray("point");
+        JSONObject firstRoute = jArray.getJSONObject(1);
+
+        if(firstRoute == null) {
+            temp = "end";
+            return temp;
+        }
+
+        else {
+            temp = firstRoute.getJSONObject("guide").getString("name");
+            Log.i("temp",temp);
+
+
+
+        }
+
+        return temp;
+
     }
 
 
@@ -145,4 +234,35 @@ public class MixState {
         looking.prod(rotationM);
         this.curPitch = -MixUtils.getAngle(0, 0, looking.y, looking.z);
     }
+
+
+
+    //class NonUIThreadHandler extends Handler {
+//
+    //    public void handleMessage(Message msg) {
+    //        switch(msg.what) {
+    //            case MSG_TOAST_THREAD:
+    //                myToast.setText((String) msg.obj);
+    //                myToast.show();
+    //        }
+    //    }
+//
+    //    @Override
+    //    public void publish(LogRecord logRecord) {
+//
+    //    }
+//
+    //    @Override
+    //    public void flush() {
+//
+    //    }
+//
+    //    @Override
+    //    public void close() throws SecurityException {
+//
+    //    }
+    //}
+
+
+
 }
