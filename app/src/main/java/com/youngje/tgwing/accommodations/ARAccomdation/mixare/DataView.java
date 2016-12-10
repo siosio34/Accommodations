@@ -96,8 +96,6 @@ public class DataView {
     public static final int MENU_ITEM_3 = R.string.menu_item_3;
     public static final int MENU_ITEM_4 = R.string.menu_item_4;
 
-    public static final int MENU_ITEM_5 = R.string.menu_item_5;
-
 
     public static final int CONNECTION_ERROR_DIALOG_TEXT = R.string.connection_error_dialog;
     public static final int CONNECTION_ERROR_DIALOG_BUTTON1 = R.string.connection_error_dialog_button1;
@@ -294,7 +292,7 @@ public class DataView {
             if (state.nextLStatus == MixState.NOT_STARTED)
                 state.nextLStatus = MixState.DONE;    // 다음 상태는 완료 상태로
 
-            //TODO:
+
             //state.downloadId = mixContext.getDownloader().submitJob(request);
 
 
@@ -335,11 +333,11 @@ public class DataView {
                 state.nextLStatus = MixState.DONE;    // 다음 상태는 완료로
             }
         }
-
 		/* 마커 업데이트 */
         dataHandler.updateActivationStatus(mixContext);    // 활성화 상태를 갱신
+
         // 각각의 마커에 적용
-       // Log.i("마커들 갯수",Integer.toString(dataHandler.getMarkerCount()));
+        Log.i("마커들 갯수",Integer.toString(dataHandler.getMarkerCount()));
         for (int i = dataHandler.getMarkerCount() - 1; i >= 0; i--) {
             ARMarker ma = dataHandler.getMarker(i);
 
@@ -349,12 +347,10 @@ public class DataView {
                 // 대신, 위치가 바뀌었을 경우와 새로운 마커를 다운로드 한 이후에
                 // 각 마커의 위치를 재계산 하도록 한다
 
-                // ARMarker navigationMarker = new NavigationMarker(ma.getTitle(), ma.getLatitude(), ma.getLongitude(), ma.getAltitude(), ma.getURL(), ma.getDatasource());
-
                 //if (!frozen)
                 //	ma.update(curFix);
                 if (!frozen) {
-                    float addTemp = 450;
+                    float addTemp = 350;
                     ma.calcPaint(cam, addX, addY+addTemp, ma.datasource);
                 }
                 ma.draw(dw);
@@ -454,7 +450,6 @@ public class DataView {
             for (int i = 0; i < dataHandler.getMarkerCount() && !evtHandled; i++) {
                 ARMarker pm = dataHandler.getMarker(i);
 
-                // TODO: 2016. 9. 9. 마커에 대한 클리이벤트 처리한거 화면에 버튼띄울거면 이런식으로 이벤트처리를 해줘야될듯 
                 // 클릭 이벤트 처리를 시도한다. ARMarker, MixState 를 참고
                 evtHandled = pm.fClick(evt.x, evt.y, mixContext, state);
 

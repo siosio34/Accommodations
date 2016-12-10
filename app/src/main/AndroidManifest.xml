@@ -73,7 +73,6 @@
             android:name="com.youngje.tgwing.accommodations.ARAccomdation.ReadDocumentActivity"
             android:screenOrientation="landscape"
             android:theme="@style/MyDialogTheme" />
-        <activity android:name="com.youngje.tgwing.accommodations.ARAccomdation.DocumentListActivity"></activity>
 
 
         <activity

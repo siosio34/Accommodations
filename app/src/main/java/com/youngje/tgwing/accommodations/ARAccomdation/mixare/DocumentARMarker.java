@@ -1,7 +1,9 @@
 package com.youngje.tgwing.accommodations.ARAccomdation.mixare;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.util.Log;
 
 
 import java.io.Serializable;
@@ -69,7 +71,6 @@ public class DocumentARMarker extends ARMarker implements Serializable {
         double altitude = curGPSFix.getAltitude()+Math.sin(0.35)*distance+Math.sin(0.4)*(distance/(MixView.dataView.getRadius()*1000f/distance));
         mGeoLoc.setAltitude(altitude - 0.2);
         super.update(curGPSFix);
-
     }
 
     // 페인트 스크린에 마커 출력
@@ -81,10 +82,12 @@ public class DocumentARMarker extends ARMarker implements Serializable {
 
         // 보여지는 상황이라면
         if (isVisible) {
+
             float maxHeight = Math.round(dw.getHeight() / 10f) + 1;	// 최대 높이 계산
             // 데이터 소스의 비트맵 파일을 읽어온다
 
             String markerFlag = "DOCUMENT";
+
             if(documentType == 0)
                 markerFlag = "DOCUMENT";
 
@@ -113,12 +116,11 @@ public class DocumentARMarker extends ARMarker implements Serializable {
     public boolean fClick(float x, float y, MixContext ctx, MixState state) {
 
         boolean evtHandled = false;
+        Log.i("클릭", "틀리게클릭");
 
         if (isClickValid(x, y)) {    // 클릭 가능한 지점인 경우(클릭된 걸로 파악된 경우)
-
-             // 클릭 가능한 지점인 경우(클릭된 걸로 파악된 경우)
-              //  evtHandled = state.handleEvent2(ctx,this);	// 마커의 URL 을 넘겨 이벤트 처리
-            // TODO: 2016. 9. 21. 여기서 도큐먼트 객체를 생성해주어야하나 ?
+            evtHandled = state.handleEventDocumentAr(ctx,this);
+            Log.i("클릭", "맞클릭");
         }
         return evtHandled;    // 성공했을 경우 true 를 리턴할 것이다
 

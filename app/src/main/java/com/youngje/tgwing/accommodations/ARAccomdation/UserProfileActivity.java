@@ -223,7 +223,6 @@ public class UserProfileActivity extends Activity {
         documentListLayout.setLayoutParams(documentListLayoutParams);
         documentListScroll.addView(documentListLayout);
 
-
         for(int i = 0; i< ARMarker.markersList.size() ; i++) {
             DocumentARMarker documentMarker = (DocumentARMarker)ARMarker.markersList.get(i);
             Log.i("정보정보",i +":" + documentMarker.getUid());
@@ -374,8 +373,6 @@ public class UserProfileActivity extends Activity {
             contentLayout.addView(videoView);
         }
 
-
-
         TextView commentView = new TextView(this);
         LinearLayout.LayoutParams commentViewParams = new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         commentView.setLayoutParams(commentViewParams);
@@ -399,7 +396,7 @@ public class UserProfileActivity extends Activity {
     }
 
     public void profileLoad () {
-        // TODO: 2016. 9. 14. user image 가져오는거해야됨
+
         String profileURL = user.getImageUri();
         String userName = user.getUserName();
 

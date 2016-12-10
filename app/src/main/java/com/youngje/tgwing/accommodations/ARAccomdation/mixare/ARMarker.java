@@ -69,7 +69,7 @@ abstract public class ARMarker implements Comparable<ARMarker> {
 
 	public static List<ARMarker> markersList= new ArrayList<>();
 
-	//TODO : NAVER MARKER용 설명
+
 	private String description = "";
 
 	// 생성자. 타이틀과 위도, 경고, 고도값, 링크될 주소와 데이터 소스를 인자로 받는다 
@@ -278,11 +278,9 @@ abstract public class ARMarker implements Comparable<ARMarker> {
 
 		float maxHeight = Math.round(dw.getHeight() / 10f) + 1;
 
-
 		String textStr = "";    // 출력될 텍스트
 		double d = distance;    // 거리. 미터 단위
 		DecimalFormat df = new DecimalFormat("@#");    // 숫자 포맷은 @숫자
-
 
 		// 위치에 따른 자신과의 거리 출력. 1000m 이상은 km로 대체한다
 		if (d < 1000.0) {

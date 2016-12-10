@@ -85,7 +85,6 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
         
         TextView reviewTextView;
 
-
         // TODO: 2016. 12. 2.  아래것들 처리해야됨 
         // 국적
         ImageView nationalityView; 

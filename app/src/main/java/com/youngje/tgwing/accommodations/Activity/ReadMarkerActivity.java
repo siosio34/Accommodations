@@ -17,8 +17,6 @@ public class ReadMarkerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_marker);
 
-        // TODO: 2016. 10. 16. 상세 글 보기 구현해야됨.
-
         imageView = (ImageView) findViewById(R.id.addReviewButton);
 
         imageView.setOnClickListener(new View.OnClickListener() {

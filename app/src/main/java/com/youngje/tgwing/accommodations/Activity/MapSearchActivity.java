@@ -336,12 +336,8 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    // TODO: 2016. 10. 31. 리스트 뷰 작업해야됨.
-    // ListView 리스트뷰
-
     public void searchListView(List<Marker> markerList) {
-        // TODO: 2016. 10. 31. 거리 1000m 넘으면 수정이 필요하지않을가 싶네.
-         
+
         ListView listview;
         ImageView navigationView;
         SearchListViewAdapter adapter;
@@ -386,13 +382,8 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
                     // get item
                     Marker item = Marker.markerList.get(position);
                     Marker.selectedMarker = item;
-                    Log.d(TAG, "Activate Navigation1 : " + item.getId());
-                    Log.d(TAG, "Activate Navigation2 : " + item.getTitle());
-                    Log.d(TAG, "Activate Navigation3 : " + item.getLat());
-                    Log.d(TAG, "Activate Navigation4 : " + item.getLon());
-                    // TODO: 2016. 10. 31. 적어도 id 는 보내야됨 
                     startActivity(new Intent(getApplicationContext(), SearchListDetailView.class));
-                    // TODO : use item data.
+
                 }
             }
         });
@@ -638,8 +629,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float v) {
-        // TODO: 2016. 11. 3.  단말의현재 위치값을 주기적으로 통보가능 
-        // TODO: 2016. 11. 3.  시발 여기다
+        // 다음 지피에스를 계속 갱신해준다.
 
         if(LocationUtil.DaumCurlocation == null)
             LocationUtil.DaumCurlocation = LocationUtil.curlocation;
@@ -775,8 +765,7 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
-        // TODO: 2016. 10. 31. 토스트 안뜨게 해야될것같긴하다
-        // TODO: 2016. 10. 31. 아님 리스트에 하나만뜨게
+
         com.youngje.tgwing.accommodations.Marker marker = mTagItemMap.get(mapPOIItem.getTag());
         StringBuilder sb = new StringBuilder();
         sb.append("title=").append(marker.getTitle()).append("\n");

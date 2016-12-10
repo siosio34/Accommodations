@@ -76,8 +76,6 @@ public class XMLHandler extends DataHandler {
 	                	// 로그 출력
 	                	Log.v(MixView.TAG,"OSM Node: "+name+" lat "+lat+" lon "+lon+"\n");
 
-
-
 	        			continue;
 	        		}
         		}

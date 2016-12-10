@@ -68,7 +68,7 @@ public class Json extends DataHandler {
                 Log.i("요데이터", jsonArr.toString());
 
                 dataArray = new JSONArray(jsonArr.toString());
-                Log.i("요데이터2", dataArray.toString());
+
                 if(dataArray != null)
                     Log.i("요데이터3", dataArray.toString());
             }
@@ -209,10 +209,6 @@ public class Json extends DataHandler {
         return ma;    // 마커 리턴
     }
 
-
-
-
-
     private ARMarker processDocumentObject(JSONObject jo) throws JSONException {
 
         ARMarker ma = null;
@@ -228,10 +224,10 @@ public class Json extends DataHandler {
         List<Comment> comments = new ArrayList<Comment>();
 
         if(contentType == 1)
-            thisDatasource = DataSource.DATASOURCE.IMAGE;
+            thisDatasource = DataSource.DATASOURCE.DOCUMENT;
 
         else if(contentType == 2)
-            thisDatasource = DataSource.DATASOURCE.VIDEO;
+            thisDatasource = DataSource.DATASOURCE.DOCUMENT;
 
         if(jo.has("contentUrl"))
             contentUrl = jo.getString("contentUrl");
@@ -255,18 +251,10 @@ public class Json extends DataHandler {
             }
         }
 
-        // TODO: 2016. 9. 21.
-        // contenturl 걍 글인 경우
-        // 댓글이 있는 경우 없는경우
-
         ma = new DocumentARMarker(jo.getString("content"),jo.getDouble("lat"),jo.getDouble("lon"),0,contentUrl,thisDatasource,jo.getInt("documentId"),jo.getString("userId"),contentType,
                 jo.getInt("popularity"),jo.getInt("responseWithme"),jo.getInt("responseSeeyou"),jo.getInt("responseNotgood"),jo.getInt("commentNum"),jo.getInt("readNum"),createdate,
                 editDdate,comments);
 
-        // TODO: 2016. 9. 21. 글 아이디 및 유저 아이디도 추가를 해야겟네.
-        // TODO: 2016. 9. 21. 아아 테스트를 하고 싶다  
-
-        Log.i("정보",ma.toString());
 
         return ma;
 

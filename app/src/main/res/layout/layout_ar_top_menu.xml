@@ -41,19 +41,14 @@
                 android:src="@mipmap/ic_icon_menu_restaurant" />
 
             <ImageView
-                android:id="@+id/restroom"
-                style="@style/scrollingARView"
-                android:src="@mipmap/ic_icon_menu_restroom" />
-
-            <ImageView
-                android:id="@+id/wifizone"
-                style="@style/scrollingARView"
-                android:src="@mipmap/ic_icon_menu_wifizone" />
-
-            <ImageView
                 android:id="@+id/bank"
                 style="@style/scrollingARView"
                 android:src="@mipmap/ic_icon_menu_bank" />
+
+            <ImageView
+                android:id="@+id/pharmacy"
+                style="@style/scrollingARView"
+                android:src="@mipmap/ic_icon_menu_pharmacy" />
 
             <ImageView
                 android:id="@+id/hotel"
@@ -61,17 +56,19 @@
                 android:src="@mipmap/ic_icon_menu_hotel" />
 
             <ImageView
-                android:id="@+id/landmark"
+                android:id="@+id/document_only"
                 style="@style/scrollingARView"
-                android:src="@mipmap/ic_icon_menu_landmark" />
-
+                 />
 
             <ImageView
-                android:id="@+id/pharmacy"
+                android:id="@+id/document_with_image"
                 style="@style/scrollingARView"
-                android:src="@mipmap/ic_icon_menu_pharmacy" />
+                />
 
-
+            <ImageView
+                android:id="@+id/document_with_video"
+                style="@style/scrollingARView"
+                />
 
         </LinearLayout>
 
@@ -82,10 +79,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+
         android:layout_alignParentBottom="true">
-        
+
         <ImageView
-            android:id="@+id/navi_button"
+            android:id="@+id/back_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="8dp"
@@ -94,6 +92,18 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             />
+
+
+        <ImageView
+            android:id="@+id/navi_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:layout_toLeftOf="@+id/write_location_button"
+
+            />
+
 
         <ImageView
             android:id="@+id/write_location_button"

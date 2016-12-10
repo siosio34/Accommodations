@@ -94,6 +94,7 @@ public class SearchListViewAdapter extends BaseAdapter {
         holder.distanceView.setText(getItem(position).getDistance());
         holder.ratingStarView.setText(new Float(getItem(position).getNumOfStar()).toString());
 
+        /*
         holder.navigationImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,12 +126,11 @@ public class SearchListViewAdapter extends BaseAdapter {
                 }
             }
         });
+        */
         return convertView;
     }
-
-    // TODO: 2016. 12. 3. 일단 번역부터하자...! 
-    // TODO: 2016. 12. 3. 네이버 정보받아오는건됨...!
-    public void onNavigation(Context context,double endLat,double endLon) throws ExecutionException, InterruptedException, JSONException, IOException {
+    /*
+    //public void onNavigation(Context context,double endLat,double endLon) throws ExecutionException, InterruptedException, JSONException, IOException {
         //요기까지
 
         curlocate = LocationUtil.curlocation;
@@ -142,7 +142,6 @@ public class SearchListViewAdapter extends BaseAdapter {
         // TODO: 2016. 12. 4. 영상 실시간 안되면 링크라도 던져주자! 
        // String result = new HttpHandler().execute(naverRouteRequestUrl).get();
 
-        // TODO: 2016. 10. 25. navigation
          // String fromCoord = "WGS84";
          // String toCoord = "WCONGNAMUL";
          // String type = "json";
@@ -214,13 +213,14 @@ public class SearchListViewAdapter extends BaseAdapter {
             //   for(int i=1; i<list.size(); i++)
             //       tempArray.add(new pointOnMap(list.get(i).getLat(), list.get(i).getLon()));
 
-            //   // TODO: 2016. 11. 28. 이거 네비 처리완료해야된다
+
             //   // 그림을 갱신함.
 
             //   ((MapSearchActivity)activity).drawLineFromStartPoint(startPoint,tempArray);
 
 
     }
+    */
 
     private RatingBar.OnRatingBarChangeListener onRatingChangedListener(final ViewHolder holder, final int position) {
         return new RatingBar.OnRatingBarChangeListener() {

@@ -79,9 +79,11 @@ public class DataHandler implements Serializable{
 	public void updateActivationStatus(MixContext mixContext) {
 		// 클래스와 정수형 변수의 해쉬테이블 맵
 		Hashtable<Class, Integer> map = new Hashtable<Class, Integer>();
-		
+
+
 		// 모든 마커에 적용
 		for(ARMarker ma: markerList) {
+
 
 			Class mClass = ma.getClass();
 			// 맵의 클래스가 null 이 아닐 경우에 클래스를 대입. null 일 경우엔 1
@@ -91,10 +93,13 @@ public class DataHandler implements Serializable{
 			boolean belowMax = (map.get(mClass) <= ma.getMaxObjects());
 			// 데이터 소스가 선택 되었는지 판단
 
+			// 이게 펄스로 들어와잇네 ㅂㄷㅂㄷ
 			boolean dataSourceSelected = mixContext.isDataSourceSelected(ma.getDatasource());
 
 			//Log.i("setActive값 지정 ")
 			// 판단된 boolean 값으로 상태를 지정한다(모두 참일 시에 활성)
+
+			// 데이터 소스가 셀렉되었는가 !
 
 			ma.setActive((belowMax && dataSourceSelected));
 		}
@@ -139,8 +144,7 @@ public class DataHandler implements Serializable{
 	}
 
 	public static String getDateString(Date createDate) {
-		System.out.println("aaa "+System.currentTimeMillis());
-		System.out.println("aaa "+createDate.getTime());
+
 		long timeDiff = System.currentTimeMillis() - createDate.getTime();
 		System.out.println("timeDiffqweqwe "+timeDiff);
 

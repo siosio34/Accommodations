@@ -26,6 +26,8 @@ import android.graphics.Color;
 
 import com.youngje.tgwing.accommodations.R;
 
+import java.util.function.ToDoubleBiFunction;
+
 import static com.youngje.tgwing.accommodations.Data.DataFormat.DATATYPE.BANK;
 
 
@@ -35,11 +37,11 @@ public class DataSource {
 
     // 데이터 소스와 데이터 포맷의 열거형 변수
     public enum DATASOURCE {
-        CAFE,BUSSTOP,Convenience,Restaurant,BANK,HOSPITAL,SPORT,ACCOMMODATION,DOCUMENT, IMAGE, VIDEO
+        CAFE,BUSSTOP,Convenience,Restaurant,BANK,HOSPITAL,ACCOMMODATION,DOCUMENT, IMAGE, VIDEO
     };
 
     public enum DATAFORMAT {
-        CAFE,BUSSTOP,Convenience,Restaurant,BANK,HOSPITAL,SPORT,ACCOMMODATION,DOCUMENT, IMAGE, VIDEO
+        CAFE,BUSSTOP,Convenience,Restaurant,BANK,HOSPITAL,ACCOMMODATION,DOCUMENT, IMAGE, VIDEO
     };
 
     // 주의할것! 방대한 양의 데이터(MB단위 이상)을 산출할 때에는, 작은 반경이나 특정한 쿼리만을 사용해야한다
@@ -54,11 +56,14 @@ public class DataSource {
     public static Bitmap restraurantIcon; // 레스토랑
     public static Bitmap convenienceIcon; // 편의점
 
+    // TODO: 2016. 12. 11. 아래 네개거 추가 
+
     public static Bitmap bankIcon; // 은행
     public static Bitmap hospitalIcon; //병원
     public static Bitmap accommodationIcon; // 숙박
-    public static Bitmap sportIcon; //스포츠
+    
 
+    // TODO: 2016. 12. 11. 도큐먼트 뿐만아니라 다른것도 분리. 
 
     public static Bitmap documentIcon;
     public static Bitmap imageIcon;
@@ -77,11 +82,12 @@ public class DataSource {
         restraurantIcon = BitmapFactory.decodeResource(res,R.drawable.icon_store);
         convenienceIcon = BitmapFactory.decodeResource(res,R.drawable.icon_conveni);
 
-        documentIcon = BitmapFactory.decodeResource(res, R.drawable.icon_conveni);
-        imageIcon = BitmapFactory.decodeResource(res,R.drawable.icon_conveni);
-        videoIcon = BitmapFactory.decodeResource(res,R.drawable.icon_conveni);
-        // TODO: 2016. 9. 20. 이거 채워넣어야됨
+        // TODO: 2016. 12. 10. 나머지추가
 
+        // TODO: 2016. 12. 11. icon 들 변경해야됨.. 
+        documentIcon = BitmapFactory.decodeResource(res, R.drawable.sns_0);
+        imageIcon = BitmapFactory.decodeResource(res,R.drawable.sns_1);
+        videoIcon = BitmapFactory.decodeResource(res,R.drawable.sns_2);
 
     }
 
@@ -106,21 +112,15 @@ public class DataSource {
                 bitmap = restraurantIcon;
                 break;
 
-
             case "BANK":
                 break;
 
             case "ACCOMMODATION":
                 break;
 
-            case "SPORT":
-                break;
-
             case "HOSPITAL":
                 break;
 
-            case "STORE":
-                break;
 
             case "DOCUMENT":
                 bitmap = documentIcon;
@@ -162,17 +162,14 @@ public class DataSource {
 
             case BANK:
                 break;
-
-            case ACCOMMODATION:
-                break;
-
+            
             case HOSPITAL:
                 break;
 
-            case SPORT:
+            case ACCOMMODATION:
                 break;
-
-            //  파이어베이스 ...?
+            
+            //  파이어베이스 부분
             case DOCUMENT:
                 ret = DATAFORMAT.DOCUMENT;
                 break;
@@ -240,12 +237,6 @@ public class DataSource {
                             "%3B" + Double.toString(lat + 0.01) + "&pageSize=100";
                     break;
 
-                case SPORT:
-                    ret =  "http://map.naver.com/search2/interestSpot.nhn?type=SPORT&boundary=" + Double.toString(lon - 0.02) + "%3B" +
-                            Double.toString(lat - 0.01) + "%3B" + Double.toString(lon + 0.02) +
-                            "%3B" + Double.toString(lat + 0.01) + "&pageSize=100";
-                    break;
-
                 case ACCOMMODATION:
                     ret =  "http://map.naver.com/search2/interestSpot.nhn?type=ACCOMMDATION&boundary=" + Double.toString(lon - 0.02) + "%3B" +
                             Double.toString(lat - 0.01) + "%3B" + Double.toString(lon + 0.02) +
@@ -263,11 +254,11 @@ public class DataSource {
                 case DOCUMENT:
                 case IMAGE:
                 case VIDEO:
-                    ret = "https://hackfair-c7518.firebaseio.com/posts.json";
+                    ret = "https://tourseoul-451de.firebaseio.com/posts.json";
                     break;
 
                 default:
-                    ret = "https://hackfair-c7518.firebaseio.com/posts.json";
+                    ret = "https://tourseoul-451de.firebaseio.com/posts.json";
                     break;
 
             }

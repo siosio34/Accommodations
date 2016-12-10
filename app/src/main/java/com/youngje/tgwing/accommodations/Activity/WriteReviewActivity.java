@@ -133,7 +133,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
                 startActivityForResult(intent, REQUEST_IMAGE);
 
-                // TODO: 2016. 10. 16. 카메라찍기 ,찍은거 이미지뷰들에 올리기.
+
 
             }
         });
@@ -171,7 +171,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                 intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
                 startActivityForResult(intent, REQUEST_VIDEO);
 
-                // TODO: 2016. 10. 16. 캠코더 ~
+
             }
         });
 

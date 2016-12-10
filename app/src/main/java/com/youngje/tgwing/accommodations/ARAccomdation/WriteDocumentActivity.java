@@ -69,8 +69,8 @@ public class WriteDocumentActivity extends Activity {
 
     private Uri mDownloadUrl = null;
 
-    Double curlat = 0.0;
-    Double curlon = 0.0;
+    Double curlat;
+    Double curlon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +96,9 @@ public class WriteDocumentActivity extends Activity {
 
         curlat = intent.getDoubleExtra("lat",0.0);
         curlon = intent.getDoubleExtra("lon",0.0);
+
+        Log.i("curlat",String.valueOf(curlat));
+        Log.i("curlat",String.valueOf(curlon));
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -199,7 +202,6 @@ public class WriteDocumentActivity extends Activity {
         String content = editText.getText().toString();
         Date currentDate = new Date();
 
-        // TODO: 2016. 9. 20. 경도 위도도 저장해야함 
         Document document = new Document(0, uid, content, 0, null, null, 0, 0, 0, 0, 0, 0, 0, currentDate, currentDate, null,curlat,curlon);
         return document;
     }

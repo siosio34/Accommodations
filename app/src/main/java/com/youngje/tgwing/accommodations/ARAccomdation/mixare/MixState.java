@@ -70,14 +70,23 @@ public class MixState {
     // 이벤트 처리
     public boolean handleEvent(MixContext ctx, String onPress, String title, PhysicalPlace log) {
 
-        // TODO: 2016. 9. 9. 여기에 진행할 이벤트 만들면 될듯함 현재는 다이얼로그 클릭이벤트 받는거 확인하기 위해서 다이얼로그 그대로 띄울고 나중에 삭제 예정
-
-
         DialogSelectOption(ctx, title, log, onPress);
+
 
         //DialogSelectOption(ctx, title, log, onPress);
         return true;
     }
+
+    public boolean handleEventDocumentAr(MixContext ctx, DocumentARMarker documentMarker) {
+
+        Intent readDocumentIntent = new Intent(ctx, ReadDocumentActivity.class);
+        DocumentARMarker.selectedMarker = documentMarker;
+        ctx.startActivity(readDocumentIntent);
+
+        return true;
+    }
+
+
 
     // 이벤트 처리
    // public boolean handleEvent2(MixContext ctx, DocumentARMarker documentMarker) {

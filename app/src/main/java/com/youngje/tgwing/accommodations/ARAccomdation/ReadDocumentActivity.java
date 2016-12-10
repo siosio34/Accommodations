@@ -234,7 +234,6 @@ public class ReadDocumentActivity extends Activity {
                     Log.i("코멘트",user.getUserName());
                     Log.i("이름",user.getUserId());
                     documentMarker.getCommentList().add(comment);
-                    // TODO: 2016. 9. 23. documentid 처리
                     postComment();
                     commentLayout.addView(createCommentLayout(user.getImageUri(), user.getUserName(), DataHandler.getDateString(currentDate), inputText));
                 }

@@ -100,8 +100,6 @@ public class DataFormat {
         String searchType = dataformat.getValue(); // 뭘 검색해야하나
         String curloc = Double.toString(lat) + "," + Double.toString(lon);
 
-        // TODO: 2016. 9. 27. 이거는 다시짤가 생각좀
-
         requestUrl = "https://apis.daum.net/local/v1/search/category.json?" +
                 "apikey=" + daumApikey + "&code=" + searchType + "&location=" + curloc +
                 "&radius=" + radius + "&sort=" + sort;

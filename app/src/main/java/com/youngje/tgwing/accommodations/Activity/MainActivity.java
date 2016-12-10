@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, UserSignInActivity.class));
                 break;
         }
-        // TODO: 2016. 10. 1. 완성해야될 필요성 있으
+
     }
 
 

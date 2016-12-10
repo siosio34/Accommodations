@@ -158,17 +158,19 @@ public class MixListView extends ListActivity {
 							String tagName= "";
 
 							DataSource.DATASOURCE tempDataSource = ma.getDatasource();
-							Log.i("뿌우우우우우우",tempDataSource.toString());
-							if(tempDataSource == DataSource.DATASOURCE.CAFE)
-								tagName ="[카페] ";
+
+							if(tempDataSource == DataSource.DATASOURCE.CAFE) tagName ="[카페] ";
+							else if(tempDataSource == DataSource.DATASOURCE.BUSSTOP) tagName="[대중교통]";
+							else if(tempDataSource == DataSource.DATASOURCE.ACCOMMODATION) tagName ="[숙박]";
+							else if(tempDataSource == DataSource.DATASOURCE.Convenience) tagName = "[편의점]";
+							else if(tempDataSource == DataSource.DATASOURCE.BANK) tagName = "[은행]";
+							else if(tempDataSource == DataSource.DATASOURCE.Restaurant) tagName = "[식당]";
+							else if(tempDataSource == DataSource.DATASOURCE.HOSPITAL) tagName = "[병원]";
+							else if(tempDataSource == DataSource.DATASOURCE.SPORT) tagName = "[스포츠]";
+							else if(tempDataSource == DataSource.DATASOURCE.DOCUMENT) tagName = "[커스텀]";
 
 							underlinedTitle = new SpannableString("  "+String.valueOf((int) ma.getDistance()) + "m"  + "   |   " + tagName + ma.getTitle());
-
-							//underlinedTitle.setSpan(new UnderlineSpan(), 0, underlinedTitle.length(), 0);
-							// 리스트 뷰에 추가한다
 							listViewMenu.add(underlinedTitle); // 리스트 뷰 메뉴
-
-
 
 					/*타이틀이 일치하는 웹사이트를 등록*/
 						if (ma.getURL()!=null)

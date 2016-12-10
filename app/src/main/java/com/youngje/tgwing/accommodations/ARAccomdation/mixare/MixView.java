@@ -59,6 +59,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -84,6 +85,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.youngje.tgwing.accommodations.ARAccomdation.UserProfileActivity;
 import com.youngje.tgwing.accommodations.ARAccomdation.WriteDocumentActivity;
 import com.youngje.tgwing.accommodations.ARAccomdation.mixare.data.DataHandler;
 import com.youngje.tgwing.accommodations.ARAccomdation.mixare.data.DataSource;
@@ -152,6 +154,7 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
     private Matrix m4 = new Matrix();
 
     private ImageView backButton;
+    private ImageView myDocumentButton;
     private ImageView writeDoucumentButton;
 
     private SeekBar myZoomBar;    // 줌 배율을 설정하기 위함
@@ -282,21 +285,30 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
             case R.id.cafe:
                 datasource = DataSource.DATASOURCE.CAFE;
                 temp = 0;
-                Log.i("클릭됨", "클릭됨1");
+
                 break;
             case R.id.train: //
                 datasource = DataSource.DATASOURCE.BUSSTOP;
                 temp = 1;
-                Log.i("클릭됨", "클릭됨2");
+
                 break;
             case R.id.restaurant:
                 datasource = DataSource.DATASOURCE.Restaurant;
                 temp = 2;
                 break;
+
             case R.id.market:
                 datasource = DataSource.DATASOURCE.Convenience;
                 temp = 3;
                 break;
+
+
+            case R.id.restroom:
+                datasource = DataSource.DATASOURCE.DOCUMENT;
+                break;
+
+
+
             default:
                 datasource = null;
                 break;
@@ -318,9 +330,8 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("NAVI")) {
                 String guide = intent.getStringExtra("GUIDE");
-                Log.i("에러의심구역1", "에러의심구역1");
                 Toast.makeText(getApplicationContext(), guide, Toast.LENGTH_SHORT).show();
-                Log.i("에러의심구역2", "에러의심구역2");
+
             }
         }
     };
@@ -447,12 +458,36 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
             doError(ex);    // 예외 발생시 에러 처리
         }
 
-        //backButton = findViewById(R.id);
+        // TODO: 2016. 12. 11. 내글 보기랑 뒤로가기 추가.
+        // TODO: 2016. 12. 11. 이미지들 추가해야됨.
+
+        backButton = (ImageView) findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        myDocumentButton = (ImageView)findViewById(R.id.navi_button);
+        myDocumentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent userDocumentIntet = new Intent(MixView.this, UserProfileActivity.class);
+                startActivity(userDocumentIntet);
+            }
+        });
+
+
         writeDoucumentButton = (ImageView)findViewById(R.id.write_location_button);
         writeDoucumentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent writeDocumentIntet = new Intent(MixView.this, WriteDocumentActivity.class);
+                Location temp = mixContext.getCurrentGPSInfo();
+                writeDocumentIntet.putExtra("lat",temp.getLatitude());
+                writeDocumentIntet.putExtra("lon",temp.getLongitude());
                 startActivity(writeDocumentIntet);
 
             }
@@ -745,7 +780,7 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
         MenuItem item1 = menu.add(base, base, base, getString(DataView.MENU_ITEM_1));
         MenuItem item2 = menu.add(base, base + 1, base + 1, getString(DataView.MENU_ITEM_2));
         MenuItem item3 = menu.add(base, base + 2, base + 2, getString(DataView.MENU_ITEM_4));
-        MenuItem itme4 = menu.add(base, base + 3, base + 3, getString(DataView.MENU_ITEM_5));
+
 
 
         return true;
