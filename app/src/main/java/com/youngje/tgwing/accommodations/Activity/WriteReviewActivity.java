@@ -174,13 +174,14 @@ public class WriteReviewActivity extends AppCompatActivity {
             }
         });
 
+         
         ratingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
 
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 String rateValue = String.valueOf(ratingBar.getRating());
+                Toast.makeText(WriteReviewActivity.this,new Float(ratingBar.getRating()).toString(),Toast.LENGTH_SHORT).show();
                 Log.i("별점 테스트 : ", rateValue);
-
             }
         });
 

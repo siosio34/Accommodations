@@ -43,6 +43,9 @@ import com.youngje.tgwing.accommodations.Translate;
 import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -155,9 +158,14 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
 
                     Log.i("translatehttpUrl",translatehttpUrl);
                     String transtedString = new HttpHandler().execute(translatehttpUrl).get();
-                    Log.i("transtedString",transtedString);
-
-                    Toast.makeText(context,transtedString,Toast.LENGTH_LONG).show();
+                    String parsedString = "";
+                    try{
+                        parsedString = new JSONObject(transtedString).getJSONObject("data").getJSONArray("translations").getJSONObject(0).getString("translatedText");
+                    }catch(NullPointerException e){
+                        e.printStackTrace();
+                    }finally {
+                        Toast.makeText(context,parsedString,Toast.LENGTH_LONG).show();
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
