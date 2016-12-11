@@ -1,8 +1,11 @@
 package com.youngje.tgwing.accommodations.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.text.Html;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,7 +85,6 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
         
         ImageView reviewPictureView;
 
-        
         TextView reviewTextView;
 
         // TODO: 2016. 12. 2.  아래것들 처리해야됨 
@@ -118,6 +120,12 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
         likeNumView = (TextView) view.findViewById(R.id.listview_detail_item_liked);
         likeImage = (ImageView) view.findViewById(R.id.liked_image_button);
 
+        final Review item = reviews.get(pos);
+        TextView localeText = (TextView)view.findViewById(R.id.listview_detail_item_userLocale);
+        if(item.getWriteUserLocale() != null) {
+            localeText.setText(item.getWriteUserLocale());
+        } else { localeText.setText("ko"); }
+
         Button translateButton = (Button)view.findViewById(R.id.listview_detail_item_translateButton);
         translateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,22 +153,35 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
                 }
             }
         });
-        Review item = reviews.get(pos);
 
         //RelativeLayout relativeLayoutTemp = (RelativeLayout)view.findViewById(R.id.reviewContentLayout);
 
         switch (item.getContentType()) {
             case 0:
+                reviewTextView.setText(item.getContent());
                 reviewPictureView.setVisibility(View.GONE);
                 reviewVideoView.setVisibility(View.GONE);
                 break;
             case 1:
+                reviewTextView.setText(item.getContent());
                 Picasso.with(view.getContext()).load(item.getreviewContentUrl()).into(reviewPictureView);
                 reviewPictureView.setVisibility(View.VISIBLE);
                 reviewVideoView.setVisibility(View.GONE);
                 break;
-            // TODO: 2016. 12. 2. 비디오뷰안됨 존나... 
             case 2:
+                reviewTextView.setText(item.getContent());
+
+                reviewTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        Uri uri = Uri.parse(item.getreviewContentUrl());
+                        i.setData(uri);
+                        context.startActivity(i);
+                    }
+                });
+
+                // TODO: 2016. 12. 11. 유알엘만 띄우는 걸로하자.
 
                // reviewPictureView.setVisibility(View.GONE);
                // reviewVideoView.setVisibility(View.VISIBLE);
@@ -211,7 +232,7 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
         userName.setText(item.getUserName());
         Picasso.with(context).load(item.getUserImageUrl()).into(profileView);
         //dateView.setText(item.getCreateDate().toString());
-        reviewTextView.setText(item.getContent());
+       // reviewTextView.setText(item.getContent());
 
         return view;
     }

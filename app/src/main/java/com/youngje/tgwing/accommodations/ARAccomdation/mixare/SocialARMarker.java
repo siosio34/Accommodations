@@ -64,7 +64,6 @@ public class SocialARMarker extends ARMarker {
 		if (isVisible) {
 			float maxHeight = Math.round(dw.getHeight() / 10f) + 1;	// 최대 높이 계산
 			// 데이터 소스의 비트맵 파일을 읽어온다
-
 			Bitmap bitmap = DataSource.getBitmap(getFlag);
 			
 			// 비트맵 파일이 읽혔다면 적절한 위치에 출력

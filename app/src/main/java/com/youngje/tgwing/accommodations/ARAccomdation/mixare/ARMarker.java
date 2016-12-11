@@ -180,8 +180,6 @@ abstract public class ARMarker implements Comparable<ARMarker> {
 			// 카메라 마커가 현재 카메라 뷰의 공간 안에 있는지 판단 
 			if (MixUtils.pointInside(cMarker.x, cMarker.y, 0, 0,
 					viewCam.width, viewCam.height)) {
-
-
 			}
 		}
 	}

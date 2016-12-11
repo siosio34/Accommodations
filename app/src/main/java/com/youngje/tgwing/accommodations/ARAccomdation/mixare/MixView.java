@@ -110,7 +110,7 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
     private TextView oriTV = null;
     private TextView accTV = null;
 
-    public static boolean arr[] = new boolean[12];
+  //  public static boolean arr[] = new boolean[12];
 
     public double mapLat = 0;
     public double mapLog = 0;
@@ -278,43 +278,53 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
 
         DataSource.DATASOURCE datasource = null;
 
-        int temp = 0;
-
         // TODO: 2016. 12. 9. 다른 카테고리 추가해야된다.
         switch (v.getId()) {
+
             case R.id.cafe:
                 datasource = DataSource.DATASOURCE.CAFE;
-                temp = 0;
-
                 break;
+
             case R.id.train: //
                 datasource = DataSource.DATASOURCE.BUSSTOP;
-                temp = 1;
-
                 break;
+
             case R.id.restaurant:
                 datasource = DataSource.DATASOURCE.Restaurant;
-                temp = 2;
                 break;
 
             case R.id.market:
                 datasource = DataSource.DATASOURCE.Convenience;
-                temp = 3;
                 break;
 
+            case R.id.bank:
+                datasource  = DataSource.DATASOURCE.BANK;
+                break;
 
-            case R.id.restroom:
+            case R.id.pharmacy:
+                datasource = DataSource.DATASOURCE.HOSPITAL;
+                break;
+
+            case R.id.hotel:
+                datasource = DataSource.DATASOURCE.ACCOMMODATION;
+                break;
+
+            case R.id.document_only:
                 datasource = DataSource.DATASOURCE.DOCUMENT;
                 break;
 
+            case R.id.document_with_image:
+                datasource = DataSource.DATASOURCE.IMAGE;
+                break;
 
+            case R.id.document_with_video:
+                datasource = DataSource.DATASOURCE.VIDEO;
+                break;
 
             default:
                 datasource = null;
                 break;
         }
-
-        arr[temp] = !arr[temp];
 
         if (datasource == null)
             Toast.makeText(mixContext, "지원하는 데이터소스없음", Toast.LENGTH_SHORT).show();
@@ -473,7 +483,6 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
         myDocumentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent userDocumentIntet = new Intent(MixView.this, UserProfileActivity.class);
                 startActivity(userDocumentIntet);
             }
@@ -781,8 +790,6 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
         MenuItem item2 = menu.add(base, base + 1, base + 1, getString(DataView.MENU_ITEM_2));
         MenuItem item3 = menu.add(base, base + 2, base + 2, getString(DataView.MENU_ITEM_4));
 
-
-
         return true;
     }
 
@@ -895,7 +902,7 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
 
     }
 
-    ;
+
 
     // 시크바 체인지 리스너. 줌 레벨 설정시의 줌 바를 처리하기 위함
     private SeekBar.OnSeekBarChangeListener myZoomBarOnSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -1070,8 +1077,6 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
 
     // 위치가 변경되었을 경우
     public void onLocationChanged(Location location) {
-
-
         try {
             killOnError();    // 에러 여부 체크
             gpsLat = location.getLatitude();

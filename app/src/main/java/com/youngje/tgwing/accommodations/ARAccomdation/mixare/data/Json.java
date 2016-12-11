@@ -54,6 +54,7 @@ public class Json extends DataHandler {
         try {
             if (root.has("result") && root.getJSONObject("result").has("site")) // d연결 가능한 링크를 가졌을시
                 dataArray = root.getJSONObject("result").getJSONArray("site");
+
             else {
                 String jsonArr = "[";
                 Iterator iterator = root.keys();
@@ -106,6 +107,18 @@ public class Json extends DataHandler {
                             ma = processConvenienceJSONObject(jo);
                             break;
 
+                        case BANK:
+                            ma = processBankJSONObject(jo);
+                            break;
+
+                        case HOSPITAL:
+                            ma = processHospitalJSONObject(jo);
+                            break;
+
+                        case ACCOMMODATION:
+                            ma = processAccomdationJSONObject(jo);
+                            break;
+
                         case DOCUMENT:
                         case VIDEO:
                         case IMAGE:
@@ -155,6 +168,89 @@ public class Json extends DataHandler {
         }
         return ma;
     }
+
+    public ARMarker processBankJSONObject(JSONObject jo)  throws JSONException {
+        ARMarker ma = null;
+
+
+        // 형식에 맞는지 검사. 타이틀과 위도, 경도, 고도 태그를 찾는다
+        if (jo.has("x") && jo.has("y") && jo.has("name")) {
+            Log.v(MixView.TAG, "processing Mixare JSON object");    // 로그 출력
+
+            String linkTemp = null;
+            linkTemp = jo.getString("id");
+
+            String linkbasic = "http://map.naver.com/local/siteview.nhn?code=" + linkTemp.substring(1);
+            Log.i("linkbasic",linkbasic);
+
+            // 할당된 값들로 마커 생성, // 일단은 경도, 위도, 이름만.
+            // 맨뒤에값은 플래그 일단 Flag 0 는 카페정보
+            ma = new SocialARMarker(
+                    jo.getString("name"),
+                    jo.getDouble("y"),
+                    jo.getDouble("x"),
+                    0,
+                    linkbasic,
+                    DataSource.DATASOURCE.BANK,"BANK");
+        }
+        return ma;    // 마커 리턴
+    }
+
+    public ARMarker processHospitalJSONObject(JSONObject jo)  throws JSONException {
+        ARMarker ma = null;
+
+
+        // 형식에 맞는지 검사. 타이틀과 위도, 경도, 고도 태그를 찾는다
+        if (jo.has("x") && jo.has("y") && jo.has("name")) {
+            Log.v(MixView.TAG, "processing Mixare JSON object");    // 로그 출력
+
+            String linkTemp = null;
+            linkTemp = jo.getString("id");
+
+            String linkbasic = "http://map.naver.com/local/siteview.nhn?code=" + linkTemp.substring(1);
+            Log.i("linkbasic",linkbasic);
+
+            // 할당된 값들로 마커 생성, // 일단은 경도, 위도, 이름만.
+            // 맨뒤에값은 플래그 일단 Flag 0 는 카페정보
+            ma = new SocialARMarker(
+                    jo.getString("name"),
+                    jo.getDouble("y"),
+                    jo.getDouble("x"),
+                    0,
+                    linkbasic,
+                    DataSource.DATASOURCE.HOSPITAL,"HOSPITAL");
+        }
+        return ma;    // 마커 리턴
+    }
+
+    public ARMarker processAccomdationJSONObject(JSONObject jo)  throws JSONException {
+        ARMarker ma = null;
+
+
+        // 형식에 맞는지 검사. 타이틀과 위도, 경도, 고도 태그를 찾는다
+        if (jo.has("x") && jo.has("y") && jo.has("name")) {
+            Log.v(MixView.TAG, "processing Mixare JSON object");    // 로그 출력
+
+            String linkTemp = null;
+            linkTemp = jo.getString("id");
+
+            String linkbasic = "http://map.naver.com/local/siteview.nhn?code=" + linkTemp.substring(1);
+            Log.i("linkbasic",linkbasic);
+
+            // 할당된 값들로 마커 생성, // 일단은 경도, 위도, 이름만.
+            // 맨뒤에값은 플래그 일단 Flag 0 는 카페정보
+            ma = new SocialARMarker(
+                    jo.getString("name"),
+                    jo.getDouble("y"),
+                    jo.getDouble("x"),
+                    0,
+                    linkbasic,
+                    DataSource.DATASOURCE.ACCOMMODATION,"ACCOMMODATION");
+        }
+        return ma;    // 마커 리턴
+    }
+
+
 
     public ARMarker processConvenienceJSONObject(JSONObject jo)  throws JSONException {
         ARMarker ma = null;
@@ -224,10 +320,10 @@ public class Json extends DataHandler {
         List<Comment> comments = new ArrayList<Comment>();
 
         if(contentType == 1)
-            thisDatasource = DataSource.DATASOURCE.DOCUMENT;
+            thisDatasource = DataSource.DATASOURCE.IMAGE;
 
         else if(contentType == 2)
-            thisDatasource = DataSource.DATASOURCE.DOCUMENT;
+            thisDatasource = DataSource.DATASOURCE.VIDEO;
 
         if(jo.has("contentUrl"))
             contentUrl = jo.getString("contentUrl");

@@ -116,11 +116,9 @@ public class DocumentARMarker extends ARMarker implements Serializable {
     public boolean fClick(float x, float y, MixContext ctx, MixState state) {
 
         boolean evtHandled = false;
-        Log.i("클릭", "틀리게클릭");
 
         if (isClickValid(x, y)) {    // 클릭 가능한 지점인 경우(클릭된 걸로 파악된 경우)
             evtHandled = state.handleEventDocumentAr(ctx,this);
-            Log.i("클릭", "맞클릭");
         }
         return evtHandled;    // 성공했을 경우 true 를 리턴할 것이다
 

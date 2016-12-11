@@ -223,7 +223,12 @@ public class UserProfileActivity extends Activity {
         documentListLayout.setLayoutParams(documentListLayoutParams);
         documentListScroll.addView(documentListLayout);
 
+        // TODO: 2016. 12. 11. 클래스 비교해서 예외처리해야됨. 
+        
+        //// TODO: 2016. 12. 11. 같이 있으면 터지네 하아... 
+
         for(int i = 0; i< ARMarker.markersList.size() ; i++) {
+
             DocumentARMarker documentMarker = (DocumentARMarker)ARMarker.markersList.get(i);
             Log.i("정보정보",i +":" + documentMarker.getUid());
             if(user.getUserId().equals(documentMarker.getUid())) {

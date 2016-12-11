@@ -118,7 +118,12 @@ public class MixListView extends ListActivity {
 				dataSourceMenu.add("정류장/역");
 				dataSourceMenu.add("음식점");
 				dataSourceMenu.add("편의점");
-				dataSourceMenu.add("도큐먼트");
+				dataSourceMenu.add("은행");
+				dataSourceMenu.add("병원");
+				dataSourceMenu.add("숙박");
+				dataSourceMenu.add("글");
+				dataSourceMenu.add("이미지");
+				dataSourceMenu.add("동영상");
 
 				// 각 항목의 체크여부를 등록
 				dataSourceChecked = new Vector<Boolean>();
@@ -128,7 +133,12 @@ public class MixListView extends ListActivity {
 				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.BUSSTOP));
 				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.Restaurant));
 				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.Convenience));
+				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.BANK));
+				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.HOSPITAL));
+				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.ACCOMMODATION));
 				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.DOCUMENT));
+				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.IMAGE));
+				dataSourceChecked.add(mixContext.isDataSourceSelected(DataSource.DATASOURCE.VIDEO));
 
 				// 리스트 어댑터를 생성하고 설정
 				adapter = new ListItemAdapter(this);
@@ -166,8 +176,10 @@ public class MixListView extends ListActivity {
 							else if(tempDataSource == DataSource.DATASOURCE.BANK) tagName = "[은행]";
 							else if(tempDataSource == DataSource.DATASOURCE.Restaurant) tagName = "[식당]";
 							else if(tempDataSource == DataSource.DATASOURCE.HOSPITAL) tagName = "[병원]";
-							else if(tempDataSource == DataSource.DATASOURCE.SPORT) tagName = "[스포츠]";
-							else if(tempDataSource == DataSource.DATASOURCE.DOCUMENT) tagName = "[커스텀]";
+							else if(tempDataSource == DataSource.DATASOURCE.DOCUMENT) tagName = "[글]";
+							else if(tempDataSource == DataSource.DATASOURCE.IMAGE) tagName = "[이미지]";
+							else if(tempDataSource == DataSource.DATASOURCE.VIDEO) tagName = "[동영상]";
+
 
 							underlinedTitle = new SpannableString("  "+String.valueOf((int) ma.getDistance()) + "m"  + "   |   " + tagName + ma.getTitle());
 							listViewMenu.add(underlinedTitle); // 리스트 뷰 메뉴
@@ -364,6 +376,7 @@ public class MixListView extends ListActivity {
 			case 2:
 				mixContext.toogleDataSource(DataSource.DATASOURCE.Restaurant);
 				break;
+
 			case 3:
 				mixContext.toogleDataSource(DataSource.DATASOURCE.Convenience);
 				break;
@@ -558,9 +571,6 @@ class ListItemAdapter extends BaseAdapter {
 			bgcolors[i]=0;
 			textcolors[i]=Color.BLACK;
 		}
-
-
-
 	}
 
 	// 데이터 소스 메뉴의 수를 리턴

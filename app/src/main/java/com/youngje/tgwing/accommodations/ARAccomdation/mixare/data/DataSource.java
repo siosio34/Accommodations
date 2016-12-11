@@ -26,11 +26,6 @@ import android.graphics.Color;
 
 import com.youngje.tgwing.accommodations.R;
 
-import java.util.function.ToDoubleBiFunction;
-
-import static com.youngje.tgwing.accommodations.Data.DataFormat.DATATYPE.BANK;
-
-
 // 데이터 소스를 실질적으로 다루는 클래스
 public class DataSource {
 
@@ -56,12 +51,11 @@ public class DataSource {
     public static Bitmap restraurantIcon; // 레스토랑
     public static Bitmap convenienceIcon; // 편의점
 
-    // TODO: 2016. 12. 11. 아래 네개거 추가 
+    // TODO: 2016. 12. 11. 아래 세개거 추가
 
     public static Bitmap bankIcon; // 은행
     public static Bitmap hospitalIcon; //병원
     public static Bitmap accommodationIcon; // 숙박
-    
 
     // TODO: 2016. 12. 11. 도큐먼트 뿐만아니라 다른것도 분리. 
 
@@ -81,10 +75,12 @@ public class DataSource {
         busIcon = BitmapFactory.decodeResource(res,R.drawable.icon_metro);
         restraurantIcon = BitmapFactory.decodeResource(res,R.drawable.icon_store);
         convenienceIcon = BitmapFactory.decodeResource(res,R.drawable.icon_conveni);
+        bankIcon = BitmapFactory.decodeResource(res,R.drawable.icon_bank);
+        hospitalIcon = BitmapFactory.decodeResource(res,R.drawable.icon_hospital);
+        accommodationIcon = BitmapFactory.decodeResource(res,R.drawable.icon_hotel);
 
-        // TODO: 2016. 12. 10. 나머지추가
-
-        // TODO: 2016. 12. 11. icon 들 변경해야됨.. 
+        // TODO: 2016. 12. 11. icon 들 변경해야됨...
+        // 이미지 영상, 비디오 이미지 구해야됨 크기는 40 * 60 정도
         documentIcon = BitmapFactory.decodeResource(res, R.drawable.sns_0);
         imageIcon = BitmapFactory.decodeResource(res,R.drawable.sns_1);
         videoIcon = BitmapFactory.decodeResource(res,R.drawable.sns_2);
@@ -113,14 +109,16 @@ public class DataSource {
                 break;
 
             case "BANK":
+                bitmap = convenienceIcon;
                 break;
 
             case "ACCOMMODATION":
+                bitmap = accommodationIcon;
                 break;
 
             case "HOSPITAL":
+                bitmap = hospitalIcon;
                 break;
-
 
             case "DOCUMENT":
                 bitmap = documentIcon;
@@ -161,12 +159,15 @@ public class DataSource {
                 break;
 
             case BANK:
+                ret = DATAFORMAT.BANK;
                 break;
             
             case HOSPITAL:
+                ret = DATAFORMAT.HOSPITAL;
                 break;
 
             case ACCOMMODATION:
+                ret = DATAFORMAT.ACCOMMODATION;
                 break;
             
             //  파이어베이스 부분

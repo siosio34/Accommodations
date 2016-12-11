@@ -126,14 +126,13 @@ public class WriteReviewActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/TourSeoul/");
+
                 if (!file.exists())
                     file.mkdir();
 
                 destination = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/TourSeoul/" + System.currentTimeMillis() + ".jpg");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
                 startActivityForResult(intent, REQUEST_IMAGE);
-
-
 
             }
         });
@@ -184,21 +183,31 @@ public class WriteReviewActivity extends AppCompatActivity {
 
             }
         });
-        // TODO: 2016. 10. 15.  각 버튼에 대한 이벤트 처리
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
                 try {
-                    FileInputStream in = new FileInputStream(destination);
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inSampleSize = 10;
 
-                    Picasso.with(this).load(data.getData()).noPlaceholder().centerCrop().fit()
-                            .into((ImageView)findViewById(R.id.loadImage));
+                  FileInputStream in = new FileInputStream(destination);
+                  Bitmap bmp = BitmapFactory.decodeStream(in, null, null);
+                  loadImage.setImageBitmap(bmp);
+
+                  //picCamBtnLayout.setVisibility(View.GONE);
+                  //videoView.setVisibility(View.GONE);
+                  //imageView.setVisibility(View.VISIBLE);
+
+                   //FileInputStream in = new FileInputStream(destination);
+                   //BitmapFactory.Options options = new BitmapFactory.Options();
+                   //options.inSampleSize = 10;
+//
+                   //Picasso.with(this).load(data.getData()).noPlaceholder().centerCrop().fit()
+                   //        .into((ImageView)findViewById(R.id.loadImage));
 
                     loadImage.setVisibility(View.VISIBLE);
                     cameraButton.setVisibility(View.GONE);

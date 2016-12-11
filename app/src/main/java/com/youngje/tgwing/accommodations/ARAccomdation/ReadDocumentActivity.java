@@ -187,19 +187,27 @@ public class ReadDocumentActivity extends Activity {
         }
 
         else if(documentMarker.getDocumentType() == 2) {
-            //camera
-            Log.i("urlurlvideo", documentMarker.getURL());
-            final VideoView videoView = new VideoView(this);
-            videoView.setVideoURI(Uri.parse(documentMarker.getURL()));
-            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    MediaController mc = new MediaController(ReadDocumentActivity.this);
-                    videoView.setMediaController(mc);
-                    mc.setAnchorView(videoView);
-                }
-            });
-            documentLeft.addView(videoView);
+
+         //   Display display = getWindowManager().getDefaultDisplay();
+         //   Point size = new Point();
+         //   display.getSize(size);
+          //  int videoSize = size.x * 750;
+//
+//
+          //  final VideoView videoView = new VideoView(this);
+          //  LinearLayout.LayoutParams imgViewParams = new LinearLayout.LayoutParams(videoSize, videoSize);
+          //  videoView.setLayoutParams(imgViewParams);
+          //  videoView.setVideoURI(Uri.parse(documentMarker.getURL()));
+          //  videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+          //      @Override
+          //      public void onPrepared(MediaPlayer mp) {
+          //          MediaController mc = new MediaController(ReadDocumentActivity.this);
+          //          videoView.setMediaController(mc);
+          //          mc.setAnchorView(videoView);
+          //      }
+          //  });
+
+         //  documentLeft.addView(videoView);
         }
 
         TextView documentText = new TextView(this);

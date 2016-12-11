@@ -79,7 +79,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-
         android:layout_alignParentBottom="true">
 
         <ImageView
@@ -100,6 +99,7 @@
             android:layout_height="48dp"
             android:padding="8dp"
             android:scaleType="centerInside"
+            android:src="@drawable/sns_add"
             android:layout_toLeftOf="@+id/write_location_button"
 
             />
