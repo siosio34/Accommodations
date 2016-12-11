@@ -64,6 +64,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -340,8 +341,13 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("NAVI")) {
                 String guide = intent.getStringExtra("GUIDE");
-                Toast.makeText(getApplicationContext(), guide, Toast.LENGTH_SHORT).show();
-
+                Snackbar.make(getWindow().getDecorView().getRootView(), guide, Snackbar.LENGTH_LONG)
+                        .setAction("Action", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(),"스낵바를 클릭한 영제형 김치 :>",Toast.LENGTH_SHORT).show();
+                    }
+                }).show();
             }
         }
     };
