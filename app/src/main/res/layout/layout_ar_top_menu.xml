@@ -58,16 +58,19 @@
             <ImageView
                 android:id="@+id/document_only"
                 style="@style/scrollingARView"
+                android:src="@drawable/ar_document_icon"
                  />
 
             <ImageView
                 android:id="@+id/document_with_image"
                 style="@style/scrollingARView"
+                android:src="@drawable/ar_document_image_icon"
                 />
 
             <ImageView
                 android:id="@+id/document_with_video"
                 style="@style/scrollingARView"
+                android:src="@drawable/ar_document_video_icon"
                 />
 
         </LinearLayout>
@@ -86,7 +89,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="8dp"
-            android:background="@drawable/ic_container_circle"
+            android:background="@drawable/ar_back_button1"
             android:scaleType="centerInside"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
@@ -99,7 +102,7 @@
             android:layout_height="48dp"
             android:padding="8dp"
             android:scaleType="centerInside"
-            android:src="@drawable/sns_add"
+            android:src="@drawable/ar_my_review"
             android:layout_toLeftOf="@+id/write_location_button"
 
             />
