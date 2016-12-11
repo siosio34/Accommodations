@@ -1,17 +1,28 @@
 package com.youngje.tgwing.accommodations.Activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RatingBar;
@@ -169,15 +180,64 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
                 reviewVideoView.setVisibility(View.GONE);
                 break;
             case 2:
-                reviewTextView.setText(item.getContent());
-
+                reviewTextView.setText(item.getContent()+"[동영상]");
+                reviewTextView.setMovementMethod(LinkMovementMethod.getInstance());
                 reviewTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent i = new Intent(Intent.ACTION_VIEW);
-                        Uri uri = Uri.parse(item.getreviewContentUrl());
-                        i.setData(uri);
-                        context.startActivity(i);
+
+                        final SpannableString site = new SpannableString(
+                                item.getreviewContentUrl());
+
+                        Linkify.addLinks(site, Linkify.ALL);
+
+                       final AlertDialog dialog = new AlertDialog.Builder(
+                               context)
+                               .setMessage(site)
+                               .setPositiveButton("OK",
+                                       new DialogInterface.OnClickListener() {
+                                           public void onClick(
+                                                   DialogInterface dialog, int which) {
+                                           }
+                                       }).create();
+
+                       dialog.show();
+
+                       ((TextView) dialog.findViewById(android.R.id.message))
+                               .setMovementMethod(LinkMovementMethod.getInstance());
+
+
+                        //     WebView webview = new WebView(context);    // 웹 뷰
+                 //     webview.getSettings().setJavaScriptEnabled(true);    // 자바스크립트 허용
+                 //     webview.getSettings().setDomStorageEnabled(true);
+                 //     // URL 을 연결하여 웹 뷰 클라이언트를 세팅
+                 //     webview.setWebViewClient(new WebViewClient() {
+                 //         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                 //             view.loadUrl(url);
+                 //             return true;
+                 //         }
+
+                 //     });
+
+                 //     // 다이얼로그를 생성
+                 //     Dialog d = new Dialog(context) {
+                 //         public boolean onKeyDown(int keyCode, KeyEvent event) {
+                 //             if (keyCode == KeyEvent.KEYCODE_BACK)
+                 //                 this.dismiss();
+                 //             return true;
+                 //         }
+                 //     };
+
+                 //     // 웹 뷰를 다이얼로그 연결한다
+                 //     d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                 //     d.getWindow().setGravity(Gravity.BOTTOM);
+                 //     d.addContentView(webview, new FrameLayout.LayoutParams(
+                 //             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,
+                 //             Gravity.BOTTOM));
+
+                 //     d.show();    // 다이얼로그 출력
+
+                 //     webview.loadUrl(item.getreviewContentUrl());    // 웹 뷰에 url 로드
                     }
                 });
 

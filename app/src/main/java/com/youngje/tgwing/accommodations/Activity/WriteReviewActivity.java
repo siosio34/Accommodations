@@ -388,8 +388,6 @@ public class WriteReviewActivity extends AppCompatActivity {
 
       //  myRef.child(locationId).push().setValue(review);
 
-
-
     }
 
     private void showProgressDialog() {
