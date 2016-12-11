@@ -54,6 +54,8 @@ public class MixState {
     public static int READY = 2;
     public static int DONE = 3;
 
+    public static boolean enterNaviEnd = false;
+
     public static Toast myToast;
     private static final int MSG_TOAST_THREAD = 1;
 
@@ -128,41 +130,45 @@ public class MixState {
                             final Intent naviBroadReceiver = new Intent();
                             naviBroadReceiver.setAction("NAVI");
 
+                            Log.i("계속된다","으어계속된다");
+
                             loopThread = new Thread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    // enterNaviEnd 초기엔 펄스 누르면 네비 종료 버튼 누르면 트루
+                                    while (!Thread.currentThread().isInterrupted() && !MixState.enterNaviEnd) {
+                                        try {
+                                            Log.i("계속된다", "으어계속된다");
 
-                                    while (!Thread.currentThread().isInterrupted())
-                                    try {
-                                        String url = DataSource.createNaverMapRequestURL(ctx.getCurrentLocation().getLongitude(), ctx.getCurrentLocation().getLatitude(), log.getLongitude(), log.getLatitude());
-                                        String result = "";
-                                        String guide = "";
+                                            String url = DataSource.createNaverMapRequestURL(ctx.getCurrentLocation().getLongitude(), ctx.getCurrentLocation().getLatitude(), log.getLongitude(), log.getLatitude());
+                                            String result = "";
+                                            String guide = "";
 
-                                        result = new HttpHandler().execute(url).get();
-                                        Log.i("result!!", result);
+                                            result = new HttpHandler().execute(url).get();
+                                            Log.i("result!!", result);
 
-                                        guide = parsingNaverNaviJson(result);
-                                        Log.i("guide!!", guide);
+                                            guide = parsingNaverNaviJson(result);
+                                            Log.i("guide!!", guide);
 
-                                        if(!guide.equals("end")) {
-                                            // 브로드 캐스트 리시버로 전달하는 부분
-                                            naviBroadReceiver.putExtra("GUIDE", guide);
-                                            ctx.sendBroadcast(naviBroadReceiver);
+                                            if (!guide.equals("end")) {
+                                                // 브로드 캐스트 리시버로 전달하는 부분
+                                                naviBroadReceiver.putExtra("GUIDE", guide);
+                                                ctx.sendBroadcast(naviBroadReceiver);
+                                            } else {
+                                                guide = "목적지에 가까워져 네비게이션이 자동종료됩니다.";
+                                                naviBroadReceiver.putExtra("GUIDE", guide);
+                                                ctx.sendBroadcast(naviBroadReceiver);
+                                                loopThread.interrupt();
+                                            }
+                                            Thread.sleep(5000);
+
+                                        } catch (ExecutionException e) {
+                                            e.printStackTrace();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
                                         }
-                                        else {
-                                            guide = "목적지에 가까워져 네비게이션이 자동종료됩니다.";
-                                            naviBroadReceiver.putExtra("GUIDE", guide);
-                                            ctx.sendBroadcast(naviBroadReceiver);
-                                            loopThread.interrupt();
-                                        }
-                                        Thread.sleep(5000);
-
-                                    } catch (ExecutionException e) {
-                                        e.printStackTrace();
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
                                     }
 
                                 }

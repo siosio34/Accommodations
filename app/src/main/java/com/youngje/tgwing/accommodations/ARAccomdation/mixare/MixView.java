@@ -342,10 +342,12 @@ public class MixView extends Activity implements SensorEventListener, LocationLi
             if (intent.getAction().equals("NAVI")) {
                 String guide = intent.getStringExtra("GUIDE");
                 Snackbar.make(getWindow().getDecorView().getRootView(), guide, Snackbar.LENGTH_LONG)
-                        .setAction("Action", new View.OnClickListener() {
+                        .setAction("네비게이션 종료", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(),"스낵바를 클릭한 영제형 김치 :>",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"네비게이션을 종료합니다.",Toast.LENGTH_SHORT).show();
+                        MixState.enterNaviEnd = true;
+
                     }
                 }).show();
             }
