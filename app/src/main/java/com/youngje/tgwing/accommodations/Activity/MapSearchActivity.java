@@ -7,14 +7,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.media.Image;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.AlignmentSpan;
@@ -29,21 +28,14 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-
 import android.widget.ArrayAdapter;
-
-import android.widget.Button;
 import android.widget.CompoundButton;
-
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-
 import android.widget.PopupWindow;
-
 import android.widget.RelativeLayout;
-
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -52,32 +44,25 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-import com.youngje.tgwing.accommodations.ARAccomdation.*;
-import com.youngje.tgwing.accommodations.ARAccomdation.MainActivity;
 import com.youngje.tgwing.accommodations.ARAccomdation.mixare.MixView;
 import com.youngje.tgwing.accommodations.Chat;
 import com.youngje.tgwing.accommodations.ChatManager;
 import com.youngje.tgwing.accommodations.Chatroom;
-
 import com.youngje.tgwing.accommodations.Data.DataFormat;
 import com.youngje.tgwing.accommodations.Data.DaumDataProcessor;
-import com.youngje.tgwing.accommodations.Data.NavigationDataProcessor;
 import com.youngje.tgwing.accommodations.Data.SeoulDataProcessor;
 import com.youngje.tgwing.accommodations.Marker;
-import com.youngje.tgwing.accommodations.Navi;
 import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.User;
 import com.youngje.tgwing.accommodations.Util.HttpHandler;
 import com.youngje.tgwing.accommodations.Util.LocationUtil;
 import com.youngje.tgwing.accommodations.Util.RoundedAvatarDrawable;
-
 
 import net.daum.mf.map.api.CalloutBalloonAdapter;
 import net.daum.mf.map.api.CameraUpdateFactory;
@@ -86,6 +71,10 @@ import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPointBounds;
 import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -102,10 +91,6 @@ import java.util.concurrent.ExecutionException;
 
 import static com.youngje.tgwing.accommodations.Marker.markerList;
 import static com.youngje.tgwing.accommodations.R.string.daum_api_key;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MapSearchActivity extends AppCompatActivity implements View.OnClickListener, MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -341,7 +326,6 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
         ListView listview;
         ImageView navigationView;
         SearchListViewAdapter adapter;
-        TextView ratingText = (TextView) findViewById(R.id.listview_rating_score);
 
         // Adapter 생성
         adapter = new SearchListViewAdapter(this);
@@ -370,21 +354,10 @@ public class MapSearchActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
 
-                Log.d(TAG, "Activate : " + v.getId());
-                Log.d(TAG, "Activate22" + String.valueOf(id));
-
-                if(v.getId() == R.id.navigation_button){
-                    // get item
-                    SearchListViewItem item = (SearchListViewItem) parent.getItemAtPosition(position);
-                    // 네비게이션 이벤트
-                    Log.d(TAG, "Activate Navigation : " + item.getTitle());
-                } else {
                     // get item
                     Marker item = Marker.markerList.get(position);
                     Marker.selectedMarker = item;
                     startActivity(new Intent(getApplicationContext(), SearchListDetailView.class));
-
-                }
             }
         });
     }

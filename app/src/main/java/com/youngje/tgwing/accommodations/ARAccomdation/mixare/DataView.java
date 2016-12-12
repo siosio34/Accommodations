@@ -337,7 +337,7 @@ public class DataView {
         dataHandler.updateActivationStatus(mixContext);    // 활성화 상태를 갱신
 
         // 각각의 마커에 적용
-        Log.i("마커들 갯수",Integer.toString(dataHandler.getMarkerCount()));
+        //Log.i("마커들 갯수",Integer.toString(dataHandler.getMarkerCount()));
         for (int i = dataHandler.getMarkerCount() - 1; i >= 0; i--) {
             ARMarker ma = dataHandler.getMarker(i);
 

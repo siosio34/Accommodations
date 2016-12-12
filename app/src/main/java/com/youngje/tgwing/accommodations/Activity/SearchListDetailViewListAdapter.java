@@ -50,7 +50,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * Created by aswoo on 2016-10-15.
+ * Created by joyeongje on 2016. 10. 18..
  */
 
 public class SearchListDetailViewListAdapter extends BaseAdapter {
@@ -102,7 +102,6 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
 
         TextView reviewTextView;
 
-        // TODO: 2016. 12. 2.  아래것들 처리해야됨 
         // 국적
         ImageView nationalityView; 
         

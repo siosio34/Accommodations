@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Created by aswoo on 2016-10-15.
+ * Created by joyeongje on 2016. 10. 18..
  */
 
 public class SearchListViewAdapter extends BaseAdapter {
@@ -77,10 +77,6 @@ public class SearchListViewAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.ratingBar.setOnRatingBarChangeListener(onRatingChangedListener(holder, position));
-        holder.ratingBar.setTag(position);
-        holder.ratingBar.setRating(getItem(position).getRatingStar());
-
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
 
@@ -90,9 +86,8 @@ public class SearchListViewAdapter extends BaseAdapter {
         // 아이템 내 각 위젯에 데이터 반영
         holder.titleTextView.setText(getItem(position).getTitle());
         holder.categoryView.setText(getItem(position).getCategory());
-        holder.ReviewNumView.setText(getItem(position).getReviewNum());
         holder.distanceView.setText(getItem(position).getDistance());
-        holder.ratingStarView.setText(new Float(getItem(position).getNumOfStar()).toString());
+
 
         /*
         holder.navigationImageView.setOnClickListener(new View.OnClickListener() {
@@ -270,13 +265,10 @@ public class SearchListViewAdapter extends BaseAdapter {
 
 
         public ViewHolder(View view) {
-            ratingBar = (RatingBar) view.findViewById(R.id.listview_rating_bar);
             titleTextView = (TextView) view.findViewById(R.id.listview_title);
             categoryView = (TextView) view.findViewById(R.id.listview_category);
-            ReviewNumView = (TextView) view.findViewById(R.id.listview_rating_num);
             distanceView = (TextView) view.findViewById(R.id.listview_distance);
-            ratingStarView = (TextView) view.findViewById(R.id.listview_rating_score);
-            navigationImageView = (ImageView) view.findViewById(R.id.navigation_button);
+
 
         }
     }

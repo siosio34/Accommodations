@@ -108,8 +108,6 @@ public class DataHandler implements Serializable{
 	// 위치가 변경되었을 경우
 	public void onLocationChanged(Location location) {
 
-
-
 		updateDistances(location);	// 거리를 갱신하고
 		sortMarkerList();			// 마커 리스트를 정렬
 

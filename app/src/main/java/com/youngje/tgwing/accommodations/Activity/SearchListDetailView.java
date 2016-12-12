@@ -113,12 +113,4 @@ public class SearchListDetailView extends AppCompatActivity {
 
     }
 
-
-
-
-
-
-
-
-
 }

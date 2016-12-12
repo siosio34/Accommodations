@@ -67,63 +67,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
-                <RatingBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:isIndicator="true"
-                    android:id="@+id/listview_rating_bar"/>
-                <TextView
-                    android:id="@+id/listview_rating_score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4"
-                    android:textColor="#ff0000"
-                    android:textSize="14sp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="점  | 리뷰"/>
-                <TextView
-                    android:id="@+id/listview_rating_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="#ff0000"
-                    android:text="0"/>
+
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/listview_navigation"
-            android:clickable="true"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_weight="0.2"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_gravity="right"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:id="@+id/navigation_button"
-                android:layout_marginLeft="15dp"
-                android:onClick="navigationClicked"
-                android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_icon_route"
-                 />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="길 찾 기"
-                android:textStyle="bold"
-                android:textSize="10sp"/>
-
-       </LinearLayout>
 
     </LinearLayout>
 

@@ -26,7 +26,7 @@ import com.youngje.tgwing.accommodations.R;
 import com.youngje.tgwing.accommodations.User;
 
 /**
- * Created by JiwoonWon on 2016. 10. 31..
+ * Created by joyeongje on 2016. 10. 18..
  */
 
 public class UserInformationActivity extends AppCompatActivity {

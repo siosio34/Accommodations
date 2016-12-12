@@ -3,9 +3,8 @@ package com.youngje.tgwing.accommodations.Activity;
 import android.graphics.drawable.Drawable;
 
 /**
- * Created by aswoo on 2016-10-15.
+ * Created by joyeongje on 2016. 10. 18..
  */
-
 public class SearchListViewItem {
     private String titleStr;
     private String categoryStr;
