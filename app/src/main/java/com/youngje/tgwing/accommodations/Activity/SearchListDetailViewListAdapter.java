@@ -46,6 +46,7 @@ import com.youngje.tgwing.accommodations.Util.HttpHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -299,7 +300,8 @@ public class SearchListDetailViewListAdapter extends BaseAdapter {
 
         userName.setText(item.getUserName());
         Picasso.with(context).load(item.getUserImageUrl()).into(profileView);
-        //dateView.setText(item.getCreateDate().toString());
+        String formattedDate = new SimpleDateFormat("yyyy.MM.dd").format(item.getCreateDate());
+        dateView.setText(formattedDate);
        // reviewTextView.setText(item.getContent());
 
         return view;
